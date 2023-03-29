@@ -18,7 +18,9 @@
 */
 import React from "react";
 import { useState } from "react";
-import { useTable } from 'react-table'
+import ProvisionActive from './ProvisionActive'
+import ProvisionUsed from './ProvisionUsed'
+
 // reactstrap components
 import {
   Button,
@@ -47,65 +49,6 @@ import DemoFooter from "components/Footers/DemoFooter.js";
 
 function ProfilePage() {
 
-    const columns = [
-        {
-            Header: 'Name',
-            columns: [
-                {
-                    Header: 'First Name',
-                    accessor: 'firstName',
-                },
-                {
-                    Header: 'Last Name',
-                    accessor: 'lastName',
-                },
-            ],
-        },
-        {
-            Header: 'Info',
-            columns: [
-                {
-                    Header: 'Age',
-                    accessor: 'age',
-                },
-                {
-                    Header: 'Visits',
-                    accessor: 'visits',
-                },
-                {
-                    Header: 'Status',
-                    accessor: 'status',
-                },
-                {
-                    Header: 'Profile Progress',
-                    accessor: 'progress',
-                },
-            ],
-        },
-    ];
-  const data = [
-    {
-        "firstName": "horn-od926",
-        "lastName": "selection-gsykp",
-        "age": 22,
-        "visits": 20,
-        "progress": 39,
-        "status": "single"
-    },
-    {
-        "firstName": "heart-nff6w",
-        "lastName": "information-nyp92",
-        "age": 16,
-        "visits": 98,
-        "progress": 40,
-        "status": "complicated"
-    },
-
-]
-
-
-
-
   const [activeTab, setActiveTab] = React.useState("1");
   var [name, surname, id] = useState("");
   const toggle = (tab) => {
@@ -113,17 +56,6 @@ function ProfilePage() {
       setActiveTab(tab);
     }
   };
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({
-      columns,
-      data,
-  })
 
   document.documentElement.classList.remove("nav-open");
   React.useEffect(() => {
@@ -219,36 +151,13 @@ const handleSubmit = (event) => {
             <CardBody >
              <TabContent className="following" activeTab={activeTab}>
                 <TabPane tabId="1">
-                  <CardText>Your Active Provisions</CardText>
-
-                  <table className="table" {...getTableProps()}>
-                      <thead>
-                          {headerGroups.map(headerGroup => (
-                              <tr {...headerGroup.getHeaderGroupProps()}>
-                                  {headerGroup.headers.map(column => (
-                                     <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                                  ))}
-                              </tr>
-                          ))}
-                      </thead>
-                      <tbody {...getTableBodyProps()}>
-                          {rows.map((row, i) => {
-                              prepareRow(row)
-                              return (
-                                  <tr {...row.getRowProps()}>
-                                      {row.cells.map(cell => {
-                                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                                      })}
-                                  </tr>
-                              )
-                          })}
-                      </tbody>
-                    </table>
-
-
+                  <CardText>
+                <ProvisionActive />
+                </CardText>
                 </TabPane>
                 <TabPane tabId="2">
                   <CardText>Your Used Provisions</CardText>
+                  <ProvisionUsed />
                 </TabPane>
                 </TabContent>
 
