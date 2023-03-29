@@ -37,12 +37,43 @@ class ViewController: UIViewController {
         identificationLabel.text = "Please select your identification method below."
         self.view.addSubview(identificationLabel)
         
-        //QR code button
         
-         
+        //Qr Code Button
+        let qrCodeButton = UIButton(frame: CGRect(x:0, y:0, width:screenWidth/2, height:screenHeight/20))
+        qrCodeButton.center.x = self.view.center.x
+        qrCodeButton.center.y = identificationLabel.center.y + identificationLabel.bounds.size.height
+        let heightQRButton = qrCodeButton.bounds.size.height
+        qrCodeButton.layer.cornerRadius = heightQRButton/2
+        qrCodeButton.layer.borderWidth = 1
+        qrCodeButton.layer.borderColor = UIColor.white.cgColor
+        qrCodeButton.setTitle("Scan QR Code", for: .normal)
+        qrCodeButton.addTarget(self, action: #selector(qrCodeButtonClicked), for: .touchUpInside)
+        view.addSubview(qrCodeButton)
+        
+        //ID Button
+        let IDButton = UIButton(frame: CGRect(x:0, y:0, width:screenWidth/2, height:screenHeight/20))
+        IDButton.center.x = self.view.center.x
+        IDButton.center.y = qrCodeButton.center.y + 1.25*qrCodeButton.bounds.size.height
+        let heightIDButton = qrCodeButton.bounds.size.height
+        IDButton.layer.cornerRadius = heightIDButton/2
+        IDButton.layer.borderWidth = 1
+        IDButton.layer.borderColor = UIColor.white.cgColor
+        IDButton.setTitle("Scan ID Card", for: .normal)
+        IDButton.addTarget(self, action: #selector(IDButtonClicked), for: .touchUpInside)
+        view.addSubview(IDButton)
     }
     
+    @objc func qrCodeButtonClicked(){
+        let qrCodeViewController = QRCodeViewController()
+        qrCodeViewController.modalPresentationStyle = .overFullScreen
+        present(qrCodeViewController, animated: true, completion: nil)
+    }
     
+    @objc func IDButtonClicked(){
+        let IDViewController = IDViewController()
+        IDViewController.modalPresentationStyle = .overFullScreen
+        present(IDViewController, animated: true, completion: nil)
+    }
     
 }
 
