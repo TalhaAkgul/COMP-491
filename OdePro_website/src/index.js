@@ -33,6 +33,7 @@ import RegisterPage from "views/examples/RegisterPage.js";
 import MyLandingPage from "views/MyLandingPage.js";
 import MyProvisions from "views/MyProvisions.js";
 import MakeProvisions from "views/MakeProvision.js";
+import Login from "views/index-sections/SectionLogin.js";
 
 // others
 
@@ -69,6 +70,10 @@ root.render(
       <Route
         path="/make-provision"
         render={(props) => <MakeProvisions {...props} />}
+      />
+      <Route
+        path="/login"
+        render={(props) => <Login {...props} />}
       />
       <Redirect to="/my-landing-page" />
     </Switch>

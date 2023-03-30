@@ -53,189 +53,120 @@ function LandingPage() {
       <ExamplesNavbar />
       <LandingPageHeader />
       <div className="main" id="about">
-        <div className="section text-center">
+        <div className="section text-center" style={{paddingBottom:"0%"}}>
           <Container>
             <Row>
               <Col className="ml-auto mr-auto" md="8">
                 <h2 className="title">Let's talk about our product</h2>
                 <h5 className="description">
-                A group becomes a team when each member is sure enough of himself and his contribution to praise the skill of the others. No one can whistle a symphony. It takes an orchestra to play it.
-                A group becomes a team when each member is sure enough of himself and his contribution to praise the skill of the others. No one can whistle a symphony. It takes an orchestra to play it.
-                A group becomes a team when each member is sure enough of himself and his contribution to praise the skill of the others. No one can whistle a symphony. It takes an orchestra to play it.
-                A group becomes a team when each member is sure enough of himself and his contribution to praise the skill of the others. No one can whistle a symphony. It takes an orchestra to play it.
-                A group becomes a team when each member is sure enough of himself and his contribution to praise the skill of the others. No one can whistle a symphony. It takes an orchestra to play it.
-                </h5>
+                  In this prduct we are presenting a new solution to purchases that are made offline. 
+                  Specifically, we are working with inflight purchases. Right now, the current solution 
+                  involves passengers to pay with cash or use their credit card. However, using cash is not 
+                  always suitable since change can not be available. Also, credit card transactions cannot
+                  be completed on the air when there is no internet. Therefore, it is the flight cabins
+                  responsibility to control the transactions when the plane lands and fix any problems with
+                  the passenger. Moreover, there can be more problems with returns. This method is inefficient
+                  and in this project, we proposed a new approach to this problem. In flight purchases can be
+                  done with a QR code or ID card of the passenger because  the passenger created a provision
+                  before the flight. With this provision, we ensure the airlines that the passenger has the
+                  money in their account and after the flight, the transaction will be successful. Similarly,
+                  in flight returns can be done easier offline. With this work, we presented a <b>reliable, certain
+                  and novel solution.</b>   </h5>
                 <br />
                
               </Col>
             </Row>
-            <br />
-            <br />
-            
           </Container>
         </div>
-        <div className="section section-dark text-center">
-          <Container>
-            <h2 className="title">Let's talk about us</h2>
+
+        <div className="section-dark text-center" style={{paddingTop: "0.5%", paddingBottom:"0%"}}>
+          <Container >
+          <h2 className="title">Meet with the Team!</h2> <br /> <br />
             <Row>
-              <Col md="4">
+              <Col md="3">
                 <Card className="card-profile card-plain">
                   <div className="card-avatar">
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                    <a>
                       <img
                         alt="..."
-                        src={require("assets/img/faces/clem-onojeghuo-3.jpg")}
+                        src={require("assets/img/faces/kd.jpg")}
                       />
                     </a>
                   </div>
                   <CardBody>
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                    <a>
                       <div className="author">
-                        <CardTitle tag="h4">Henry Ford</CardTitle>
-                        <h6 className="card-category">Product Manager</h6>
-                      </div>
-                    </a>
-                    <p className="card-description text-center">
-                      Teamwork is so important that it is virtually impossible
-                      for you to reach the heights of your capabilities or make
-                      the money that you want without becoming very good at it.
-                    </p>
-                  </CardBody>
-                  <CardFooter className="text-center">
-                    <Button
-                      className="btn-just-icon btn-neutral"
-                      color="link"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className="fa fa-twitter" />
-                    </Button>
-                    <Button
-                      className="btn-just-icon btn-neutral ml-1"
-                      color="link"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className="fa fa-google-plus" />
-                    </Button>
-                    <Button
-                      className="btn-just-icon btn-neutral ml-1"
-                      color="link"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className="fa fa-linkedin" />
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </Col>
-              <Col md="4">
-                <Card className="card-profile card-plain">
-                  <div className="card-avatar">
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      <img
-                        alt="..."
-                        src={require("assets/img/faces/joe-gardner-2.jpg")}
-                      />
-                    </a>
-                  </div>
-                  <CardBody>
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      <div className="author">
-                        <CardTitle tag="h4">Sophie West</CardTitle>
-                        <h6 className="card-category">Designer</h6>
-                      </div>
-                    </a>
-                    <p className="card-description text-center">
-                      A group becomes a team when each member is sure enough of
-                      himself and his contribution to praise the skill of the
-                      others. No one can whistle a symphony. It takes an
-                      orchestra to play it.
-                    </p>
-                  </CardBody>
-                  <CardFooter className="text-center">
-                    <Button
-                      className="btn-just-icon btn-neutral"
-                      color="link"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className="fa fa-twitter" />
-                    </Button>
-                    <Button
-                      className="btn-just-icon btn-neutral ml-1"
-                      color="link"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className="fa fa-google-plus" />
-                    </Button>
-                    <Button
-                      className="btn-just-icon btn-neutral ml-1"
-                      color="link"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className="fa fa-linkedin" />
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </Col>
-              <Col md="4">
-                <Card className="card-profile card-plain">
-                  <div className="card-avatar">
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      <img
-                        alt="..."
-                        src={require("assets/img/faces/erik-lucatero-2.jpg")}
-                      />
-                    </a>
-                  </div>
-                  <CardBody>
-                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      <div className="author">
-                        <CardTitle tag="h4">Robert Orben</CardTitle>
+                        <CardTitle tag="h4">Ahmet Talha Akgül</CardTitle>
                         <h6 className="card-category">Developer</h6>
                       </div>
                     </a>
-                    <p className="card-description text-center">
-                      The strength of the team is each individual member. The
-                      strength of each member is the team. If you can laugh
-                      together, you can work together, silence isn’t golden,
-                      it’s deadly.
-                    </p>
                   </CardBody>
-                  <CardFooter className="text-center">
-                    <Button
-                      className="btn-just-icon btn-neutral"
-                      color="link"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className="fa fa-twitter" />
-                    </Button>
-                    <Button
-                      className="btn-just-icon btn-neutral ml-1"
-                      color="link"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className="fa fa-google-plus" />
-                    </Button>
-                    <Button
-                      className="btn-just-icon btn-neutral ml-1"
-                      color="link"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className="fa fa-linkedin" />
-                    </Button>
-                  </CardFooter>
                 </Card>
               </Col>
-            </Row>
+              <Col md="3">
+                <Card className="card-profile card-plain">
+                  <div className="card-avatar">
+                    <a>
+                      <img
+                        alt="..."
+                        src={require("assets/img/faces/kd.jpg")}
+                      />
+                    </a>
+                  </div>
+                  <CardBody>
+                    <a>
+                      <div className="author">
+                        <CardTitle tag="h4">Betül Demirtaş</CardTitle>
+                        <h6 className="card-category">Developer</h6>
+                      </div>
+                    </a>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md="3">
+                <Card className="card-profile card-plain">
+                  <div className="card-avatar">
+                    <a>
+                      <img
+                        alt="..."
+                        src={require("assets/img/faces/kd.jpg")}
+                      />
+                    </a>
+                  </div>
+                  <CardBody>
+                    <a>
+                      <div className="author">
+                        <CardTitle tag="h4">Doğa Ege İnhanlı</CardTitle>
+                        <h6 className="card-category">Developer</h6>
+                      </div>
+                    </a>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md="3">
+                <Card className="card-profile card-plain">
+                  <div className="card-avatar">
+                    <a>
+                      <img
+                        alt="..."
+                        src={require("assets/img/faces/kd.jpg")}
+                      />
+                    </a>
+                  </div>
+                  <CardBody>
+                    <a>
+                      <div className="author">
+                        <CardTitle tag="h4">Pınar Erbil</CardTitle>
+                        <h6 className="card-category">Developer</h6>
+                      </div>
+                    </a>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>            
           </Container>
         </div>
+
         <div className="section landing-section" id="contact-us">
           <Container>
             <Row>
