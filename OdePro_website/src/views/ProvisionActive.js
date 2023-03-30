@@ -8,9 +8,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-function ProvisionActive() {
-  const [data, setData] = useState([]);
+function ProvisionActive({my}) {
+  const [data, setData, my] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [myy] = useState("1");
 
   useEffect(() => {
     axios.get('/api/data').then((response) => {
@@ -52,7 +53,7 @@ function ProvisionActive() {
               <TableCell component="th" scope="row">
                 {d.id}
               </TableCell>
-              <TableCell align="left">{d.name}</TableCell>
+              <TableCell align="left">{myy}</TableCell>
               <TableCell align="left">{d.surname}</TableCell>
               <TableCell align="left">{d.provisionAmount}</TableCell>
               <TableCell align="left">{d.paymentDetails}</TableCell>
