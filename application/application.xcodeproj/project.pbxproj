@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C79FBFA29D44CDB0052764A /* plane.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 1C79FBF929D44CDB0052764A /* plane.jpeg */; };
 		1C79FBFC29D44DAF0052764A /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C79FBFB29D44DAF0052764A /* QRCodeViewController.swift */; };
 		1C79FBFE29D44E310052764A /* IDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C79FBFD29D44E310052764A /* IDViewController.swift */; };
+		1C9BF11729DB2F3900B69C37 /* AddPaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11629DB2F3900B69C37 /* AddPaymentController.swift */; };
+		1C9BF11B29DB342300B69C37 /* FoodDrinkMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11A29DB342300B69C37 /* FoodDrinkMenuController.swift */; };
+		1C9BF11D29DB343400B69C37 /* EntertainmentMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11C29DB343400B69C37 /* EntertainmentMenuController.swift */; };
+		1C9BF11F29DB344800B69C37 /* AfterFlightServiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11E29DB344800B69C37 /* AfterFlightServiceController.swift */; };
+		1C9BF12529DB47C900B69C37 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 1C9BF12429DB47C900B69C37 /* images */; };
 		1CDAE2FF29D376DE000E140A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE2FE29D376DE000E140A /* AppDelegate.swift */; };
 		1CDAE30129D376DE000E140A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE30029D376DE000E140A /* SceneDelegate.swift */; };
 		1CDAE30329D376DE000E140A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE30229D376DE000E140A /* ViewController.swift */; };
@@ -40,9 +44,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1C79FBF929D44CDB0052764A /* plane.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = plane.jpeg; path = ../../../plane.jpeg; sourceTree = "<group>"; };
 		1C79FBFB29D44DAF0052764A /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		1C79FBFD29D44E310052764A /* IDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDViewController.swift; sourceTree = "<group>"; };
+		1C9BF11629DB2F3900B69C37 /* AddPaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentController.swift; sourceTree = "<group>"; };
+		1C9BF11A29DB342300B69C37 /* FoodDrinkMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDrinkMenuController.swift; sourceTree = "<group>"; };
+		1C9BF11C29DB343400B69C37 /* EntertainmentMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntertainmentMenuController.swift; sourceTree = "<group>"; };
+		1C9BF11E29DB344800B69C37 /* AfterFlightServiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterFlightServiceController.swift; sourceTree = "<group>"; };
+		1C9BF12429DB47C900B69C37 /* images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = images; sourceTree = SOURCE_ROOT; };
 		1CDAE2FB29D376DE000E140A /* application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = application.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CDAE2FE29D376DE000E140A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CDAE30029D376DE000E140A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,8 +115,8 @@
 		1CDAE2FD29D376DE000E140A /* application */ = {
 			isa = PBXGroup;
 			children = (
+				1C9BF12429DB47C900B69C37 /* images */,
 				1CDAE2FE29D376DE000E140A /* AppDelegate.swift */,
-				1C79FBF929D44CDB0052764A /* plane.jpeg */,
 				1CDAE30029D376DE000E140A /* SceneDelegate.swift */,
 				1CDAE30229D376DE000E140A /* ViewController.swift */,
 				1C79FBFD29D44E310052764A /* IDViewController.swift */,
@@ -118,6 +126,10 @@
 				1CDAE30929D376E0000E140A /* LaunchScreen.storyboard */,
 				1CDAE30C29D376E0000E140A /* Info.plist */,
 				1CDAE33029D37987000E140A /* Background.swift */,
+				1C9BF11629DB2F3900B69C37 /* AddPaymentController.swift */,
+				1C9BF11A29DB342300B69C37 /* FoodDrinkMenuController.swift */,
+				1C9BF11C29DB343400B69C37 /* EntertainmentMenuController.swift */,
+				1C9BF11E29DB344800B69C37 /* AfterFlightServiceController.swift */,
 			);
 			path = application;
 			sourceTree = "<group>";
@@ -243,8 +255,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C9BF12529DB47C900B69C37 /* images in Resources */,
 				1CDAE30B29D376E0000E140A /* LaunchScreen.storyboard in Resources */,
-				1C79FBFA29D44CDB0052764A /* plane.jpeg in Resources */,
 				1CDAE30829D376E0000E140A /* Assets.xcassets in Resources */,
 				1CDAE30629D376DE000E140A /* Main.storyboard in Resources */,
 			);
@@ -272,11 +284,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CDAE30329D376DE000E140A /* ViewController.swift in Sources */,
+				1C9BF11D29DB343400B69C37 /* EntertainmentMenuController.swift in Sources */,
+				1C9BF11B29DB342300B69C37 /* FoodDrinkMenuController.swift in Sources */,
 				1CDAE2FF29D376DE000E140A /* AppDelegate.swift in Sources */,
 				1CDAE30129D376DE000E140A /* SceneDelegate.swift in Sources */,
 				1CDAE33129D37987000E140A /* Background.swift in Sources */,
 				1C79FBFC29D44DAF0052764A /* QRCodeViewController.swift in Sources */,
 				1C79FBFE29D44E310052764A /* IDViewController.swift in Sources */,
+				1C9BF11F29DB344800B69C37 /* AfterFlightServiceController.swift in Sources */,
+				1C9BF11729DB2F3900B69C37 /* AddPaymentController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
