@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1C15477C29E17F3C0011DBA2 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C15476E29E17D6F0011DBA2 /* SQLite.framework */; };
 		1C15477D29E17F3C0011DBA2 /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1C15476E29E17D6F0011DBA2 /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1C6BD84A29E1F8DE00E243DB /* PersonalDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6BD84929E1F8DE00E243DB /* PersonalDetailsController.swift */; };
 		1C79FBFC29D44DAF0052764A /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C79FBFB29D44DAF0052764A /* QRCodeViewController.swift */; };
 		1C79FBFE29D44E310052764A /* IDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C79FBFD29D44E310052764A /* IDViewController.swift */; };
 		1C9BF11729DB2F3900B69C37 /* AddPaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11629DB2F3900B69C37 /* AddPaymentController.swift */; };
@@ -110,6 +111,7 @@
 
 /* Begin PBXFileReference section */
 		1C15476329E17D6E0011DBA2 /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../../Downloads/SQLite.swift-master/SQLite.xcodeproj"; sourceTree = "<group>"; };
+		1C6BD84929E1F8DE00E243DB /* PersonalDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDetailsController.swift; sourceTree = "<group>"; };
 		1C79FBFB29D44DAF0052764A /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		1C79FBFD29D44E310052764A /* IDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDViewController.swift; sourceTree = "<group>"; };
 		1C9BF11629DB2F3900B69C37 /* AddPaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentController.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				1C9BF11A29DB342300B69C37 /* FoodDrinkMenuController.swift */,
 				1C9BF11C29DB343400B69C37 /* EntertainmentMenuController.swift */,
 				1C9BF11E29DB344800B69C37 /* AfterFlightServiceController.swift */,
+				1C6BD84929E1F8DE00E243DB /* PersonalDetailsController.swift */,
 			);
 			path = application;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 				1CDAE30329D376DE000E140A /* ViewController.swift in Sources */,
 				1C9BF11D29DB343400B69C37 /* EntertainmentMenuController.swift in Sources */,
 				1C9BF11B29DB342300B69C37 /* FoodDrinkMenuController.swift in Sources */,
+				1C6BD84A29E1F8DE00E243DB /* PersonalDetailsController.swift in Sources */,
 				1CDAE2FF29D376DE000E140A /* AppDelegate.swift in Sources */,
 				1CDAE30129D376DE000E140A /* SceneDelegate.swift in Sources */,
 				1CDAE33129D37987000E140A /* Background.swift in Sources */,
