@@ -269,14 +269,6 @@ class FoodDrinkMenuController: UIViewController {
     }
     @IBAction func addItemsButtonClicked(_ sender: UIButton) {
         updateTable()
-        do {
-                    let products = try self.database.prepare(self.productsTable)
-                    for product in products {
-                        print("productId: \(product[self.productId]), productName: \(product[self.productName]), productType: \(product[self.productType]), count: \(product[self.count]), price: \(product[self.price])")
-                    }
-                } catch {
-                    print(error)
-                }
     }
 }
 

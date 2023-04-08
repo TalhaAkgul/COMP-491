@@ -144,12 +144,6 @@
                                         <rect key="frame" x="14" y="8" width="347" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bag.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="38t-iD-bNP">
-                                        <rect key="frame" x="14" y="115.5" width="36" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="tintColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
@@ -175,20 +169,42 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="woQ-7Q-Dlr">
+                                <rect key="frame" x="20" y="525" width="374" height="188"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bag.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="38t-iD-bNP">
+                                        <rect key="frame" x="8" y="7" width="36" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </imageView>
+                                </subviews>
+                                <viewLayoutGuide key="contentLayoutGuide" id="DdE-Bf-Tgz"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="hVb-d6-sRa"/>
+                            </scrollView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOI-54-u09">
+                                <rect key="frame" x="20" y="727" width="374" height="49"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ul3-X1-d6m">
+                                        <rect key="frame" x="8" y="14" width="358" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYO-sr-TTi">
-                                <rect key="frame" x="34" y="831" width="347" height="31"/>
+                                <rect key="frame" x="34" y="803" width="347" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Proceed Payment">
                                     <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                             </button>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="woQ-7Q-Dlr">
-                                <rect key="frame" x="20" y="525" width="374" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <viewLayoutGuide key="contentLayoutGuide" id="DdE-Bf-Tgz"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="hVb-d6-sRa"/>
-                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hsG-uT-UqJ"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
@@ -196,6 +212,7 @@
                     <navigationItem key="navigationItem" id="1TX-Or-DaA"/>
                     <connections>
                         <outlet property="afterFlightServicesView" destination="9OS-bE-0bI" id="AY4-Ga-jCV"/>
+                        <outlet property="basketImage" destination="38t-iD-bNP" id="Ihu-kc-gw3"/>
                         <outlet property="entertainmentMenuView" destination="wwp-7V-22J" id="VPi-FA-gQw"/>
                         <outlet property="foodMenuView" destination="3o8-Yd-Q2y" id="Gtc-7w-joK"/>
                         <outlet property="menuImage1" destination="0bM-79-Rmt" id="khv-ug-35L"/>
@@ -204,9 +221,12 @@
                         <outlet property="menuImage4" destination="stU-HI-j4g" id="vCF-Ck-jpb"/>
                         <outlet property="menuImage5" destination="36j-AD-X20" id="MbR-jC-Gyn"/>
                         <outlet property="menuImage6" destination="hgI-2M-chl" id="dYg-Ax-Pcf"/>
-                        <outlet property="menuImage7" destination="8AY-Gs-n4p" id="Ybg-JG-Zzr"/>
+                        <outlet property="menuImage7" destination="8AY-Gs-n4p" id="z3C-Sf-aWM"/>
                         <outlet property="navigationBar" destination="1wz-fY-6WO" id="fwh-Pd-BHo"/>
+                        <outlet property="proceedPaymentButton" destination="AYO-sr-TTi" id="AtG-pY-wPA"/>
                         <outlet property="scrollView" destination="woQ-7Q-Dlr" id="L3S-ly-6gh"/>
+                        <outlet property="totalLabel" destination="ul3-X1-d6m" id="RFM-VZ-ry1"/>
+                        <outlet property="totalView" destination="cOI-54-u09" id="OOS-bI-0s7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ewt-yQ-UWy" sceneMemberID="firstResponder"/>
@@ -3194,7 +3214,7 @@
         <scene sceneID="8Z4-9B-MFg">
             <objects>
                 <viewController id="uzB-gh-SlJ" customClass="AfterFlightServicesController" customModule="application" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="qEu-7y-T5Z">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="qEu-7y-T5Z">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -3542,6 +3562,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="TbW-jO-2QN"/>
         <segue reference="Muc-V5-1tg"/>
     </inferredMetricsTieBreakers>
     <resources>

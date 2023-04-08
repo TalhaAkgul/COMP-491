@@ -6,8 +6,17 @@
 //
 
 import UIKit
+import SQLite
 
 class AddPaymentController: UIViewController {
+    
+    var database: Connection!
+    let productsTable = Table("Products")
+    let productId = Expression<Int>("productId")
+    let productName = Expression<String>("productName")
+    let productType = Expression<String>("productType")
+    let count = Expression<Int>("count")
+    let price = Expression<Double>("price")
     
     @IBOutlet weak var menuImage1: UIImageView!
     @IBOutlet weak var menuImage2: UIImageView!
@@ -21,6 +30,10 @@ class AddPaymentController: UIViewController {
     @IBOutlet weak var afterFlightServicesView: UIView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var basketImage: UIImageView!
+    @IBOutlet weak var proceedPaymentButton: UIButton!
+    @IBOutlet weak var totalView: UIView!
+    @IBOutlet weak var totalLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.view.backgroundColor = .red
@@ -32,39 +45,99 @@ class AddPaymentController: UIViewController {
         menuImage6.image = UIImage(named: "images/add payment page images/menu6.jpeg")
         menuImage7.image = UIImage(named: "images/add payment page images/menu7.jpeg")
         
-            let scrollViewContainer: UIStackView = {
-                let view = UIStackView()
+        let scrollViewContainer: UIStackView = {
+            let view = UIStackView()
 
-                view.axis = .vertical
-                view.spacing = 10
+            view.axis = .vertical
+            view.spacing = 10
+            view.backgroundColor = .white
+            view.translatesAutoresizingMaskIntoConstraints = false
+            return view
+        }()
+        /*
+        let scrollViewContainer2: UIStackView = {
+            let view = UIStackView()
 
-                view.translatesAutoresizingMaskIntoConstraints = false
-                return view
-            }()
-
-        let myView: UIView = {
-            let view = UIView(frame: CGRect(x: 100, y: 100, width: 50, height: 60))
+            view.axis = .vertical
+            view.spacing = 10
             view.backgroundColor = .red
-            view.heightAnchor.constraint(equalToConstant: scrollView.bounds.size.width).isActive = true
-                return view
-            }()
-        view.addSubview(scrollView)
-                scrollView.addSubview(scrollViewContainer)
-                scrollViewContainer.addArrangedSubview(myView)
-                /*
-                scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-                scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-                scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-                scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-                */
-                scrollViewContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
-                scrollViewContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
-                scrollViewContainer.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-                scrollViewContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-               
-                 // this is important for scrolling
-                scrollViewContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+            view.translatesAutoresizingMaskIntoConstraints = false
+            return view
+        }()
+        */
         
+        updateBasket(container : scrollViewContainer)
+        view.addSubview(scrollView)
+        scrollView.addSubview(scrollViewContainer)
+        //scrollView.addSubview(scrollViewContainer2)
+        scrollViewContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        scrollViewContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+        scrollViewContainer.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        scrollViewContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        // this is important for scrolling
+        scrollViewContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        /*
+        scrollViewContainer2.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+        scrollViewContainer2.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        scrollViewContainer2.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true*/
     }
     
+    func connectDatabase(){
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let fileUrl = documentDirectory.appendingPathComponent("Products").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database = database
+        } catch {
+            print(error)
+        }
+    }
+    
+    func updateBasket(container : UIStackView){
+        connectDatabase()
+        do {
+            let products = try self.database.prepare(self.productsTable.filter(self.count != 0))
+            //let labelPosX = 20
+            var labelPosY = 20
+            var totalPrice = 0.0
+            for product in products {
+                //print(product[self.productName])
+                
+                let productLabel = UILabel()
+                //productLabel.center = CGPoint(x: 160, y: 285)
+                //productLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                productLabel.textColor = UIColor.black
+                productLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
+                let productName = product[self.productName]
+                let count = product[self.count]
+                let productText = String(count) + "   x   " + productName
+                //productLabel.text = productText
+                
+              
+                
+                
+                //let priceLabel = UILabel()
+                //priceLabel.center = CGPoint(x: 160, y: 285)
+                //priceLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                //priceLabel.textColor = UIColor.black
+                let price = product[self.price]
+                let totalPriceForProd = price * Double(count)
+                let priceText = String(totalPriceForProd) + " ₺ "
+                //priceLabel.text = priceText
+                //priceLabel.textAlignment = .right
+                let text = productText + ": " + priceText
+                productLabel.text = text
+                container.addArrangedSubview(productLabel)
+                //container.addArrangedSubview(priceLabel)
+                
+                totalPrice = totalPrice + totalPriceForProd
+               
+                labelPosY = labelPosY + 30
+            }
+            totalLabel.text = "Total Amount: " + String(totalPrice) + " ₺ "
+            totalLabel.textAlignment = .right
+        } catch {
+            print(error)
+        }
+    }
 }

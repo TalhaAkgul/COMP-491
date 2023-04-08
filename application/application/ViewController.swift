@@ -29,7 +29,6 @@ class ViewController: UIViewController {
         initializeDatabase()
         
         // Do any additional setup after loading the view.
-        
         self.view.addBackground()
         
         let screenSize: CGRect = UIScreen.main.bounds
@@ -85,8 +84,6 @@ class ViewController: UIViewController {
             print(error)
         }
         */
-        //let insertUser = self.productsTable.insert(self.productId <- 1, self.productName <- "dsjkjdsds",
-                                                   // self.productType <- "asssss", self.count <- 0, self.price <- 0)
         let insertUser = self.productsTable.insertMany(or: OnConflict.replace,
                                                        [[self.productId <- 1, self.productName <- "Suitcase Help", self.productType <- "After Flight", self.count <- 0, self.price <- 200.0],
                                                         [self.productId <- 2, self.productName <- "Rent A Car", self.productType <- "After Flight", self.count <- 0, self.price <- 570.0],
@@ -144,33 +141,20 @@ class ViewController: UIViewController {
                                                         [self.productId <- 54, self.productName <- "Red Wine", self.productType <- "Food Drink", self.count <- 0, self.price <- 8.7],
                                                         [self.productId <- 55, self.productName <- "Rose Wine", self.productType <- "Food Drink", self.count <- 0, self.price <- 60.4],
                                                         [self.productId <- 56, self.productName <- "Tea", self.productType <- "Food Drink", self.count <- 0, self.price <- 14.3],
-                                                        [self.productId <- 57, self.productName <- "White Wine", self.productType <- "Food Drink", self.count <- 0, self.price <- 60.1]
-                                                       ])
+                                                        [self.productId <- 57, self.productName <- "White Wine", self.productType <- "Food Drink", self.count <- 0, self.price <- 60.1]])
         do {
             try self.database.run(insertUser)
-            print("INSERTED USER")
         } catch {
             print(error)
         }
-            print("LIST TAPPED")
         /*
-        do {
-            let products = try self.database.prepare(self.productsTable)
-            for product in products {
-                print("productId: \(product[self.productId]), productName: \(product[self.productName]), productType: \(product[self.productType]), count: \(product[self.count]), price: \(product[self.price])")
-            }
-        } catch {
-            print(error)
-        }
-                     
-        
         do {
             let drop = productsTable.drop(ifExists: true)
             try database.run(drop)
         } catch {
             print(error)
         }
-         */
+        */
     }
 }
 

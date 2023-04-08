@@ -88,6 +88,7 @@ class AfterFlightServicesController: UIViewController {
             print(error)
         }
     }
+    
     func updateTable(){
         connectDatabase()
         do {
