@@ -6,8 +6,18 @@
 //
 
 import UIKit
+import SQLite
 
 class EntertainmentMenuController: UIViewController {
+    
+    var database: Connection!
+    let productsTable = Table("Products")
+    let productId = Expression<Int>("productId")
+    let productName = Expression<String>("productName")
+    let productType = Expression<String>("productType")
+    let count = Expression<Int>("count")
+    let price = Expression<Double>("price")
+    
     @IBOutlet weak var entPhoto1: UIImageView!
     @IBOutlet weak var entPhoto2: UIImageView!
     @IBOutlet weak var entPhoto3: UIImageView!
@@ -75,7 +85,25 @@ class EntertainmentMenuController: UIViewController {
     @IBOutlet weak var count14: UILabel!
     @IBOutlet weak var count15: UILabel!
     @IBOutlet weak var count16: UILabel!
+    @IBOutlet weak var prod1: UILabel!
+    @IBOutlet weak var prod2: UILabel!
+    @IBOutlet weak var prod3: UILabel!
+    @IBOutlet weak var prod4: UILabel!
+    @IBOutlet weak var prod5: UILabel!
+    @IBOutlet weak var prod6: UILabel!
+    @IBOutlet weak var prod7: UILabel!
+    @IBOutlet weak var prod8: UILabel!
+    @IBOutlet weak var price1: UILabel!
+    @IBOutlet weak var price2: UILabel!
+    @IBOutlet weak var price3: UILabel!
+    @IBOutlet weak var price4: UILabel!
+    @IBOutlet weak var price5: UILabel!
+    @IBOutlet weak var price6: UILabel!
+    @IBOutlet weak var price7: UILabel!
+    @IBOutlet weak var price8: UILabel!
     var countLabels = [UILabel]()
+    var prodLabels = [UILabel]()
+    var priceLabels = [UILabel]()
     var plusButtons = [UIButton]()
     var minusButtons = [UIButton]()
     override func viewDidLoad() {
@@ -105,6 +133,8 @@ class EntertainmentMenuController: UIViewController {
             minusButtons[i].tag = (i+1) * 2 + 1
         }
         countLabels.append(contentsOf: [count1,count2,count3,count4,count5,count6,count7,count8,count9,count10,count11,count12,count13,count14,count15, count16])
+        priceLabels.append(contentsOf: [price1,price2,price3,price4,price5,price6,price7,price8])
+        prodLabels.append(contentsOf: [prod1,prod2,prod3,prod4,prod5,prod6,prod7,prod8])
     }
     @IBAction func buttonClicked(_ sender: UIButton) {
         let senderInfo = sender.self.tag
@@ -120,5 +150,34 @@ class EntertainmentMenuController: UIViewController {
             }
         }
     }
-    
+    func connectDatabase(){
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let fileUrl = documentDirectory.appendingPathComponent("Products").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database = database
+        } catch {
+            print(error)
+        }
+    }
+    func updateTable(){
+        connectDatabase()
+        do {
+            let products = try self.database.prepare(self.productsTable.filter(self.productType == "Entertainment"))
+            for product in products {
+                let currentCount = Int(countLabels[product[self.productId] - 6].text!) ?? 0
+                let updateProduct = self.productsTable.filter(self.productId == product[self.productId]).update(self.count <- currentCount)
+                do {
+                    try self.database.run(updateProduct)
+                } catch {
+                    print(error)
+                }
+            }
+        } catch {
+            print(error)
+        }
+    }
+    @IBAction func addItemsButtonClicked(_ sender: UIButton) {
+        updateTable()
+    }
 }

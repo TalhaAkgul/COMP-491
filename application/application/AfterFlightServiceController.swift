@@ -6,9 +6,18 @@
 //
 
 import UIKit
+import SQLite
 
 class AfterFlightServicesController: UIViewController {
-
+    
+    var database: Connection!
+    let productsTable = Table("Products")
+    let productId = Expression<Int>("productId")
+    let productName = Expression<String>("productName")
+    let productType = Expression<String>("productType")
+    let count = Expression<Int>("count")
+    let price = Expression<Double>("price")
+    
     @IBOutlet weak var aftPhoto1: UIImageView!
     @IBOutlet weak var aftPhoto2: UIImageView!
     @IBOutlet weak var aftPhoto3: UIImageView!
@@ -67,5 +76,36 @@ class AfterFlightServicesController: UIViewController {
                 countLabels[(senderInfo-1)/2 - 1].text = "\(value)"
             }
         }
+        
+    }
+    func connectDatabase(){
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let fileUrl = documentDirectory.appendingPathComponent("Products").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database = database
+        } catch {
+            print(error)
+        }
+    }
+    func updateTable(){
+        connectDatabase()
+        do {
+            let products = try self.database.prepare(self.productsTable.filter(self.productType == "After Flight"))
+            for product in products {
+                let currentCount = Int(countLabels[product[self.productId] - 1].text!) ?? 0
+                let updateProduct = self.productsTable.filter(self.productId == product[self.productId]).update(self.count <- currentCount)
+                do {
+                    try self.database.run(updateProduct)
+                } catch {
+                    print(error)
+                }
+            }
+        } catch {
+            print(error)
+        }
+    }
+    @IBAction func addItemButtonClicked(_ sender: UIButton) {
+        updateTable()
     }
 }

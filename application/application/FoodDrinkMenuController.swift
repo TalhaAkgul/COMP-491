@@ -6,9 +6,18 @@
 //
 
 import UIKit
+import SQLite
 
 class FoodDrinkMenuController: UIViewController {
 
+    var database: Connection!
+    let productsTable = Table("Products")
+    let productId = Expression<Int>("productId")
+    let productName = Expression<String>("productName")
+    let productType = Expression<String>("productType")
+    let count = Expression<Int>("count")
+    let price = Expression<Double>("price")
+    
     @IBOutlet weak var foodPhoto1: UIImageView!
     @IBOutlet weak var foodPhoto2: UIImageView!
     @IBOutlet weak var foodPhoto3: UIImageView!
@@ -198,32 +207,7 @@ class FoodDrinkMenuController: UIViewController {
         foodPhoto34.image = UIImage(named: "images/food menu images/drinks/rose wine.png")
         foodPhoto35.image = UIImage(named: "images/food menu images/drinks/tea.png")
         foodPhoto36.image = UIImage(named: "images/food menu images/drinks/white wine.png")
-        /*
-         plusButton1.tag = 2
-         plusButton2.tag = 4
-         plusButton3.tag = 6
-         plusButton4.tag = 8
-         plusButton5.tag = 10
-         plusButton6.tag = 12
-         plusButton7.tag = 14
-         plusButton8.tag = 16
-         plusButton9.tag = 18
-         plusButton10.tag = 20
-         plusButton11.tag = 22
-         plusButton12.tag = 24
-         minusButton1.tag = 3
-         minusButton2.tag = 5
-         minusButton3.tag = 7
-         minusButton4.tag = 9
-         minusButton5.tag = 11
-         minusButton6.tag = 13
-         minusButton7.tag = 15
-         minusButton8.tag = 17
-         minusButton9.tag = 19
-         minusButton10.tag = 21
-         minusButton11.tag = 23
-         minusButton12.tag = 25
-         */
+        
         plusButtons.append(contentsOf: [plusButton1,plusButton2,plusButton3,plusButton4,plusButton5,plusButton6,plusButton7,plusButton8,plusButton9,plusButton10,plusButton11,plusButton12,plusButton13,plusButton14,plusButton15])
         plusButtons.append(contentsOf: [plusButton16,plusButton17,plusButton18,plusButton19,plusButton20,plusButton21,plusButton22,plusButton23,plusButton24,plusButton25,plusButton26,plusButton27,plusButton28,plusButton29])
         plusButtons.append(contentsOf: [plusButton30,plusButton31,plusButton32,plusButton33,plusButton34,plusButton35,plusButton36])
@@ -255,6 +239,44 @@ class FoodDrinkMenuController: UIViewController {
                 countLabels[(senderInfo-1)/2 - 1].text = "\(value)"
             }
         }
+    }
+    func connectDatabase(){
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let fileUrl = documentDirectory.appendingPathComponent("Products").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database = database
+        } catch {
+            print(error)
+        }
+    }
+    func updateTable(){
+        connectDatabase()
+        do {
+            let products = try self.database.prepare(self.productsTable.filter(self.productType == "Food Drink"))
+            for product in products {
+                let currentCount = Int(countLabels[product[self.productId] - 22].text!) ?? 0
+                let updateProduct = self.productsTable.filter(self.productId == product[self.productId]).update(self.count <- currentCount)
+                do {
+                    try self.database.run(updateProduct)
+                } catch {
+                    print(error)
+                }
+            }
+        } catch {
+            print(error)
+        }
+    }
+    @IBAction func addItemsButtonClicked(_ sender: UIButton) {
+        updateTable()
+        do {
+                    let products = try self.database.prepare(self.productsTable)
+                    for product in products {
+                        print("productId: \(product[self.productId]), productName: \(product[self.productName]), productType: \(product[self.productType]), count: \(product[self.count]), price: \(product[self.price])")
+                    }
+                } catch {
+                    print(error)
+                }
     }
 }
 
