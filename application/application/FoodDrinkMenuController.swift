@@ -171,6 +171,7 @@ class FoodDrinkMenuController: UIViewController {
     var minusButtons = [UIButton]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        connectDatabase()
         foodPhoto1.image = UIImage(named: "images/food menu images/foods/avocadobowl.png")
         foodPhoto2.image = UIImage(named: "images/food menu images/foods/baconwrap.png")
         foodPhoto3.image = UIImage(named: "images/food menu images/foods/chickenwrap.png")
@@ -224,6 +225,17 @@ class FoodDrinkMenuController: UIViewController {
         countLabels.append(contentsOf: [count1,count2,count3,count4,count5,count6,count7,count8,count9,count10,count11,count12,count13,count14,count15])
         countLabels.append(contentsOf: [count16,count17,count18,count19,count20,count21,count22,count23,count24,count25,count26,count27,count28,count29])
         countLabels.append(contentsOf: [count30,count31,count32,count33,count34,count35,count36])
+        
+        for i in countLabels.indices {
+            do {
+                let products = try self.database.prepare(self.productsTable.filter(self.productId == i + 22))
+                for prod in products{
+                    countLabels[i].text = String(prod[self.count])
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
     
     @IBAction func buttonClicked(_ sender: UIButton) {
@@ -251,7 +263,7 @@ class FoodDrinkMenuController: UIViewController {
         }
     }
     func updateTable(){
-        connectDatabase()
+        
         do {
             let products = try self.database.prepare(self.productsTable.filter(self.productType == "Food Drink"))
             for product in products {

@@ -36,6 +36,7 @@ class AddPaymentController: UIViewController {
     @IBOutlet weak var totalLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        connectDatabase()
         //self.view.backgroundColor = .red
         menuImage1.image = UIImage(named: "images/add payment page images/menu1.jpeg")
         menuImage2.image = UIImage(named: "images/add payment page images/menu2.jpeg")
@@ -94,7 +95,7 @@ class AddPaymentController: UIViewController {
     }
     
     func updateBasket(container : UIStackView){
-        connectDatabase()
+        
         do {
             let products = try self.database.prepare(self.productsTable.filter(self.count != 0))
             //let labelPosX = 20
@@ -136,6 +137,34 @@ class AddPaymentController: UIViewController {
             }
             totalLabel.text = "Total Amount: " + String(totalPrice) + " ₺ "
             totalLabel.textAlignment = .right
+        } catch {
+            print(error)
+        }
+    }
+    
+    @IBAction func cancelPaymentClicked(_ sender: UIButton) {
+        let productsAtBasket = self.productsTable.filter(self.count != 0)
+        let cancelBasket = productsAtBasket.update(self.count <- 0)
+        do {
+            try self.database.run(cancelBasket)
+        } catch {
+            print(error)
+        }
+    }
+    
+    @IBAction func proceedPaymentClicked(_ sender: UIButton) {
+        /*
+         
+         
+         
+        The main database will be updated according to the payment amount and the passenger
+         
+         
+         */
+        let productsAtBasket = self.productsTable.filter(self.count != 0)
+        let completeBasket = productsAtBasket.update(self.count <- 0)
+        do {
+            try self.database.run(completeBasket)
         } catch {
             print(error)
         }

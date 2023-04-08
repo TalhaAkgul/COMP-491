@@ -204,6 +204,9 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Proceed Payment">
                                     <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="proceedPaymentClicked:" destination="74f-04-nqC" eventType="touchUpInside" id="y9H-pZ-CKx"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CbL-0P-qGR">
                                 <rect key="frame" x="34" y="823" width="347" height="31"/>
@@ -213,6 +216,7 @@
                                     <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                                 <connections>
+                                    <action selector="cancelPaymentClicked:" destination="74f-04-nqC" eventType="touchUpInside" id="u3c-nI-1xj"/>
                                     <segue destination="XjH-en-EeK" kind="presentation" modalPresentationStyle="fullScreen" id="ijJ-JW-0EX"/>
                                 </connections>
                             </button>
@@ -3219,7 +3223,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PaB-HI-e1Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="707" y="1139"/>
+            <point key="canvasLocation" x="2648" y="669"/>
         </scene>
         <!--After Flight Services Controller-->
         <scene sceneID="8Z4-9B-MFg">
@@ -3569,7 +3573,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RY4-OZ-9Qp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="706" y="-619"/>
+            <point key="canvasLocation" x="2649" y="-350"/>
         </scene>
         <!--Personal Details Controller-->
         <scene sceneID="uds-VW-Pyg">
@@ -3724,11 +3728,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ft-cW-8sz" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-688.40579710144937" y="790.84821428571422"/>
+            <point key="canvasLocation" x="709" y="861"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ijJ-JW-0EX"/>
+        <segue reference="K6N-RA-qZ0"/>
         <segue reference="Luj-Tp-DW4"/>
     </inferredMetricsTieBreakers>
     <resources>

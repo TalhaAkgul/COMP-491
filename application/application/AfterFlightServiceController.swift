@@ -47,6 +47,7 @@ class AfterFlightServicesController: UIViewController {
     var minusButtons = [UIButton]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        connectDatabase()
         aftPhoto1.image = UIImage(named: "images/afterflight menu images/Blue and Orange Game Time Instagram Post.png")
         aftPhoto2.image = UIImage(named: "images/afterflight menu images/Blue and Orange Game Time Instagram Post-2.jpg")
         aftPhoto3.image = UIImage(named: "images/afterflight menu images/Blue and Orange Game Time Instagram Post-3.jpg")
@@ -61,7 +62,16 @@ class AfterFlightServicesController: UIViewController {
             minusButtons[i].tag = (i+1) * 2 + 1
         }
         countLabels.append(contentsOf: [count1,count2,count3,count4,count5])
-        
+        for i in countLabels.indices {
+            do {
+                let products = try self.database.prepare(self.productsTable.filter(self.productId == i + 1))
+                for prod in products{
+                    countLabels[i].text = String(prod[self.count])
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
     @IBAction func buttonClicked(_ sender: UIButton) {
         let senderInfo = sender.self.tag
@@ -90,10 +100,12 @@ class AfterFlightServicesController: UIViewController {
     }
     
     func updateTable(){
-        connectDatabase()
+        
         do {
             let products = try self.database.prepare(self.productsTable.filter(self.productType == "After Flight"))
+           
             for product in products {
+                
                 let currentCount = Int(countLabels[product[self.productId] - 1].text!) ?? 0
                 let updateProduct = self.productsTable.filter(self.productId == product[self.productId]).update(self.count <- currentCount)
                 do {
@@ -101,6 +113,7 @@ class AfterFlightServicesController: UIViewController {
                 } catch {
                     print(error)
                 }
+                
             }
         } catch {
             print(error)

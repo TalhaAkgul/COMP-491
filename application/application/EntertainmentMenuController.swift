@@ -108,6 +108,7 @@ class EntertainmentMenuController: UIViewController {
     var minusButtons = [UIButton]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        connectDatabase()
         entPhoto1.image = UIImage(named: "images/entertainment menu images/album-daisies.jpg")
         entPhoto2.image = UIImage(named: "images/entertainment menu images/album-legacy.jpg")
         entPhoto3.image = UIImage(named: "images/entertainment menu images/album-neveragain.jpg")
@@ -135,6 +136,18 @@ class EntertainmentMenuController: UIViewController {
         countLabels.append(contentsOf: [count1,count2,count3,count4,count5,count6,count7,count8,count9,count10,count11,count12,count13,count14,count15, count16])
         priceLabels.append(contentsOf: [price1,price2,price3,price4,price5,price6,price7,price8])
         prodLabels.append(contentsOf: [prod1,prod2,prod3,prod4,prod5,prod6,prod7,prod8])
+        
+        
+        for i in countLabels.indices {
+            do {
+                let products = try self.database.prepare(self.productsTable.filter(self.productId == i + 6))
+                for prod in products{
+                    countLabels[i].text = String(prod[self.count])
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
     @IBAction func buttonClicked(_ sender: UIButton) {
         let senderInfo = sender.self.tag
@@ -161,7 +174,7 @@ class EntertainmentMenuController: UIViewController {
         }
     }
     func updateTable(){
-        connectDatabase()
+        
         do {
             let products = try self.database.prepare(self.productsTable.filter(self.productType == "Entertainment"))
             for product in products {
