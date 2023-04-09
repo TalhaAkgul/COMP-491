@@ -34,7 +34,7 @@ import MyLandingPage from "views/MyLandingPage.js";
 import MyProvisions from "views/MyProvisions.js";
 import MakeProvisions from "views/MakeProvision.js";
 import Login from "views/index-sections/SectionLogin.js";
-
+import GetUser from "views/GetUser.jsx";
 // others
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -71,10 +71,8 @@ root.render(
         path="/make-provision"
         render={(props) => <MakeProvisions {...props} />}
       />
-      <Route
-        path="/login"
-        render={(props) => <Login {...props} />}
-      />
+      <Route path="/login" render={(props) => <Login {...props} />} />
+      <Route path="/hi" render={(props) => <GetUser {...props} />} />
       <Redirect to="/my-landing-page" />
     </Switch>
   </BrowserRouter>
