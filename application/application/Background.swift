@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIView {
-    func addBackground(imageName: String = "plane.jpeg", contentMode: UIView.ContentMode = .scaleToFill) {
+    func addBackground(imageName: String = "images/entrance page images/plane.jpeg", contentMode: UIView.ContentMode = .scaleToFill) {
         // setup the UIImageView
         let backgroundImageView = UIImageView(frame: UIScreen.main.bounds)
         backgroundImageView.image = UIImage(named: imageName)
