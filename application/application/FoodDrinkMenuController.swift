@@ -166,6 +166,44 @@ class FoodDrinkMenuController: UIViewController {
     @IBOutlet weak var count34: UILabel!
     @IBOutlet weak var count35: UILabel!
     @IBOutlet weak var count36: UILabel!
+    
+    @IBOutlet weak var price1: UILabel!
+    @IBOutlet weak var price2: UILabel!
+    @IBOutlet weak var price3: UILabel!
+    @IBOutlet weak var price4: UILabel!
+    @IBOutlet weak var price5: UILabel!
+    @IBOutlet weak var price6: UILabel!
+    @IBOutlet weak var price7: UILabel!
+    @IBOutlet weak var price8: UILabel!
+    @IBOutlet weak var price9: UILabel!
+    @IBOutlet weak var price10: UILabel!
+    @IBOutlet weak var price11: UILabel!
+    @IBOutlet weak var price12: UILabel!
+    @IBOutlet weak var price13: UILabel!
+    @IBOutlet weak var price14: UILabel!
+    @IBOutlet weak var price15: UILabel!
+    @IBOutlet weak var price16: UILabel!
+    @IBOutlet weak var price17: UILabel!
+    @IBOutlet weak var price18: UILabel!
+    @IBOutlet weak var price19: UILabel!
+    @IBOutlet weak var price20: UILabel!
+    @IBOutlet weak var price21: UILabel!
+    @IBOutlet weak var price22: UILabel!
+    @IBOutlet weak var price23: UILabel!
+    @IBOutlet weak var price24: UILabel!
+    @IBOutlet weak var price25: UILabel!
+    @IBOutlet weak var price26: UILabel!
+    @IBOutlet weak var price27: UILabel!
+    @IBOutlet weak var price28: UILabel!
+    @IBOutlet weak var price29: UILabel!
+    @IBOutlet weak var price30: UILabel!
+    @IBOutlet weak var price31: UILabel!
+    @IBOutlet weak var price32: UILabel!
+    @IBOutlet weak var price33: UILabel!
+    @IBOutlet weak var price34: UILabel!
+    @IBOutlet weak var price35: UILabel!
+    @IBOutlet weak var price36: UILabel!
+    var priceLabels = [UILabel]()
     var countLabels = [UILabel]()
     var plusButtons = [UIButton]()
     var minusButtons = [UIButton]()
@@ -226,11 +264,16 @@ class FoodDrinkMenuController: UIViewController {
         countLabels.append(contentsOf: [count16,count17,count18,count19,count20,count21,count22,count23,count24,count25,count26,count27,count28,count29])
         countLabels.append(contentsOf: [count30,count31,count32,count33,count34,count35,count36])
         
+        priceLabels.append(contentsOf: [price1,price2,price3,price4,price5,price6,price7,price8,price9,price10,price11,price12,price13,price14,price15,price16])
+        priceLabels.append(contentsOf: [price17,price18,price19,price20,price21,price22,price23,price24,price25,price26,price27,price28,price29,price30,price31,price32])
+        priceLabels.append(contentsOf: [price33,price34,price35,price36])
+       
         for i in countLabels.indices {
             do {
                 let products = try self.database.prepare(self.productsTable.filter(self.productId == i + 22))
                 for prod in products{
                     countLabels[i].text = String(prod[self.count])
+                    priceLabels[i].text = String(prod[self.price]) + " ₺"
                 }
             } catch {
                 print(error)

@@ -37,13 +37,6 @@ class AddPaymentController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
-        /*
-        for subview in view.subviews {
-            if subview is UIVisualEffectView {
-                subview.removeFromSuperview()
-            }
-        } */
-        //self.view.backgroundColor = .red
         menuImage1.image = UIImage(named: "images/add payment page images/menu1.jpeg")
         menuImage2.image = UIImage(named: "images/add payment page images/menu2.jpeg")
         menuImage3.image = UIImage(named: "images/add payment page images/menu3.jpeg")
@@ -61,22 +54,10 @@ class AddPaymentController: UIViewController {
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
         }()
-        /*
-        let scrollViewContainer2: UIStackView = {
-            let view = UIStackView()
-
-            view.axis = .vertical
-            view.spacing = 10
-            view.backgroundColor = .red
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
-        */
         
         updateBasket(container : scrollViewContainer)
         view.addSubview(scrollView)
         scrollView.addSubview(scrollViewContainer)
-        //scrollView.addSubview(scrollViewContainer2)
         scrollViewContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
         scrollViewContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
         scrollViewContainer.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
@@ -104,12 +85,9 @@ class AddPaymentController: UIViewController {
         
         do {
             let products = try self.database.prepare(self.productsTable.filter(self.count != 0))
-            //let labelPosX = 20
             var labelPosY = 20
             var totalPrice = 0.0
             for product in products {
-                //print(product[self.productName])
-                
                 let productLabel = UILabel()
                 //productLabel.center = CGPoint(x: 160, y: 285)
                 //productLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -119,10 +97,6 @@ class AddPaymentController: UIViewController {
                 let count = product[self.count]
                 let productText = String(count) + "   x   " + productName
                 //productLabel.text = productText
-                
-              
-                
-                
                 //let priceLabel = UILabel()
                 //priceLabel.center = CGPoint(x: 160, y: 285)
                 //priceLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -138,7 +112,6 @@ class AddPaymentController: UIViewController {
                 //container.addArrangedSubview(priceLabel)
                 
                 totalPrice = totalPrice + totalPriceForProd
-               
                 labelPosY = labelPosY + 30
             }
             totalLabel.text = "Total Amount: " + String(totalPrice) + " ₺ "

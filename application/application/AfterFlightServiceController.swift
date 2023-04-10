@@ -42,6 +42,13 @@ class AfterFlightServicesController: UIViewController {
     @IBOutlet weak var count4: UILabel!
     @IBOutlet weak var count5: UILabel!
     
+    @IBOutlet weak var price1: UILabel!
+    @IBOutlet weak var price2: UILabel!
+    @IBOutlet weak var price3: UILabel!
+    @IBOutlet weak var price4: UILabel!
+    @IBOutlet weak var price5: UILabel!
+    
+    var priceLabels = [UILabel]()
     var countLabels = [UILabel]()
     var plusButtons = [UIButton]()
     var minusButtons = [UIButton]()
@@ -62,17 +69,20 @@ class AfterFlightServicesController: UIViewController {
             minusButtons[i].tag = (i+1) * 2 + 1
         }
         countLabels.append(contentsOf: [count1,count2,count3,count4,count5])
+        priceLabels.append(contentsOf: [price1,price2,price3,price4,price5])
         for i in countLabels.indices {
             do {
                 let products = try self.database.prepare(self.productsTable.filter(self.productId == i + 1))
                 for prod in products{
                     countLabels[i].text = String(prod[self.count])
+                    priceLabels[i].text = String(prod[self.price]) + " ₺"
                 }
             } catch {
                 print(error)
             }
         }
     }
+    
     @IBAction func buttonClicked(_ sender: UIButton) {
         let senderInfo = sender.self.tag
         if(senderInfo % 2 == 0){
@@ -86,7 +96,6 @@ class AfterFlightServicesController: UIViewController {
                 countLabels[(senderInfo-1)/2 - 1].text = "\(value)"
             }
         }
-        
     }
     func connectDatabase(){
         do {
@@ -100,12 +109,9 @@ class AfterFlightServicesController: UIViewController {
     }
     
     func updateTable(){
-        
         do {
             let products = try self.database.prepare(self.productsTable.filter(self.productType == "After Flight"))
-           
             for product in products {
-                
                 let currentCount = Int(countLabels[product[self.productId] - 1].text!) ?? 0
                 let updateProduct = self.productsTable.filter(self.productId == product[self.productId]).update(self.count <- currentCount)
                 do {
@@ -119,6 +125,7 @@ class AfterFlightServicesController: UIViewController {
             print(error)
         }
     }
+    
     @IBAction func addItemButtonClicked(_ sender: UIButton) {
         updateTable()
     }

@@ -124,7 +124,7 @@ class ViewController: UIViewController {
                                                         [self.productId <- 37, self.productName <- "Banana", self.productType <- "Food Drink", self.count <- 0, self.price <- 10.4],
                                                         [self.productId <- 38, self.productName <- "Bluberry Muffin", self.productType <- "Food Drink", self.count <- 0, self.price <- 28.1],
                                                         [self.productId <- 39, self.productName <- "Chips", self.productType <- "Food Drink", self.count <- 0, self.price <- 15.6],
-                                                        [self.productId <- 30, self.productName <- "Chocolate Bar", self.productType <- "Food Drink", self.count <- 0, self.price <- 9.3],
+                                                        [self.productId <- 40, self.productName <- "Chocolate Bar", self.productType <- "Food Drink", self.count <- 0, self.price <- 9.3],
                                                         [self.productId <- 41, self.productName <- "Chocolate Donut", self.productType <- "Food Drink", self.count <- 0, self.price <- 20.6],
                                                         [self.productId <- 42, self.productName <- "Icecream", self.productType <- "Food Drink", self.count <- 0, self.price <- 12.0],
                                                         [self.productId <- 43, self.productName <- "Protein Bar", self.productType <- "Food Drink", self.count <- 0, self.price <- 9.0],

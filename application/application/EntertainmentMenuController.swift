@@ -85,6 +85,7 @@ class EntertainmentMenuController: UIViewController {
     @IBOutlet weak var count14: UILabel!
     @IBOutlet weak var count15: UILabel!
     @IBOutlet weak var count16: UILabel!
+    
     @IBOutlet weak var prod1: UILabel!
     @IBOutlet weak var prod2: UILabel!
     @IBOutlet weak var prod3: UILabel!
@@ -93,6 +94,15 @@ class EntertainmentMenuController: UIViewController {
     @IBOutlet weak var prod6: UILabel!
     @IBOutlet weak var prod7: UILabel!
     @IBOutlet weak var prod8: UILabel!
+    @IBOutlet weak var prod9: UILabel!
+    @IBOutlet weak var prod10: UILabel!
+    @IBOutlet weak var prod11: UILabel!
+    @IBOutlet weak var prod12: UILabel!
+    @IBOutlet weak var prod13: UILabel!
+    @IBOutlet weak var prod14: UILabel!
+    @IBOutlet weak var prod15: UILabel!
+    @IBOutlet weak var prod16: UILabel!
+    
     @IBOutlet weak var price1: UILabel!
     @IBOutlet weak var price2: UILabel!
     @IBOutlet weak var price3: UILabel!
@@ -101,9 +111,18 @@ class EntertainmentMenuController: UIViewController {
     @IBOutlet weak var price6: UILabel!
     @IBOutlet weak var price7: UILabel!
     @IBOutlet weak var price8: UILabel!
+    @IBOutlet weak var price9: UILabel!
+    @IBOutlet weak var price10: UILabel!
+    @IBOutlet weak var price11: UILabel!
+    @IBOutlet weak var price12: UILabel!
+    @IBOutlet weak var price13: UILabel!
+    @IBOutlet weak var price14: UILabel!
+    @IBOutlet weak var price15: UILabel!
+    @IBOutlet weak var price16: UILabel!
+    
+    var priceLabels = [UILabel]()
     var countLabels = [UILabel]()
     var prodLabels = [UILabel]()
-    var priceLabels = [UILabel]()
     var plusButtons = [UIButton]()
     var minusButtons = [UIButton]()
     override func viewDidLoad() {
@@ -134,21 +153,24 @@ class EntertainmentMenuController: UIViewController {
             minusButtons[i].tag = (i+1) * 2 + 1
         }
         countLabels.append(contentsOf: [count1,count2,count3,count4,count5,count6,count7,count8,count9,count10,count11,count12,count13,count14,count15, count16])
-        priceLabels.append(contentsOf: [price1,price2,price3,price4,price5,price6,price7,price8])
-        prodLabels.append(contentsOf: [prod1,prod2,prod3,prod4,prod5,prod6,prod7,prod8])
         
+        prodLabels.append(contentsOf: [prod1,prod2,prod3,prod4,prod5,prod6,prod7,prod8,prod9,prod10,prod11,prod12,prod13,prod14,prod15,prod16])
+        
+        priceLabels.append(contentsOf: [price1,price2,price3,price4,price5,price6,price7,price8,price9,price10,price11,price12,price13,price14,price15,price16])
         
         for i in countLabels.indices {
             do {
                 let products = try self.database.prepare(self.productsTable.filter(self.productId == i + 6))
                 for prod in products{
                     countLabels[i].text = String(prod[self.count])
+                    priceLabels[i].text = String(prod[self.price]) + " ₺"
                 }
             } catch {
                 print(error)
             }
         }
     }
+    
     @IBAction func buttonClicked(_ sender: UIButton) {
         let senderInfo = sender.self.tag
         if(senderInfo % 2 == 0){
