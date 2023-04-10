@@ -9,18 +9,15 @@ import UIKit
 
 class PopupAfterProceedPaymentController: UIViewController {
  
-    var successful: Bool = false
     @IBOutlet weak var messageLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        showAnimate()
     }
     
-    @IBAction func closePopUp(_ sender: AnyObject) {
-        self.removeAnimate()
-        //self.view.removeFromSuperview()
-        
+    @IBAction func closePopUp(_ sender: UIButton) {
+        removeAnimate()
     }
     
     func showAnimate()
