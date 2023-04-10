@@ -67,8 +67,8 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-        
         /*
+        
         let createTable = self.productsTable.create { (table) in
             table.column(self.productId, primaryKey: true)
             table.column(self.productName)
