@@ -3567,6 +3567,53 @@
             </objects>
             <point key="canvasLocation" x="3436" y="-356"/>
         </scene>
+        <!--Popup After Proceed Payment Controller-->
+        <scene sceneID="xDf-uY-uwd">
+            <objects>
+                <viewController storyboardIdentifier="PopUpAfterProceedPayment" id="3Lq-Bi-fnn" customClass="PopupAfterProceedPaymentController" customModule="application" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rOx-oi-K6I">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qyv-6K-Odl">
+                                <rect key="frame" x="87" y="384" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="een-CV-LGB">
+                                        <rect key="frame" x="24" y="75" width="192" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="OK">
+                                            <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="closePopUp:" destination="3Lq-Bi-fnn" eventType="touchUpInside" id="JkU-zd-wap"/>
+                                            <segue destination="74f-04-nqC" kind="presentation" animates="NO" modalPresentationStyle="fullScreen" id="P3N-e5-V71"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Insufficient Provision! " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O4P-Zf-w7F">
+                                        <rect key="frame" x="8" y="18" width="224" height="49"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="5Tb-eL-bvA"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <connections>
+                        <outlet property="messageLabel" destination="O4P-Zf-w7F" id="pGc-Ot-f6e"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GEO-HX-PZG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-688.40579710144937" y="880.58035714285711"/>
+        </scene>
         <!--Personal Details Controller-->
         <scene sceneID="uds-VW-Pyg">
             <objects>
@@ -3725,7 +3772,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="K6N-RA-qZ0"/>
-        <segue reference="08X-ih-pdO"/>
+        <segue reference="P3N-e5-V71"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.right.square" catalog="system" width="128" height="114"/>

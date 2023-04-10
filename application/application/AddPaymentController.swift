@@ -37,6 +37,12 @@ class AddPaymentController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
+        /*
+        for subview in view.subviews {
+            if subview is UIVisualEffectView {
+                subview.removeFromSuperview()
+            }
+        } */
         //self.view.backgroundColor = .red
         menuImage1.image = UIImage(named: "images/add payment page images/menu1.jpeg")
         menuImage2.image = UIImage(named: "images/add payment page images/menu2.jpeg")
@@ -161,6 +167,18 @@ class AddPaymentController: UIViewController {
          
          
          */
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(blurEffectView)
+        
+        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpAfterProceedPayment") as! PopupAfterProceedPaymentController
+        self.addChild(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        self.view.addSubview(popOverVC.view)
+        popOverVC.didMove(toParent: self)
+        /*
         let productsAtBasket = self.productsTable.filter(self.count != 0)
         let completeBasket = productsAtBasket.update(self.count <- 0)
         do {
@@ -168,5 +186,6 @@ class AddPaymentController: UIViewController {
         } catch {
             print(error)
         }
+        */
     }
 }
