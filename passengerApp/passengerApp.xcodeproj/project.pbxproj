@@ -25,6 +25,7 @@
 		1C3E8A8629EACB610075A73E /* images in Resources */ = {isa = PBXBuildFile; fileRef = 1C3E8A7E29EACB600075A73E /* images */; };
 		1C3E8A8929EAD3100075A73E /* OrderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3E8A8829EAD3100075A73E /* OrderController.swift */; };
 		1C3E8A9429EAD8B50075A73E /* QRCodePageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3E8A8C29EAD8B50075A73E /* QRCodePageController.swift */; };
+		1C3E8A9D29EAE46E0075A73E /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3E8A9C29EAE46E0075A73E /* QRCodeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,7 @@
 		1C3E8A7E29EACB600075A73E /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../application/images; sourceTree = "<group>"; };
 		1C3E8A8829EAD3100075A73E /* OrderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderController.swift; sourceTree = "<group>"; };
 		1C3E8A8C29EAD8B50075A73E /* QRCodePageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodePageController.swift; sourceTree = "<group>"; };
+		1C3E8A9C29EAE46E0075A73E /* QRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +198,7 @@
 				1C3E8A7B29EAC9B80075A73E /* AfterFlightServiceController.swift */,
 				1C3E8A8C29EAD8B50075A73E /* QRCodePageController.swift */,
 				1C3E8A8829EAD3100075A73E /* OrderController.swift */,
+				1C3E8A9C29EAE46E0075A73E /* QRCodeView.swift */,
 			);
 			path = passengerApp;
 			sourceTree = "<group>";
@@ -431,6 +434,7 @@
 			files = (
 				1C3E8A9429EAD8B50075A73E /* QRCodePageController.swift in Sources */,
 				1C3E8A8929EAD3100075A73E /* OrderController.swift in Sources */,
+				1C3E8A9D29EAE46E0075A73E /* QRCodeView.swift in Sources */,
 				1C3E8A7829EAC9990075A73E /* FoodDrinkMenuController.swift in Sources */,
 				1C3E8A7A29EAC9A80075A73E /* EntertainmentMenuController.swift in Sources */,
 				1C3E8A7C29EAC9B80075A73E /* AfterFlightServiceController.swift in Sources */,

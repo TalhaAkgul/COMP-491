@@ -3626,7 +3626,7 @@
         <!--Code Page Controller-->
         <scene sceneID="pw9-ud-bun">
             <objects>
-                <viewController storyboardIdentifier="QRCodePageController" id="blM-Bn-tIO" customClass="QRCodePageController" customModule="QRCodeApplication" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="QRCodePageController" id="blM-Bn-tIO" customClass="QRCodePageController" customModule="passengerApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Ad-dG-WIs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3635,10 +3635,9 @@
                                 <rect key="frame" x="55" y="225" width="304" height="446"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mrw-Ek-mJH">
-                                        <rect key="frame" x="27" y="98" width="250" height="250"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eVh-H3-ikX">
+                                        <rect key="frame" x="84" y="160" width="137" height="127"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
@@ -3676,10 +3675,13 @@
                         <viewLayoutGuide key="safeArea" id="oCx-vp-JbD"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
+                    <connections>
+                        <outlet property="qrCodeImageView" destination="eVh-H3-ikX" id="rw2-bP-JDf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WUA-c9-cF3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="474" y="815"/>
+            <point key="canvasLocation" x="473.91304347826093" y="814.95535714285711"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
