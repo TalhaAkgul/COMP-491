@@ -18,7 +18,8 @@ class ViewController: UIViewController {
     let count = Expression<Int>("count")
     let price = Expression<Double>("price")
     
-
+    let customerTable = Table("Passenger")
+    let passId = Expression<String>("passId")
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var instructionLabel: UILabel!
     @IBOutlet weak var idTextField: UITextField!
@@ -73,6 +74,12 @@ class ViewController: UIViewController {
             print(error)
         }
         
+        do {
+            let drop = customerTable.drop(ifExists: true)
+            try database.run(drop)
+        } catch {
+            print(error)
+        }
         /*
         let createTable = self.productsTable.create { (table) in
             table.column(self.productId, primaryKey: true)
@@ -81,14 +88,24 @@ class ViewController: UIViewController {
             table.column(self.count)
             table.column(self.price)
         }
-                        
+        
         do {
             try self.database.run(createTable)
             print("Created Table")
         } catch {
             print(error)
         }
-        */
+         */
+        let createTable2 = self.customerTable.create { (table) in
+            table.column(self.passId, primaryKey: true)
+        }
+          
+        do {
+            try self.database.run(createTable2)
+        } catch {
+            print(error)
+        }
+        
         let insertUser = self.productsTable.insertMany(or: OnConflict.replace,
                                                        [[self.productId <- 1, self.productName <- "Suitcase Help", self.productType <- "After Flight", self.count <- 0, self.price <- 200.0],
                                                         [self.productId <- 2, self.productName <- "Rent A Car", self.productType <- "After Flight", self.count <- 0, self.price <- 570.0],
@@ -153,15 +170,17 @@ class ViewController: UIViewController {
             print(error)
         }
         /*
-        do {
-            let drop = productsTable.drop(ifExists: true)
-            try database.run(drop)
-        } catch {
-            print(error)
-        }
+        
         */
     }
     @IBAction func generateQRCodeWithoutOrderButtonClicked(_ sender: UIButton) {
+        let insertPass = self.customerTable.insert(self.passId <- idTextField.text!)
+                            
+        do {
+            try self.database.run(insertPass)
+        } catch {
+            print(error)
+        }
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
@@ -173,7 +192,19 @@ class ViewController: UIViewController {
         popOverVC.view.frame = self.view.frame
         self.view.addSubview(popOverVC.view)
         popOverVC.didMove(toParent: self)
+        
     }
+    
+    @IBAction func generateQRCodeWithOrderButtonClicked(_ sender: UIButton) {
+        let insertPass = self.customerTable.insert(self.passId <- idTextField.text!)
+                            
+        do {
+            try self.database.run(insertPass)
+        } catch {
+            print(error)
+        }
+    }
+    
 }
 
 
