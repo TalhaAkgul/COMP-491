@@ -26,12 +26,12 @@ class QRCodePageController: UIViewController {
     let passId = Expression<String>("passId")
     @IBOutlet weak var qrCodeImageView: UIImageView!
     let filter = CIFilter.qrCodeGenerator()
+    var image = UIImage()
     override func viewDidLoad() {
         
         super.viewDidLoad()
         showAnimate()
-        let str = "dskds"
-        generateQRCode(Data: str)
+        generateQRCode()
     }
     func connectDatabase(){
         do {
@@ -43,7 +43,7 @@ class QRCodePageController: UIViewController {
             print(error)
         }
     }
-    func generateQRCode(Data:String){
+    func generateQRCode(){
         let orderDict : [String: Any] = generateJSON()
         
         //let data = Data.data(using: String.Encoding.ascii, allowLossyConversion: false)
@@ -62,23 +62,25 @@ class QRCodePageController: UIViewController {
         let transform = CGAffineTransform(scaleX: 10, y: 10)
         let transformImage = ciImage?.transformed(by: transform)
         
-        let image = UIImage(ciImage: transformImage!)
+        image = UIImage(ciImage: transformImage!)
         qrCodeImageView.image = image
-        print(orderDict)
+        //print(orderDict)
     }
     
     func generateJSON() -> [String: Any]{
         connectDatabase()
-        var orderDict : [String: Any] = [ "passengerID": "", "orders": [ ], ]
-        var passID = ""
+        var orderDict : [String: Any] = [ "orders": [ ],"passengerID": "" ]
+        let passIDZeros = "0000"
+        var passIDNum = ""
         do{
             let passengers = try self.database.prepare(self.customerTable)
             for passenger in passengers {
-                passID = String(passenger[self.passId])
+                passIDNum = String(passenger[self.passId])
             }
         } catch {
             print(error)
         }
+        let passID = passIDZeros + passIDNum
         orderDict.updateValue(passID, forKey: "passengerID")
         var orderArray:[[String:String]] = []
         do {

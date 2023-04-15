@@ -64,8 +64,8 @@
                                     </backgroundConfiguration>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="generateQRCodeWithOrderButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H1B-hw-XEM"/>
-                                    <segue destination="mi5-1y-fxx" kind="presentation" modalPresentationStyle="fullScreen" id="OjC-eY-ern"/>
+                                    <action selector="generateQRCodeWithOrderButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dn4-gr-LR5"/>
+                                    <segue destination="mi5-1y-fxx" kind="presentation" id="OjC-eY-ern"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -89,7 +89,7 @@
             <objects>
                 <viewController storyboardIdentifier="OrderController" id="mi5-1y-fxx" customClass="OrderController" customModule="passengerApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="baQ-Up-xOw">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Ug-n0-OmB">
@@ -3687,7 +3687,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="OjC-eY-ern"/>
-        <segue reference="nSj-rs-CES"/>
+        <segue reference="3C1-7z-M7W"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

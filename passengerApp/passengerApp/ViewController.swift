@@ -169,9 +169,6 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-        /*
-        
-        */
     }
     @IBAction func generateQRCodeWithoutOrderButtonClicked(_ sender: UIButton) {
         let insertPass = self.customerTable.insert(self.passId <- idTextField.text!)
