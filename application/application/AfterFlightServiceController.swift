@@ -80,9 +80,30 @@ class AfterFlightServicesController: UIViewController {
             } catch {
                 print(error)
             }
+        }/*
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)*/
+    }/*
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+
+            switch swipeGesture.direction {
+            case .right:
+                print("Swiped right")
+                
+                let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddPayment") as! AddPaymentController
+                self.addChild(popOverVC)
+                popOverVC.view.frame = self.view.frame
+                self.view.addSubview(popOverVC.view)
+                popOverVC.didMove(toParent: self)
+            default:
+                break
+            }
         }
     }
-    
+    */
     @IBAction func buttonClicked(_ sender: UIButton) {
         let senderInfo = sender.self.tag
         if(senderInfo % 2 == 0){
