@@ -15,6 +15,7 @@
 		1C79FBFE29D44E310052764A /* IDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C79FBFD29D44E310052764A /* IDViewController.swift */; };
 		1C7D051929E3F984003B1FF6 /* PopupAfterProceedPaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D051829E3F984003B1FF6 /* PopupAfterProceedPaymentController.swift */; };
 		1C7D052529E42C66003B1FF6 /* PaymentSuccessfulController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D052429E42C66003B1FF6 /* PaymentSuccessfulController.swift */; };
+		1C82AE7629EC34C3009B39C7 /* QRJSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C82AE7529EC34C3009B39C7 /* QRJSONData.swift */; };
 		1C9BF11729DB2F3900B69C37 /* AddPaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11629DB2F3900B69C37 /* AddPaymentController.swift */; };
 		1C9BF11B29DB342300B69C37 /* FoodDrinkMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11A29DB342300B69C37 /* FoodDrinkMenuController.swift */; };
 		1C9BF11D29DB343400B69C37 /* EntertainmentMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11C29DB343400B69C37 /* EntertainmentMenuController.swift */; };
@@ -119,6 +120,7 @@
 		1C79FBFD29D44E310052764A /* IDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDViewController.swift; sourceTree = "<group>"; };
 		1C7D051829E3F984003B1FF6 /* PopupAfterProceedPaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAfterProceedPaymentController.swift; sourceTree = "<group>"; };
 		1C7D052429E42C66003B1FF6 /* PaymentSuccessfulController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSuccessfulController.swift; sourceTree = "<group>"; };
+		1C82AE7529EC34C3009B39C7 /* QRJSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRJSONData.swift; sourceTree = "<group>"; };
 		1C9BF11629DB2F3900B69C37 /* AddPaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentController.swift; sourceTree = "<group>"; };
 		1C9BF11A29DB342300B69C37 /* FoodDrinkMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDrinkMenuController.swift; sourceTree = "<group>"; };
 		1C9BF11C29DB343400B69C37 /* EntertainmentMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntertainmentMenuController.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				1C6BD84929E1F8DE00E243DB /* PersonalDetailsController.swift */,
 				1C7D051829E3F984003B1FF6 /* PopupAfterProceedPaymentController.swift */,
 				1C7D052429E42C66003B1FF6 /* PaymentSuccessfulController.swift */,
+				1C82AE7529EC34C3009B39C7 /* QRJSONData.swift */,
 			);
 			path = application;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				1C6BD84A29E1F8DE00E243DB /* PersonalDetailsController.swift in Sources */,
 				1CDAE2FF29D376DE000E140A /* AppDelegate.swift in Sources */,
 				1CDAE30129D376DE000E140A /* SceneDelegate.swift in Sources */,
+				1C82AE7629EC34C3009B39C7 /* QRJSONData.swift in Sources */,
 				1CDAE33129D37987000E140A /* Background.swift in Sources */,
 				1C79FBFC29D44DAF0052764A /* QRCodeViewController.swift in Sources */,
 				1C79FBFE29D44E310052764A /* IDViewController.swift in Sources */,
