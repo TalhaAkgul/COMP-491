@@ -44,7 +44,7 @@ function MyProvisionsPage() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/getalldata")
+    fetch("https://172.16.126.233:8080/getalldata")
       .then((response) => response.json())
       .then((data) => setUsers(data));
   }, []);
@@ -52,7 +52,7 @@ function MyProvisionsPage() {
   const filteredDataUsed = users.filter(
     (item) =>
       search &&
-      item.condition.toLowerCase().includes("Used".toLowerCase()) &&
+     // item.condition.toLowerCase().includes("Used".toLowerCase()) &&
       item.name.toLowerCase().includes(search.name.toLowerCase()) &&
       item.surname.toLowerCase().includes(search.surname.toLowerCase())
   );
@@ -60,7 +60,7 @@ function MyProvisionsPage() {
   const filteredDataActive = users.filter(
     (item) =>
       search &&
-      item.condition.toLowerCase().includes("Active".toLowerCase()) &&
+    //  item.condition.toLowerCase().includes("Active".toLowerCase()) &&
       item.name.toLowerCase().includes(search.name.toLowerCase()) &&
       item.surname.toLowerCase().includes(search.surname.toLowerCase())
   );

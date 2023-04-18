@@ -14,13 +14,32 @@ import {
 } from "react-icons/fa";
 
 class CreditCard extends React.Component {
-  state = {
-    cardNumber: "",
-    cardHolderName: "",
-    cardExpirationDate: "",
-    cardCVC: "",
-    cardType: "",
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cardNumber: "",
+      cardHolderName: "",
+      cardExpirationDate: "",
+      cardCVC: "123",
+      cardType: "",
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    //const { name, value } = event.target;
+    this.setState({
+      cardCVC: "value",
+    
+  });
+
+
+    // Call the onCreditCardChange function passed in as a prop with the updated credit card input data
+    this.props.onCreditCardChange(this.state);
+  }
+
   // Flip card animations
   flipCard = () => {
     anime({
@@ -87,7 +106,7 @@ class CreditCard extends React.Component {
       cardCVC,
       cardType,
     } = this.state;
-    console.log(this.state);
+
     return (
       <div className="credit-card-container">
         <div className="credit-card">
