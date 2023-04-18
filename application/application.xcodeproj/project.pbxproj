@@ -9,9 +9,13 @@
 /* Begin PBXBuildFile section */
 		1C15477C29E17F3C0011DBA2 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C15476E29E17D6F0011DBA2 /* SQLite.framework */; };
 		1C15477D29E17F3C0011DBA2 /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1C15476E29E17D6F0011DBA2 /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1C4401A729EB4A4800AF40F3 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 1C4401A629EB4A4800AF40F3 /* CodeScanner */; };
 		1C6BD84A29E1F8DE00E243DB /* PersonalDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6BD84929E1F8DE00E243DB /* PersonalDetailsController.swift */; };
 		1C79FBFC29D44DAF0052764A /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C79FBFB29D44DAF0052764A /* QRCodeViewController.swift */; };
 		1C79FBFE29D44E310052764A /* IDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C79FBFD29D44E310052764A /* IDViewController.swift */; };
+		1C7D051929E3F984003B1FF6 /* PopupAfterProceedPaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D051829E3F984003B1FF6 /* PopupAfterProceedPaymentController.swift */; };
+		1C7D052529E42C66003B1FF6 /* PaymentSuccessfulController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7D052429E42C66003B1FF6 /* PaymentSuccessfulController.swift */; };
+		1C82AE7629EC34C3009B39C7 /* QRJSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C82AE7529EC34C3009B39C7 /* QRJSONData.swift */; };
 		1C9BF11729DB2F3900B69C37 /* AddPaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11629DB2F3900B69C37 /* AddPaymentController.swift */; };
 		1C9BF11B29DB342300B69C37 /* FoodDrinkMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11A29DB342300B69C37 /* FoodDrinkMenuController.swift */; };
 		1C9BF11D29DB343400B69C37 /* EntertainmentMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11C29DB343400B69C37 /* EntertainmentMenuController.swift */; };
@@ -114,6 +118,9 @@
 		1C6BD84929E1F8DE00E243DB /* PersonalDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDetailsController.swift; sourceTree = "<group>"; };
 		1C79FBFB29D44DAF0052764A /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		1C79FBFD29D44E310052764A /* IDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDViewController.swift; sourceTree = "<group>"; };
+		1C7D051829E3F984003B1FF6 /* PopupAfterProceedPaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupAfterProceedPaymentController.swift; sourceTree = "<group>"; };
+		1C7D052429E42C66003B1FF6 /* PaymentSuccessfulController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentSuccessfulController.swift; sourceTree = "<group>"; };
+		1C82AE7529EC34C3009B39C7 /* QRJSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRJSONData.swift; sourceTree = "<group>"; };
 		1C9BF11629DB2F3900B69C37 /* AddPaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPaymentController.swift; sourceTree = "<group>"; };
 		1C9BF11A29DB342300B69C37 /* FoodDrinkMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDrinkMenuController.swift; sourceTree = "<group>"; };
 		1C9BF11C29DB343400B69C37 /* EntertainmentMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntertainmentMenuController.swift; sourceTree = "<group>"; };
@@ -140,6 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C4401A729EB4A4800AF40F3 /* CodeScanner in Frameworks */,
 				1C15477C29E17F3C0011DBA2 /* SQLite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,6 +231,9 @@
 				1C9BF11C29DB343400B69C37 /* EntertainmentMenuController.swift */,
 				1C9BF11E29DB344800B69C37 /* AfterFlightServiceController.swift */,
 				1C6BD84929E1F8DE00E243DB /* PersonalDetailsController.swift */,
+				1C7D051829E3F984003B1FF6 /* PopupAfterProceedPaymentController.swift */,
+				1C7D052429E42C66003B1FF6 /* PaymentSuccessfulController.swift */,
+				1C82AE7529EC34C3009B39C7 /* QRJSONData.swift */,
 			);
 			path = application;
 			sourceTree = "<group>";
@@ -261,6 +272,9 @@
 			dependencies = (
 			);
 			name = application;
+			packageProductDependencies = (
+				1C4401A629EB4A4800AF40F3 /* CodeScanner */,
+			);
 			productName = application;
 			productReference = 1CDAE2FB29D376DE000E140A /* application.app */;
 			productType = "com.apple.product-type.application";
@@ -337,6 +351,9 @@
 				Base,
 			);
 			mainGroup = 1CDAE2F229D376DE000E140A;
+			packageReferences = (
+				1C4401A529EB4A4800AF40F3 /* XCRemoteSwiftPackageReference "CodeScanner" */,
+			);
 			productRefGroup = 1CDAE2FC29D376DE000E140A /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -445,11 +462,14 @@
 				1C6BD84A29E1F8DE00E243DB /* PersonalDetailsController.swift in Sources */,
 				1CDAE2FF29D376DE000E140A /* AppDelegate.swift in Sources */,
 				1CDAE30129D376DE000E140A /* SceneDelegate.swift in Sources */,
+				1C82AE7629EC34C3009B39C7 /* QRJSONData.swift in Sources */,
 				1CDAE33129D37987000E140A /* Background.swift in Sources */,
 				1C79FBFC29D44DAF0052764A /* QRCodeViewController.swift in Sources */,
 				1C79FBFE29D44E310052764A /* IDViewController.swift in Sources */,
+				1C7D051929E3F984003B1FF6 /* PopupAfterProceedPaymentController.swift in Sources */,
 				1C9BF11F29DB344800B69C37 /* AfterFlightServiceController.swift in Sources */,
 				1C9BF11729DB2F3900B69C37 /* AddPaymentController.swift in Sources */,
+				1C7D052529E42C66003B1FF6 /* PaymentSuccessfulController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,13 +648,16 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = application/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera to scan QR Codes.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -655,13 +678,16 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = application/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera to scan QR Codes.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -787,6 +813,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1C4401A529EB4A4800AF40F3 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1C4401A629EB4A4800AF40F3 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C4401A529EB4A4800AF40F3 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1CDAE2F329D376DE000E140A /* Project object */;
 }

@@ -1,14 +1,14 @@
 //
-//  AddPaymentController.swift
-//  application
+//  OrderController.swift
+//  passengerApp
 //
-//  Created by Doga Ege Inhanli on 3.04.2023.
+//  Created by Doga Ege Inhanli on 15.04.2023.
 //
 
 import UIKit
 import SQLite
 
-class AddPaymentController: UIViewController {
+class OrderController: UIViewController {
     
     var database: Connection!
     let productsTable = Table("Products")
@@ -30,7 +30,6 @@ class AddPaymentController: UIViewController {
     @IBOutlet weak var afterFlightServicesView: UIView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var basketImage: UIImageView!
     @IBOutlet weak var proceedPaymentButton: UIButton!
     @IBOutlet weak var totalView: UIView!
     @IBOutlet weak var totalLabel: UILabel!
@@ -146,12 +145,13 @@ class AddPaymentController: UIViewController {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(blurEffectView)
         
-        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpAfterProceedPayment") as! PopupAfterProceedPaymentController
+        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "QRCodePageController") as! QRCodePageController
         self.addChild(popOverVC)
         popOverVC.view.frame = self.view.frame
         self.view.addSubview(popOverVC.view)
         popOverVC.didMove(toParent: self)
-        /*
+        
+         /*
         let productsAtBasket = self.productsTable.filter(self.count != 0)
         let completeBasket = productsAtBasket.update(self.count <- 0)
         do {
@@ -162,3 +162,4 @@ class AddPaymentController: UIViewController {
         */
     }
 }
+

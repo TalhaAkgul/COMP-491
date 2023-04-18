@@ -1,14 +1,14 @@
 //
 //  AfterFlightServiceController.swift
-//  application
+//  passengerApp
 //
-//  Created by Doga Ege Inhanli on 3.04.2023.
+//  Created by Doga Ege Inhanli on 15.04.2023.
 //
 
 import UIKit
 import SQLite
 
-class AfterFlightServicesController: UIViewController {
+class AfterFlightServiceController: UIViewController {
     
     var database: Connection!
     let productsTable = Table("Products")
@@ -18,11 +18,13 @@ class AfterFlightServicesController: UIViewController {
     let count = Expression<Int>("count")
     let price = Expression<Double>("price")
     
+    
     @IBOutlet weak var aftPhoto1: UIImageView!
     @IBOutlet weak var aftPhoto2: UIImageView!
     @IBOutlet weak var aftPhoto3: UIImageView!
     @IBOutlet weak var aftPhoto4: UIImageView!
     @IBOutlet weak var aftPhoto5: UIImageView!
+    
     
     @IBOutlet weak var plusButton1: UIButton!
     @IBOutlet weak var plusButton2: UIButton!
@@ -80,30 +82,9 @@ class AfterFlightServicesController: UIViewController {
             } catch {
                 print(error)
             }
-        }/*
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
-        swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)*/
-    }/*
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-
-            switch swipeGesture.direction {
-            case .right:
-                print("Swiped right")
-                
-                let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddPayment") as! AddPaymentController
-                self.addChild(popOverVC)
-                popOverVC.view.frame = self.view.frame
-                self.view.addSubview(popOverVC.view)
-                popOverVC.didMove(toParent: self)
-            default:
-                break
-            }
         }
     }
-    */
+    
     @IBAction func buttonClicked(_ sender: UIButton) {
         let senderInfo = sender.self.tag
         if(senderInfo % 2 == 0){
@@ -151,3 +132,4 @@ class AfterFlightServicesController: UIViewController {
         updateTable()
     }
 }
+

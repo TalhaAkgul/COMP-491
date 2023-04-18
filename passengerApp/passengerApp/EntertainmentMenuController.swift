@@ -1,8 +1,8 @@
 //
 //  EntertainmentMenuController.swift
-//  application
+//  passengerApp
 //
-//  Created by Doga Ege Inhanli on 3.04.2023.
+//  Created by Doga Ege Inhanli on 15.04.2023.
 //
 
 import UIKit
@@ -216,3 +216,4 @@ class EntertainmentMenuController: UIViewController {
         updateTable()
     }
 }
+

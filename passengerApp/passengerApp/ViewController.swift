@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  application
+//  passengerApp
 //
-//  Created by Doga Ege Inhanli on 28.03.2023.
+//  Created by Doga Ege Inhanli on 15.04.2023.
 //
 
 import UIKit
@@ -18,11 +18,13 @@ class ViewController: UIViewController {
     let count = Expression<Int>("count")
     let price = Expression<Double>("price")
     
+    let customerTable = Table("Passenger")
+    let passId = Expression<String>("passId")
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var instructionLabel: UILabel!
-    @IBOutlet weak var identifyIdButton: UIButton!
-    @IBOutlet weak var qrCodeButton: UIButton!
-    
+    @IBOutlet weak var idTextField: UITextField!
+    @IBOutlet weak var generateQRWithoutOrderButton: UIButton!
+    @IBOutlet weak var generateQRWithOrderButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Local database for the products
@@ -45,14 +47,18 @@ class ViewController: UIViewController {
         instructionLabel.center.y = welcomeLabel.center.y + welcomeLabel.bounds.size.height
         instructionLabel.textAlignment = .center
         
-        //ID Button
-        identifyIdButton.center.x = self.view.center.x
-        identifyIdButton.center.y = instructionLabel.center.y +
+        
+        idTextField.center.x = self.view.center.x
+        idTextField.center.y = instructionLabel.center.y +
         2.5*instructionLabel.bounds.size.height
        
-        //Qr Code Button
-        qrCodeButton.center.x = self.view.center.x
-        qrCodeButton.center.y = identifyIdButton.center.y + 1.25*qrCodeButton.bounds.size.height
+        
+        generateQRWithoutOrderButton.center.x = self.view.center.x
+        generateQRWithoutOrderButton.center.y = idTextField.center.y + 1.25*generateQRWithoutOrderButton.bounds.size.height
+        
+        generateQRWithOrderButton.center.x = self.view.center.x
+        generateQRWithOrderButton.center.y = generateQRWithoutOrderButton.center.y + 1.25*generateQRWithOrderButton.bounds.size.height
+        
     }
     
     func initializeDatabase(){
@@ -67,8 +73,14 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-        /*
         
+        do {
+            let drop = customerTable.drop(ifExists: true)
+            try database.run(drop)
+        } catch {
+            print(error)
+        }
+        /*
         let createTable = self.productsTable.create { (table) in
             table.column(self.productId, primaryKey: true)
             table.column(self.productName)
@@ -76,14 +88,24 @@ class ViewController: UIViewController {
             table.column(self.count)
             table.column(self.price)
         }
-                        
+        
         do {
             try self.database.run(createTable)
             print("Created Table")
         } catch {
             print(error)
         }
-        */
+         */
+        let createTable2 = self.customerTable.create { (table) in
+            table.column(self.passId, primaryKey: true)
+        }
+          
+        do {
+            try self.database.run(createTable2)
+        } catch {
+            print(error)
+        }
+        
         let insertUser = self.productsTable.insertMany(or: OnConflict.replace,
                                                        [[self.productId <- 1, self.productName <- "Suitcase Help", self.productType <- "After Flight", self.count <- 0, self.price <- 200.0],
                                                         [self.productId <- 2, self.productName <- "Rent A Car", self.productType <- "After Flight", self.count <- 0, self.price <- 570.0],
@@ -147,14 +169,40 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-        /*
+    }
+    @IBAction func generateQRCodeWithoutOrderButtonClicked(_ sender: UIButton) {
+        let insertPass = self.customerTable.insert(self.passId <- idTextField.text!)
+                            
         do {
-            let drop = productsTable.drop(ifExists: true)
-            try database.run(drop)
+            try self.database.run(insertPass)
         } catch {
             print(error)
         }
-        */
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(blurEffectView)
+        
+        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "QRCodePageController") as! QRCodePageController
+        self.addChild(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        self.view.addSubview(popOverVC.view)
+        popOverVC.didMove(toParent: self)
+        
     }
+    
+    @IBAction func generateQRCodeWithOrderButtonClicked(_ sender: UIButton) {
+        let insertPass = self.customerTable.insert(self.passId <- idTextField.text!)
+                            
+        do {
+            try self.database.run(insertPass)
+        } catch {
+            print(error)
+        }
+    }
+    
 }
+
+
 
