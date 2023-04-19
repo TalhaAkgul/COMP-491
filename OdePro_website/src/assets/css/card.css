@@ -63,6 +63,9 @@ body {
 #credit-card-number {
   font-family: 'Courier New', Courier, monospace;
   font-size: 30px;
+  justify-content: center;
+  margin-top: 18%;
+
 }
 
 .credit-card-form {
@@ -123,10 +126,12 @@ input::placeholder {
 }
 
 #credit-card-validthru {
-  font-size:7.5px;
-  width: 25px;
+  font-size:10px;
+  width: 30px;
   display: inline-block;
-  margin-top: 1px;
+  margin-left: 45%;
+  margin-top: 25%;
+  
 }
 
 #credit-card-expiration p {
@@ -137,6 +142,7 @@ input::placeholder {
 #credit-card-holder-name {
   font-size: 20px;
   height: 20px;
+  margin-left: 5%;
   display: inline-block;
 }
 
