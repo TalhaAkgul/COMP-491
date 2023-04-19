@@ -17,28 +17,21 @@
 
 */
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 
-import styled from "styled-components";
 import Cleave from "cleave.js/react";
 import anime from "animejs/lib/anime.es.js";
 import "assets/css/card.css";
 // reactstrap components
 
 import {
-  FaCcAmex,
-  FaCcDinersClub,
-  FaCcDiscover,
-  FaCcJcb,
-  FaCcMastercard,
-  FaCcVisa,
-  FaCreditCard,
-} from "react-icons/fa";
-import {
   Button,
   Label,
   FormGroup,
   Input,
+  Card,
+  CardBody,
+  CardHeader,
   NavItem,
   NavLink,
   Nav,
@@ -54,22 +47,8 @@ import {
 import ExamplesNavbar from "components/Navbars/MyNavbar.js";
 import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
 import DemoFooter from "components/Footers/DemoFooter.js";
-import CreditCard from "components/Elements/CreditCard";
-function getDisplayCardNumber(numberInput) {
-  const placeholder = "****************";
-  const newPlaceholder = placeholder.substr(numberInput.length);
-
-  return numberInput.concat("", newPlaceholder).match(/.{1,4}/g);
-}
 
 function ProfilePage() {
-  const [activeTab, setActiveTab] = React.useState("1");
-
-  const toggle = (tab) => {
-    if (activeTab !== tab) {
-      setActiveTab(tab);
-    }
-  };
 
   document.documentElement.classList.remove("nav-open");
   React.useEffect(() => {
@@ -78,37 +57,86 @@ function ProfilePage() {
       document.body.classList.remove("landing-page");
     };
   });
+  const [activeTab, setActiveTab] = React.useState("1");
 
-  var [search, setSearch] = useState("");
   var [name, setName] = useState("");
+  const [errorMessageName, setErrorMessageName] = useState("");
   var [surname, setSurname] = useState("");
+  const [errorMessageSurname, setErrorMessageSurname] = useState("");
   var [email, setEmail] = useState("");
+  const [errorMessageEmail, setErrorMessageEmail] = useState("");
   var [callSign, setCallSign] = useState("");
+  const [errorMessageCallSign, setErrorMessageCallSign] = useState("");
   var [flightNo, setFlightNo] = useState("");
+  const [errorMessageFlightNo, setErrorMessageFlightNo] = useState("");
 
   const [cardNumber, setCardNumber] = useState("");
   const [cardHolderName, setCardHolderName] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
-  const [cardType, setCardType] = useState("");
   const [cvv, setCvv] = useState("");
 
-  const handleSubmit = async(e) => {
-    e.preventDefault();
+  const nameRef = useRef(null);
+  const surnameRef = useRef(null);
+  const emailRef = useRef(null);
+  const callSignRef = useRef(null);
+  const flightNoRef = useRef(null);
 
+  const toggle = (tab) => {
+    if (activeTab === "1" && tab === "2") { //next
+      var nameValue = nameRef.current.value;
+      var surnameValue = surnameRef.current.value;
+      var emailValue = emailRef.current.value;
+      var callSignValue = callSignRef.current.value;
+      var flightNoValue = flightNoRef.current.value;
+
+      if (!nameValue || !surnameValue || !emailValue || !callSignValue || !flightNoValue) {
+        alert("Input is required, please check your information");
+      }
+      else {
+        setActiveTab(tab);
+      } 
+    }
+
+    if (activeTab === "2" && tab === "2") { //submit
+      handleSubmit();
+    }
+    if (activeTab === "2" && tab === "1") {
+      setActiveTab(tab);
+    }
+  };
+
+  // Flip card animations
+  const flipCard = () => {
+    anime({
+      targets: ".credit-card-inner",
+      rotateY: "180deg",
+      duration: "100",
+      easing: "linear",
+    });
+  };
+  const unFlipCard = () => {
+    anime({
+      targets: ".credit-card-inner",
+      rotateY: "360deg",
+      duration: "100",
+      easing: "linear",
+    });
+  };
+
+  const handleSubmit = async() => {
     const data = {
       name,
       surname,
       email,
       callSign,
       flightNo,
-      cardType,
       cardNumber,
       cardHolderName,
       expirationDate,
       cvv
     };
 
-    const response = await fetch("https://172.16.126.233:8080/deneme", {
+    const response = await fetch("/api/contact", {
 
       method: "POST",
       headers: {
@@ -118,11 +146,11 @@ function ProfilePage() {
     });
 
     if (response.ok) {
-      alert("Form submitted successfully" + cvv);
+      alert("Form submitted successfully");
     } else {
       alert("Form submission failed");
     }
-    e.target.reset();
+    //e.target.reset();
 
   };
 
@@ -133,93 +161,146 @@ function ProfilePage() {
       <div className="section profile-content">
         <Container>
           <br />
-          <Form onSubmit={handleSubmit}>
-            <Row>
-              <Col md="6">
-                <Row>
-                  <FormGroup className="col-sm-8">
-                    <Label for="text">Name</Label>
-                    <Input 
-                      type="text" 
-                      id="name"
-                      required="'required'"
-                      pattern="[A-Za-zıöçşğü]*"
-                      onChange={(e) => setName(e.target.value)} 
-                      placeholder="Name" />
-                  </FormGroup>
-                </Row>
+          <br />
+          <br />
+          <form onSubmit={handleSubmit}>
 
-                <Row>
-                  <FormGroup className="col-sm-8">
-                    <Label for="Surname">Surname</Label>
-                    <Input 
-                      type="text"
-                      id="surname" 
-                      required="'required'"
-                      pattern="[A-Za-zıöçşğü]*"
-                      onChange={(e) => setSurname(e.target.value)} 
-                      placeholder="Surname" />
-                  </FormGroup>
-                </Row>
+          <Card>
+          <CardHeader></CardHeader>
+          <CardBody className="col-md" style={{margin: '0 0 0 20%', width: '60%'}}>
+          <TabContent activeTab={activeTab}>
+          <TabPane tabId="1">
+          <FormGroup>
+          <Row>
+          <Col>
+              <Label for="text">Name</Label>
+              <Input 
+                type="text" 
+                id="name"
+                value={name} 
+                ref={nameRef} 
+                required="'required'"
+                onChange={(e) =>  {
+                  const  pattern= /^[A-Za-zıöçşğü ]*$/; // regex to allow only letters
+                  if (pattern.test(e.target.value)) {
+                    setName(e.target.value);
+                    setErrorMessageName("");
+                  } else {
+                    setErrorMessageName("Input must contain only letters");
+                  }
+                }} 
+                placeholder="Name" />
+                {errorMessageName && <span style={{ color: "red" }}>{errorMessageName}</span>}
+                </Col>
+                <Col>
 
-                <Row>
-                  <FormGroup className="col-sm-8">
-                    <Label for="inputEmail">Email</Label>
-                    <Input 
-                      type="email" 
-                      id="inputEmail" 
-                      required="'required'"
-                      pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Email" />
-                  </FormGroup>
-                </Row>
-
-                <Row>
-                  <FormGroup className="col-sm-3">
-                    <Label for="airline">Flight Number</Label>
-                    <Input 
-                      type="text" 
-                      id="airline" 
-                      required="'required'"
-                      pattern="[A-Za-zıöçşğü]{2,3}"
-                      onChange={(e) => setCallSign(e.target.value)}
-                      placeholder="Initials" />
-                  </FormGroup>
-                  <FormGroup className="col-sm-5 ">
-                    <Label for="airline" style={{ opacity: 0 }}>
-                      this is a hidden element
-                    </Label>
-                    <Input
-                      type="text"
-                      title="Numbers Only"
-                      id="flightnum"
-                      required="'required'"
-                      pattern="[0-9]*"
-                      onChange={(e) => setFlightNo(e.target.value)}
-                      placeholder="Number"
-                    />
-                  </FormGroup>
-                </Row>
+              <Label for="Surname">Surname</Label>
+              <Input 
+                type="text"
+                id="surname" 
+                ref={surnameRef} 
+                value={surname} 
+                required="'required'"
+                onChange={(e) =>{
+                  const  pattern= /^[A-Za-zıöçşğü ]*$/; // regex to allow only letters
+                  if (pattern.test(e.target.value)) {
+                    setSurname(e.target.value);
+                    setErrorMessageSurname("");
+                  } else {
+                    setErrorMessageSurname("Input must contain only letters");
+                  }
+                }} 
+                placeholder="Surname" />
+                {errorMessageSurname && <span style={{ color: "red" }}>{errorMessageSurname}</span>}
               </Col>
+            </Row>
+            </FormGroup>
+            <FormGroup >
+            <Row>
+              <Col>
+                <Label for="inputEmail">Email</Label>
+                <Input 
+                  type="email" 
+                  id="inputEmail"
+                  ref={emailRef} 
+                  value={email}  
+                  required="'required'"
+                  onChange={(e) => {
+                    const  pattern=/.*/; // regex to allow only letters
+                    if (pattern.test(e.target.value)) {
+                      setEmail(e.target.value);
+                      setErrorMessageEmail("");
+                    } else {
+                      setErrorMessageEmail("Input must be a form of email");
+                    }
+                  }} 
+                  placeholder="Email" />
+                  {errorMessageEmail && <span style={{ color: "red" }}>{errorMessageEmail}</span>}
+              </Col>
+            </Row>
+            </FormGroup>
 
-              <Col md="2">
-                <br />
-                <FormGroup className="col-sm-6">
-                <div className="credit-card-container">
-                <div className="credit-card">
+            <FormGroup>
+            <Row>
+             <Col>
+                <Label for="airline">Flight Number</Label>
+                <Input 
+                  type="text" 
+                  id="airline" 
+                  ref={callSignRef} 
+                  value={callSign}
+                  required="'required'"
+                  onChange={(e) => {
+                    const  pattern= /^[A-Za-zıöçşğü]{0,3}$/; // regex to allow only letters
+                    if (pattern.test(e.target.value)) {
+                      setCallSign(e.target.value);
+                      setErrorMessageCallSign("");
+                    } else {
+                      setErrorMessageCallSign("Input must contain only letters");
+                    }
+                  }}
+                  placeholder="Initials" />
+                  {errorMessageCallSign && <span style={{ color: "red" }}>{errorMessageCallSign}</span>}
+              </Col>
+              <Col>
+                <Label for="airline" style={{ opacity: 0 }}>
+                  this is a hidden element
+                </Label>
+                
+                <Input
+                  type="text"
+                  title="Numbers Only"
+                  ref={flightNoRef} 
+                  value={flightNo}
+                  id="flightnum"
+                  required="'required'"
+                  onChange={(e) => {
+                    const  pattern= /^[0-9]*$/; // regex to allow only letters
+                    if (pattern.test(e.target.value)) {
+                      setFlightNo(e.target.value);
+                      setErrorMessageFlightNo("");
+                    } else {
+                      setErrorMessageFlightNo("Input must contain only letters");
+                    }
+                  }} 
+                  placeholder="Number"
+                />                  
+                {errorMessageFlightNo && <span style={{ color: "red" }}>{errorMessageFlightNo}</span>}
+                </Col>
+            </Row>
+            </FormGroup>
+               
+    </TabPane>
+      <TabPane tabId="2">
+      
+
+                <FormGroup>
+                <Row>
+          <Col>
+                <div className="credit-card-container" >
+                <div className="credit-card" style={{margin: "0 12% 0 12%", width: "76%" }}>
                 <div className="credit-card-inner">
                 <div className="credit-card-front">
-                <div id="credit-card-type">
-                {cardType === "" && <FaCreditCard />}
-                {cardType === "Discover" && <FaCcDiscover />}
-                {cardType === "AmericanExpress" && <FaCcAmex />}
-                {cardType === "Visa" && <FaCcVisa />}
-                {cardType === "DinersClub" && <FaCcDinersClub />}
-                {cardType === "JCB" && <FaCcJcb />}
-                {cardType === "MasterCard" && <FaCcMastercard />}
-              </div>
-
               <div id="credit-card-number">
                 {cardNumber == "" && (
                   <div id="credit-card-number">0000 0000 0000 0000</div>
@@ -253,7 +334,7 @@ function ProfilePage() {
             </div>
           </div>
         </div>
-        <form className="credit-card-form">
+        <form className="credit-card-form" style={{margin: "5% 5% 0 5%", width: "90%" }}>
           <label className="credit-card-input-label">Credit Card Number</label>
           <Cleave
             placeholder="Enter your credit card number"
@@ -270,13 +351,13 @@ function ProfilePage() {
             placeholder="Enter card holder name"
             value={cardHolderName}
             required="'required'"
-            onChange={(e) => setCardHolderName(e.target.value)} 
+            onChange={(e) => setCardHolderName(e.target.value)}
             className="credit-card-text-input"
             maxLength="30"
           />
           <div className="date-and-csv" style={{ display: "flex" }}>
             <div
-              style={{ display: "flex", flexDirection: "column", width: "50%" }}
+              style={{ display: "flex", flexDirection: "column", width:"50%"}}
             >
               <label className="credit-card-input-label">Expiration Date</label>
               <Cleave
@@ -289,11 +370,11 @@ function ProfilePage() {
                 value={expirationDate}
                 className="credit-card-text-input"
                 required="'required'"
-                onChange={(e) => setExpirationDate(e.target.value)} 
+                onChange={(e) => setExpirationDate(e.target.value)}
               />
             </div>
             <div
-              style={{ display: "flex", flexDirection: "column", width: "50%" }}
+              style={{ display: "flex", flexDirection: "column", width:"50%"}}
             >
               <label className="credit-card-input-label">
                 CVC Security Code
@@ -308,21 +389,53 @@ function ProfilePage() {
                 className="credit-card-text-input"
                 required="'required'"
                 onChange={(e) => setCvv(e.target.value)} 
-                //onFocus={this.flipCard}
-                //onBlur={this.unFlipCard}
+                onFocus={flipCard}
+                onBlur={unFlipCard}
               />
             </div>
           </div>
         </form>
       </div>
+      </Col>
+                </Row>
                </FormGroup>
-                <Button className="btn-round" type="submit" color="danger">
-                  Submit{" "}
-                </Button>
-              </Col>
-            
-            </Row>
-          </Form>
+
+    </TabPane>
+    </TabContent>
+    </CardBody> 
+    <CardHeader>
+
+    <Nav pills className="justify-content-center">
+                  <Nav tabs activeTab={activeTab}>
+                    <NavItem style={{margin:"0 1rem 0  0"}}>
+                      <Button 
+                        className="btn-round" color="danger" size="lg"
+                        onClick={() => {
+                          toggle("1");
+                        }}
+                        href="#"
+                      >
+                        Prev
+                      </Button>
+                    </NavItem>
+                    <NavItem>
+                      <Button
+                       className="btn-round" type="submit" color="danger" size="lg"
+                       onClick={() => {
+                        toggle("2");
+                      }}
+                        href="#"
+                      >
+                        {activeTab === "2" ? "Submit" : "Next"}
+                      </Button>
+                    </NavItem>
+                  </Nav>
+                </Nav>
+        </CardHeader>
+
+          </Card>
+          </form>
+
           <br />
         </Container>
       </div>
