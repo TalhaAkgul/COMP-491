@@ -40,7 +40,7 @@ import {
 
 // core components
 import ExamplesNavbar from "components/Navbars/MyNavbar.js";
-import LandingPageHeader from "components/Headers/MyLandingPageHeader.js";
+import LandingPageHeader from "components/Headers/MyLandingPageHeaderMain.js";
 import DemoFooter from "components/Footers/DemoFooter.js";
 
 function LandingPage() {
