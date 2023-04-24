@@ -18,6 +18,18 @@ class ViewController: UIViewController {
     let count = Expression<Int>("count")
     let price = Expression<Double>("price")
     
+    var database2: Connection!
+    let transactionTable = Table("Transaction")
+    let transactionId = Expression<String>("transactionId")
+    let amount = Expression<Double>("amount")
+    let passengerId = Expression<String>("passengerId")
+    
+    var database3: Connection!
+    let qrTable = Table("QR")
+    let pId = Expression<String>("pId")
+    let prId = Expression<String>("prId")
+    let prCount = Expression<String>("prCount")
+    
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var instructionLabel: UILabel!
     @IBOutlet weak var identifyIdButton: UIButton!
@@ -27,7 +39,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Local database for the products
         initializeDatabase()
-        
+        initializeTransactionDatabase()
+        initializeQRDatabase()
         // Do any additional setup after loading the view.
         self.view.addBackground()
         
@@ -55,6 +68,81 @@ class ViewController: UIViewController {
         qrCodeButton.center.y = identifyIdButton.center.y + 1.25*qrCodeButton.bounds.size.height
     }
     
+    func initializeQRDatabase(){
+        
+        
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            
+            let fileUrl = documentDirectory.appendingPathComponent("QR").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database3 = database
+        } catch {
+            print(error)
+        }
+        
+        do {
+            let drop = qrTable.drop(ifExists: true)
+            try database3.run(drop)
+        } catch {
+            print(error)
+        }
+        
+        
+        let createTable = self.qrTable.create { (table) in
+            table.column(self.prId, primaryKey: true)
+            table.column(self.pId)
+            table.column(self.prCount)
+        }
+                        
+        do {
+            try self.database3.run(createTable)
+            print("Created Table")
+        } catch {
+            print(error)
+        }
+        
+    }
+    
+    func initializeTransactionDatabase(){
+        
+        
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            
+            let fileUrl = documentDirectory.appendingPathComponent("Transaction").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database2 = database
+        } catch {
+            print(error)
+        }
+        /*
+        
+        let createTable = self.transactionTable.create { (table) in
+            table.column(self.transactionId, primaryKey: true)
+            table.column(self.amount)
+            table.column(self.passengerId)
+        }
+                        
+        do {
+            try self.database2.run(createTable)
+            print("Created Table")
+        } catch {
+            print(error)
+        }
+        */
+        /*
+        do {
+            let drop = productsTable.drop(ifExists: true)
+            try database.run(drop)
+        } catch {
+            print(error)
+        }
+        */
+    }
+    
+    
+    
     func initializeDatabase(){
         
         
@@ -67,7 +155,13 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-        /*
+        
+        do {
+            let drop = productsTable.drop(ifExists: true)
+            try database.run(drop)
+        } catch {
+            print(error)
+        }
         
         let createTable = self.productsTable.create { (table) in
             table.column(self.productId, primaryKey: true)
@@ -83,7 +177,7 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-        */
+        
         let insertUser = self.productsTable.insertMany(or: OnConflict.replace,
                                                        [[self.productId <- 1, self.productName <- "Suitcase Help", self.productType <- "After Flight", self.count <- 0, self.price <- 200.0],
                                                         [self.productId <- 2, self.productName <- "Rent A Car", self.productType <- "After Flight", self.count <- 0, self.price <- 570.0],
@@ -142,19 +236,26 @@ class ViewController: UIViewController {
                                                         [self.productId <- 55, self.productName <- "Rose Wine", self.productType <- "Food Drink", self.count <- 0, self.price <- 60.4],
                                                         [self.productId <- 56, self.productName <- "Tea", self.productType <- "Food Drink", self.count <- 0, self.price <- 14.3],
                                                         [self.productId <- 57, self.productName <- "White Wine", self.productType <- "Food Drink", self.count <- 0, self.price <- 60.1]])
+        
         do {
             try self.database.run(insertUser)
         } catch {
             print(error)
         }
-        /*
-        do {
-            let drop = productsTable.drop(ifExists: true)
-            try database.run(drop)
-        } catch {
-            print(error)
-        }
-        */
+        
+        
+         
+        
     }
+    
+    @IBAction func syncButtonClicked(_ sender: UIButton) {
+        /*
+        
+         */
+        
+        
+        
+    }
+    
 }
 
