@@ -509,7 +509,7 @@ function ProfilePage() {
                     <NavItem style={{ margin: "0 1rem 0  0" }}>
                       <Button
                         className="btn-round"
-                        color="danger"
+                        color="info"
                         size="lg"
                         onClick={() => {
                           toggle("1");
@@ -523,7 +523,7 @@ function ProfilePage() {
                       <Button
                         className="btn-round"
                         type="submit"
-                        color="danger"
+                        color="info"
                         size="lg"
                         onClick={() => {
                           toggle("2");

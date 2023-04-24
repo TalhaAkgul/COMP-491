@@ -38,7 +38,7 @@ function DemoFooter() {
               </li>
               <li>
                 <a
-                  href=""
+                  href="https://www.creative-tim.com/license?ref=pkr-footer"
                   target="_blank"
                 >
                   Licenses
