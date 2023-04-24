@@ -1,0 +1,46 @@
+[
+  {
+    "passengerId": "12345678912",
+    "passengerName": "Pınar",
+    "passengerSurname": "Erbil",
+    "passengerEmail": "24@gmail.com",
+    "passengerAddress": "Ankara",
+    "passengerPhoneNumber": "1234567894561",
+    "amount": "123",
+    "provisionDate": "2023-04-23 00:00:00.0",
+    "aid": "1"
+  },
+  {
+    "passengerId": "12345678913",
+    "passengerName": "Ahmet Talha",
+    "passengerSurname": "Akgul",
+    "passengerEmail": "25@gmail.com",
+    "passengerAddress": "Istanbul",
+    "passengerPhoneNumber": "1234567894562",
+    "amount": "342.4",
+    "provisionDate": "2023-04-22 00:17:40.0",
+    "aid": "2"
+  },
+  {
+    "passengerId": "12345678914",
+    "passengerName": "Betul",
+    "passengerSurname": "Demirtas",
+    "passengerEmail": "26@gmail.com",
+    "passengerAddress": "Kayseri",
+    "passengerPhoneNumber": "1234567894563",
+    "amount": "2310.7",
+    "provisionDate": "2023-04-21 00:08:00.0",
+    "aid": "3"
+  },
+  {
+    "passengerId": "15275519218",
+    "passengerName": "Doga Ege",
+    "passengerSurname": "Inhanli",
+    "passengerEmail": "27@gmail.com",
+    "passengerAddress": "Balikesir",
+    "passengerPhoneNumber": "1234567894564",
+    "amount": "87.2",
+    "provisionDate": "2023-04-20 00:05:00.0",
+    "aid": "4"
+  }
+]
