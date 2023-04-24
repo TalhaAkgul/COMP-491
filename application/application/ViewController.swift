@@ -236,6 +236,7 @@ class ViewController: UIViewController {
                                                         [self.productId <- 55, self.productName <- "Rose Wine", self.productType <- "Food Drink", self.count <- 0, self.price <- 60.4],
                                                         [self.productId <- 56, self.productName <- "Tea", self.productType <- "Food Drink", self.count <- 0, self.price <- 14.3],
                                                         [self.productId <- 57, self.productName <- "White Wine", self.productType <- "Food Drink", self.count <- 0, self.price <- 60.1]])
+        
         do {
             try self.database.run(insertUser)
         } catch {

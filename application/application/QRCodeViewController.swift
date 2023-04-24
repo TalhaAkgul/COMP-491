@@ -10,7 +10,16 @@ import SwiftUI
 import CodeScanner
 import SQLite
 
+
 class QRCodeViewController: UIViewController {
+    
+    var database: Connection!
+    let productsTable = Table("Products")
+    let productId = Expression<Int>("productId")
+    let productName = Expression<String>("productName")
+    let productType = Expression<String>("productType")
+    let count = Expression<Int>("count")
+    let price = Expression<Double>("price")
     
     var scannedCode: String = ""
     var scanComplete: Bool = false {
@@ -42,6 +51,7 @@ class QRCodeViewController: UIViewController {
         self.view.addSubview(scanView.view)
         self.addChild(scanView)
         connectDatabase()
+        connectDatabase3()
         
         
     }
@@ -104,8 +114,24 @@ class QRCodeViewController: UIViewController {
             for dict in orderDict {
                 let prIdValue = dict.keys.first ?? ""
                 let prCountValue = dict.values.first ?? ""
-                
                 let insertQuery = qrTable.insert(pId <- passID, prId <- prIdValue, prCount <- prCountValue)
+                if let prId = Int(prIdValue) { // Convert the prIdValue to an Int
+                    let matchingRow = productsTable.filter(productId == prId) // Use the converted prId variable in the filter expression
+                    if let prCountString = dict.values.first, let prCountValue = Int(prCountString) {
+                        let updateStatement = matchingRow.update(count <- prCountValue)
+
+                        do {
+                            try database.run(updateStatement)
+                            print("Successfully updated count value")
+                        } catch {
+                            print("Error updating count value: \(error)")
+                        }
+                    } else {
+                        print("Error: Invalid count value")
+                    }
+                } else {
+                    print("Error: Invalid product ID value")
+                }
                 
                 do {
                     try database3.run(insertQuery)
@@ -151,12 +177,23 @@ class QRCodeViewController: UIViewController {
         self.view.addSubview(personalDetailsController.view)
         personalDetailsController.didMove(toParent: self)
     }
-    func connectDatabase(){
+    func connectDatabase3(){
         do {
             let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             let fileUrl = documentDirectory.appendingPathComponent("QR").appendingPathExtension("sqlite3")
             let database = try Connection(fileUrl.path)
             self.database3 = database
+        } catch {
+            print(error)
+        }
+    }
+    
+    func connectDatabase(){
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let fileUrl = documentDirectory.appendingPathComponent("Products").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database = database
         } catch {
             print(error)
         }

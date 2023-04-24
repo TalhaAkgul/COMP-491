@@ -18,6 +18,14 @@ class AddPaymentController: UIViewController {
     let count = Expression<Int>("count")
     let price = Expression<Double>("price")
     
+    var database3: Connection!
+    let qrTable = Table("QR")
+    let pId = Expression<String>("pId")
+    let prId = Expression<String>("prId")
+    let prCount = Expression<String>("prCount")
+    
+    var totalPrice: Double!
+    
     @IBOutlet weak var menuImage1: UIImageView!
     @IBOutlet weak var menuImage2: UIImageView!
     @IBOutlet weak var menuImage3: UIImageView!
@@ -37,6 +45,7 @@ class AddPaymentController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
+        connectDatabase3()
         menuImage1.image = UIImage(named: "images/add payment page images/menu1.jpeg")
         menuImage2.image = UIImage(named: "images/add payment page images/menu2.jpeg")
         menuImage3.image = UIImage(named: "images/add payment page images/menu3.jpeg")
@@ -86,7 +95,7 @@ class AddPaymentController: UIViewController {
         do {
             let products = try self.database.prepare(self.productsTable.filter(self.count != 0))
             var labelPosY = 20
-            var totalPrice = 0.0
+            totalPrice = 0.0
             for product in products {
                 let productLabel = UILabel()
                 //productLabel.center = CGPoint(x: 160, y: 285)
@@ -110,7 +119,6 @@ class AddPaymentController: UIViewController {
                 productLabel.text = text
                 container.addArrangedSubview(productLabel)
                 //container.addArrangedSubview(priceLabel)
-                
                 totalPrice = totalPrice + totalPriceForProd
                 labelPosY = labelPosY + 30
             }
@@ -131,6 +139,7 @@ class AddPaymentController: UIViewController {
         }
     }
     
+    
     @IBAction func proceedPaymentClicked(_ sender: UIButton) {
         /*
          
@@ -140,17 +149,55 @@ class AddPaymentController: UIViewController {
          
          
          */
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(blurEffectView)
+        guard let path = Bundle.main.path(forResource: "serverData", ofType: "json") else {
+            fatalError("Couldn't find file 'serverData.json' in app bundle.")
+        }
         
-        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpAfterProceedPayment") as! PopupAfterProceedPaymentController
-        self.addChild(popOverVC)
-        popOverVC.view.frame = self.view.frame
-        self.view.addSubview(popOverVC.view)
-        popOverVC.didMove(toParent: self)
+        let url = URL(fileURLWithPath: path)
+        do {
+            let data = try Data(contentsOf: url)
+            print(data)
+            do {
+                let decoder = JSONDecoder()
+                let serverInfos = try decoder.decode([ServerData].self, from: data)
+                var currentId = ""
+                if let qrRow = try database3.pluck(qrTable) {
+                    // Retrieve the value of pId column from the row and assign it to idLabel's text
+                    currentId  = qrRow[pId]
+                }
+                for serverInfo in serverInfos {
+                    if serverInfo.passengerId == currentId {
+                        let amount = serverInfo.amount
+                        let amountValue = Double(amount) ?? 0.0
+                        if totalPrice > amountValue {
+                            let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+                            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                            blurEffectView.frame = view.bounds
+                            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                            view.addSubview(blurEffectView)
+                            
+                            let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopUpAfterProceedPayment") as! PopupAfterProceedPaymentController
+                            self.addChild(popOverVC)
+                            popOverVC.view.frame = self.view.frame
+                            self.view.addSubview(popOverVC.view)
+                            popOverVC.didMove(toParent: self)
+                        } else {
+                            let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PaymentSuccessfulController") as! PaymentSuccessfulController
+                            self.addChild(popOverVC)
+                            popOverVC.view.frame = self.view.frame
+                            self.view.addSubview(popOverVC.view)
+                            popOverVC.didMove(toParent: self)                        }
+                        
+                    }
+                        }
+                    } catch {
+                      print(error)
+                    }        } catch {
+            fatalError("Couldn't load contents of file at path '\(url)': \(error)")
+        }
+        
+        
+        
         /*
         let productsAtBasket = self.productsTable.filter(self.count != 0)
         let completeBasket = productsAtBasket.update(self.count <- 0)
@@ -160,5 +207,16 @@ class AddPaymentController: UIViewController {
             print(error)
         }
         */
+    }
+    
+    func connectDatabase3(){
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let fileUrl = documentDirectory.appendingPathComponent("QR").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database3 = database
+        } catch {
+            print(error)
+        }
     }
 }
