@@ -31,6 +31,8 @@
 		1CDAE32029D376E0000E140A /* applicationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE31F29D376E0000E140A /* applicationUITests.swift */; };
 		1CDAE32229D376E0000E140A /* applicationUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE32129D376E0000E140A /* applicationUITestsLaunchTests.swift */; };
 		1CDAE33129D37987000E140A /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE33029D37987000E140A /* Background.swift */; };
+		7782C50029F6D78000C1D325 /* ServerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7782C4FF29F6D78000C1D325 /* ServerData.swift */; };
+		7782C50B29F6DFD900C1D325 /* serverData.json in Resources */ = {isa = PBXBuildFile; fileRef = 7782C50A29F6DFD900C1D325 /* serverData.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,6 +142,8 @@
 		1CDAE31F29D376E0000E140A /* applicationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applicationUITests.swift; sourceTree = "<group>"; };
 		1CDAE32129D376E0000E140A /* applicationUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applicationUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1CDAE33029D37987000E140A /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
+		7782C4FF29F6D78000C1D325 /* ServerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerData.swift; sourceTree = "<group>"; };
+		7782C50A29F6DFD900C1D325 /* serverData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = serverData.json; path = ../../serverData.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +219,7 @@
 		1CDAE2FD29D376DE000E140A /* application */ = {
 			isa = PBXGroup;
 			children = (
+				7782C50A29F6DFD900C1D325 /* serverData.json */,
 				1C9BF12429DB47C900B69C37 /* images */,
 				1CDAE2FE29D376DE000E140A /* AppDelegate.swift */,
 				1CDAE30029D376DE000E140A /* SceneDelegate.swift */,
@@ -234,6 +239,7 @@
 				1C7D051829E3F984003B1FF6 /* PopupAfterProceedPaymentController.swift */,
 				1C7D052429E42C66003B1FF6 /* PaymentSuccessfulController.swift */,
 				1C82AE7529EC34C3009B39C7 /* QRJSONData.swift */,
+				7782C4FF29F6D78000C1D325 /* ServerData.swift */,
 			);
 			path = application;
 			sourceTree = "<group>";
@@ -429,6 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C9BF12529DB47C900B69C37 /* images in Resources */,
+				7782C50B29F6DFD900C1D325 /* serverData.json in Resources */,
 				1CDAE30B29D376E0000E140A /* LaunchScreen.storyboard in Resources */,
 				1CDAE30829D376E0000E140A /* Assets.xcassets in Resources */,
 				1CDAE30629D376DE000E140A /* Main.storyboard in Resources */,
@@ -456,6 +463,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7782C50029F6D78000C1D325 /* ServerData.swift in Sources */,
 				1CDAE30329D376DE000E140A /* ViewController.swift in Sources */,
 				1C9BF11D29DB343400B69C37 /* EntertainmentMenuController.swift in Sources */,
 				1C9BF11B29DB342300B69C37 /* FoodDrinkMenuController.swift in Sources */,
