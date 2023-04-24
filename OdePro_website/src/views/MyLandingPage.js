@@ -116,7 +116,7 @@ function LandingPage() {
                     <a>
                       <img
                         alt="..."
-                        src={require("assets/img/faces/talha.jpg")}
+                        src={require("assets/img/faces/betul.jpg")}
                       />
                     </a>
                   </div>
