@@ -242,8 +242,12 @@ class AddPaymentController: UIViewController {
                             popOverVC.didMove(toParent: self)
                         } else {
                             do {
+                                let time = ("\(Date())")
                                 // Insert a new row into the table
-                                let insert = transactionTable.insert(transactionId <- "1", amount <- totalSpendings, passengerId <- currentId)
+                                print(totalPrice)
+                                print(time)
+                                print(currentId)
+                                let insert = transactionTable.insert(transactionId <- time, amount <- totalPrice, passengerId <- currentId)
                                 
                                 // Execute the insert statement
                                 try database2.run(insert)
@@ -252,7 +256,7 @@ class AddPaymentController: UIViewController {
                             } catch {
                                 print("Error inserting transaction: \(error)")
                             }
-
+                            
                             let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PaymentSuccessfulController") as! PaymentSuccessfulController
                             self.addChild(popOverVC)
                             popOverVC.view.frame = self.view.frame

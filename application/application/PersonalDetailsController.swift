@@ -27,6 +27,7 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
     @IBOutlet weak var personalInfoView: UIView!
     @IBOutlet weak var spendingsView: UIView!
     @IBOutlet weak var initialPLabel: UITextField!
+    @IBOutlet weak var spentLabel: UITextField!
     @IBOutlet weak var idLabel: UITextField!
     @IBOutlet weak var nameLabel: UITextField!
     @IBOutlet weak var provisionLabel: UITextField!
@@ -70,6 +71,9 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
         cancelButton.frame.size.width = screenWidth * 0.9
         cancelButton.center.x = self.view.center.x
         cancelButton.center.y = addPaymentButton.frame.maxY + cancelButton.bounds.size.height/2 + screenHeight/25
+        initialPLabel.isUserInteractionEnabled = false
+        provisionLabel.isUserInteractionEnabled = false
+        spentLabel.isUserInteractionEnabled = false
         
         
     }
@@ -108,11 +112,11 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
                         let passengerId = serverInfo.passengerId
                         let passengerName = serverInfo.passengerName
                         let passengerSurname = serverInfo.passengerSurname
-                        let amount = serverInfo.amount
+                        let provisionAmount = Double(serverInfo.amount) ?? 0.0
                         var totalSpendings = 0.0
-                        /*
+                        
                         do {
-                            let filteredRows = try database2.prepare(transactionTable.filter(passengerId == currentId))
+                            let filteredRows = try database2.prepare(transactionTable.filter(self.passengerId == currentId))
                             for row in filteredRows {
                                 let transactionAmount = Double(row[amount])
                                 totalSpendings += transactionAmount
@@ -120,10 +124,12 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
                         } catch {
                             print("Error selecting transactions: \(error)")
                         }
-*/
+                        print(totalSpendings)
+                        let remainingAmount = provisionAmount - totalSpendings
                         nameLabel.text = passengerName + " " + passengerSurname
-                        provisionLabel.text = amount + "₺"
-                        initialPLabel.text = amount + "₺"
+                        provisionLabel.text = String(remainingAmount) + "₺"
+                        initialPLabel.text = String(provisionAmount) + "₺"
+                        spentLabel.text = String(totalSpendings) + "₺"
                     }
                         }
                     } catch {

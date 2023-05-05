@@ -3862,6 +3862,7 @@
                         <outlet property="personalInfoView" destination="h2A-A0-ihK" id="wES-KY-5SO"/>
                         <outlet property="provisionLabel" destination="dsl-Ef-yVv" id="ZlK-MG-x1f"/>
                         <outlet property="spendingsView" destination="2WY-w3-ZeV" id="H9J-tG-9pr"/>
+                        <outlet property="spentLabel" destination="rrD-qW-qf9" id="7uq-Is-bv6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ft-cW-8sz" sceneMemberID="firstResponder"/>
@@ -3886,8 +3887,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="K6N-RA-qZ0"/>
-        <segue reference="HvW-6x-5B5"/>
-        <segue reference="EDy-bc-doz"/>
+        <segue reference="Luj-Tp-DW4"/>
+        <segue reference="CR0-aG-bRY"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
