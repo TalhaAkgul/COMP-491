@@ -24,12 +24,9 @@ class AddPaymentController: UIViewController {
     let prId = Expression<String>("prId")
     let prCount = Expression<String>("prCount")
     
+    @IBOutlet weak var foodDrinkMenuView: UIView!
     var totalPrice: Double!
     
-    @IBOutlet weak var menuImage1: UIImageView!
-    @IBOutlet weak var menuImage2: UIImageView!
-    @IBOutlet weak var menuImage3: UIImageView!
-    @IBOutlet weak var menuImage4: UIImageView!
     @IBOutlet weak var menuImage5: UIImageView!
     @IBOutlet weak var menuImage6: UIImageView!
     @IBOutlet weak var menuImage7: UIImageView!
@@ -39,20 +36,52 @@ class AddPaymentController: UIViewController {
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var basketImage: UIImageView!
-    @IBOutlet weak var proceedPaymentButton: UIButton!
     @IBOutlet weak var totalView: UIView!
     @IBOutlet weak var totalLabel: UILabel!
+    @IBOutlet weak var foodDrinkButton: UIButton!
+    @IBOutlet weak var entertainmentButton: UIButton!
+    @IBOutlet weak var afterFlightButton: UIButton!
+    @IBOutlet weak var proceedPaymentButton: UIButton!
+    @IBOutlet weak var cancelPaymentButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
         connectDatabase3()
-        menuImage1.image = UIImage(named: "images/add payment page images/menu1.jpeg")
-        menuImage2.image = UIImage(named: "images/add payment page images/menu2.jpeg")
-        menuImage3.image = UIImage(named: "images/add payment page images/menu3.jpeg")
-        menuImage4.image = UIImage(named: "images/add payment page images/menu4.jpeg")
-        menuImage5.image = UIImage(named: "images/add payment page images/menu5.jpeg")
+        
+        menuImage5.image = UIImage(named: "images/add payment page images/menu2.jpeg")
         menuImage6.image = UIImage(named: "images/add payment page images/menu6.jpeg")
         menuImage7.image = UIImage(named: "images/add payment page images/menu7.jpeg")
+        
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenHeight = screenSize.height
+        let screenWidth  = screenSize.width
+        
+        foodDrinkMenuView.frame.size.width = screenWidth
+        foodDrinkMenuView.center.x = self.view.center.x
+        foodDrinkMenuView.center.y = navigationBar.frame.maxY + foodDrinkMenuView.bounds.size.height/2
+        foodDrinkButton.center.x = self.view.center.x
+        menuImage5.center.x = self.view.center.x
+        
+        entertainmentMenuView.frame.size.width = screenWidth
+        entertainmentMenuView.center.x = self.view.center.x
+        entertainmentMenuView.center.y = foodDrinkMenuView.frame.maxY + entertainmentMenuView.bounds.size.height/2
+        entertainmentButton.center.x = self.view.center.x
+        menuImage6.center.x = self.view.center.x
+        
+        afterFlightServicesView.frame.size.width = screenWidth
+        afterFlightServicesView.center.x = self.view.center.x
+        afterFlightServicesView.center.y = entertainmentMenuView.frame.maxY + afterFlightServicesView.bounds.size.height/2
+        afterFlightButton.center.x = self.view.center.x
+        menuImage7.center.x = self.view.center.x
+        
+        cancelPaymentButton.center.x = self.view.center.x
+        cancelPaymentButton.center.y = screenHeight * 0.95
+        
+        proceedPaymentButton.center.x = self.view.center.x
+        proceedPaymentButton.center.y = cancelPaymentButton.center.y - 1.5 * proceedPaymentButton.bounds.size.height
+        
+        totalView.center.x = self.view.center.x
+        totalView.center.y = proceedPaymentButton.center.y - 1.1 * totalView.frame.size.height
         
         let scrollViewContainer: UIStackView = {
             let view = UIStackView()
@@ -73,10 +102,11 @@ class AddPaymentController: UIViewController {
         scrollViewContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
         // this is important for scrolling
         scrollViewContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        /*
-        scrollViewContainer2.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
-        scrollViewContainer2.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        scrollViewContainer2.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true*/
+        scrollView.center.x = self.view.center.x
+        scrollView.center.y = afterFlightServicesView.frame.maxY + scrollView.frame.size.height/2 + 10
+        
+        scrollView.frame.size.height = totalView.frame.minY - scrollView.frame.minY - 20
+    
     }
     
     func connectDatabase(){

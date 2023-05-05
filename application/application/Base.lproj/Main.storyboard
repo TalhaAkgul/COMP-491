@@ -150,12 +150,16 @@
                                     <navigationItem title="Add Payment" id="vUn-Vw-7qr"/>
                                 </items>
                             </navigationBar>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3o8-Yd-Q2y">
-                                <rect key="frame" x="20" y="108" width="374" height="120"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3o8-Yd-Q2y">
+                                <rect key="frame" x="20" y="108" width="374" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="36j-AD-X20">
+                                        <rect key="frame" x="14" y="8" width="347" height="46"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJ4-pP-YFI">
-                                        <rect key="frame" x="14" y="77" width="347" height="31"/>
+                                        <rect key="frame" x="14" y="53" width="347" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="See Food &amp; Drinks Menu">
@@ -165,36 +169,20 @@
                                             <segue destination="XNr-El-LBm" kind="presentation" modalPresentationStyle="fullScreen" id="TbW-jO-2QN"/>
                                         </connections>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0bM-79-Rmt">
-                                        <rect key="frame" x="14" y="8" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mse-fx-EhK">
-                                        <rect key="frame" x="83" y="8" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n2y-jO-aSn">
-                                        <rect key="frame" x="152" y="8" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="36j-AD-X20">
-                                        <rect key="frame" x="291" y="8" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="stU-HI-j4g">
-                                        <rect key="frame" x="221" y="8" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wwp-7V-22J">
-                                <rect key="frame" x="20" y="236" width="374" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wwp-7V-22J">
+                                <rect key="frame" x="20" y="201" width="374" height="92"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Umz-TY-k66">
-                                        <rect key="frame" x="14" y="77" width="347" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hgI-2M-chl">
+                                        <rect key="frame" x="14" y="8" width="347" height="46"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Umz-TY-k66">
+                                        <rect key="frame" x="14" y="54" width="347" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="See Entertainment Menu">
                                             <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -203,19 +191,19 @@
                                             <segue destination="YkM-wd-saf" kind="presentation" modalPresentationStyle="fullScreen" id="ZUo-Oj-XcB"/>
                                         </connections>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hgI-2M-chl">
-                                        <rect key="frame" x="14" y="8" width="347" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9OS-bE-0bI">
-                                <rect key="frame" x="20" y="371" width="374" height="128"/>
+                                <rect key="frame" x="20" y="296" width="374" height="92"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8AY-Gs-n4p">
+                                        <rect key="frame" x="14" y="8" width="347" height="46"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NgR-bH-NZz">
-                                        <rect key="frame" x="14" y="77" width="347" height="31"/>
+                                        <rect key="frame" x="14" y="54" width="347" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="See After Flight Services">
@@ -225,26 +213,22 @@
                                             <segue destination="uzB-gh-SlJ" kind="presentation" modalPresentationStyle="fullScreen" id="Xve-4i-V6Y"/>
                                         </connections>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8AY-Gs-n4p">
-                                        <rect key="frame" x="14" y="8" width="347" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="woQ-7Q-Dlr">
-                                <rect key="frame" x="20" y="525" width="374" height="188"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="woQ-7Q-Dlr">
+                                <rect key="frame" x="19" y="396" width="374" height="131"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="contentLayoutGuide" id="DdE-Bf-Tgz"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="hVb-d6-sRa"/>
                             </scrollView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOI-54-u09">
-                                <rect key="frame" x="20" y="727" width="374" height="49"/>
+                                <rect key="frame" x="18" y="592" width="374" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ul3-X1-d6m">
-                                        <rect key="frame" x="8" y="14" width="358" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ul3-X1-d6m">
+                                        <rect key="frame" x="7.4311926605505505" y="14" width="357.99999999999989" height="21.000000000000171"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -252,20 +236,20 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYO-sr-TTi">
-                                <rect key="frame" x="34" y="784" width="347" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AYO-sr-TTi">
+                                <rect key="frame" x="32.891743119266039" y="649" width="347" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Proceed Payment">
                                     <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="proceedPaymentClicked:" destination="74f-04-nqC" eventType="touchUpInside" id="y9H-pZ-CKx"/>
+                                    <action selector="proceedPaymentClicked:" destination="74f-04-nqC" eventType="touchUpInside" id="l0r-aW-sRf"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CbL-0P-qGR">
-                                <rect key="frame" x="34" y="823" width="347" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CbL-0P-qGR">
+                                <rect key="frame" x="32.891743119266039" y="688" width="347" height="31.000000000000114"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Cancel Payment">
                                     <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -281,18 +265,19 @@
                     </view>
                     <navigationItem key="navigationItem" id="1TX-Or-DaA"/>
                     <connections>
+                        <outlet property="afterFlightButton" destination="NgR-bH-NZz" id="6Lg-vN-uRP"/>
                         <outlet property="afterFlightServicesView" destination="9OS-bE-0bI" id="AY4-Ga-jCV"/>
+                        <outlet property="cancelPaymentButton" destination="CbL-0P-qGR" id="hh0-sn-qix"/>
+                        <outlet property="entertainmentButton" destination="Umz-TY-k66" id="XhC-uH-TJm"/>
                         <outlet property="entertainmentMenuView" destination="wwp-7V-22J" id="VPi-FA-gQw"/>
+                        <outlet property="foodDrinkButton" destination="zJ4-pP-YFI" id="Vr5-tR-ONe"/>
+                        <outlet property="foodDrinkMenuView" destination="3o8-Yd-Q2y" id="4wg-ez-zvu"/>
                         <outlet property="foodMenuView" destination="3o8-Yd-Q2y" id="Gtc-7w-joK"/>
-                        <outlet property="menuImage1" destination="0bM-79-Rmt" id="khv-ug-35L"/>
-                        <outlet property="menuImage2" destination="Mse-fx-EhK" id="6xW-DA-c7m"/>
-                        <outlet property="menuImage3" destination="n2y-jO-aSn" id="A7S-Ve-o5E"/>
-                        <outlet property="menuImage4" destination="stU-HI-j4g" id="vCF-Ck-jpb"/>
-                        <outlet property="menuImage5" destination="36j-AD-X20" id="MbR-jC-Gyn"/>
+                        <outlet property="menuImage5" destination="36j-AD-X20" id="ctl-Se-MgK"/>
                         <outlet property="menuImage6" destination="hgI-2M-chl" id="dYg-Ax-Pcf"/>
                         <outlet property="menuImage7" destination="8AY-Gs-n4p" id="z3C-Sf-aWM"/>
-                        <outlet property="navigationBar" destination="1wz-fY-6WO" id="fwh-Pd-BHo"/>
-                        <outlet property="proceedPaymentButton" destination="AYO-sr-TTi" id="AtG-pY-wPA"/>
+                        <outlet property="navigationBar" destination="1wz-fY-6WO" id="WNL-LH-ICb"/>
+                        <outlet property="proceedPaymentButton" destination="AYO-sr-TTi" id="VXM-9X-nsa"/>
                         <outlet property="scrollView" destination="woQ-7Q-Dlr" id="L3S-ly-6gh"/>
                         <outlet property="totalLabel" destination="ul3-X1-d6m" id="RFM-VZ-ry1"/>
                         <outlet property="totalView" destination="cOI-54-u09" id="OOS-bI-0s7"/>
@@ -3809,29 +3794,29 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0 ₺" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="veD-U3-cEM">
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0 ₺" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="veD-U3-cEM">
                                         <rect key="frame" x="205" y="128" width="150" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text=" 0 ₺" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rrD-qW-qf9">
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text=" 0 ₺" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rrD-qW-qf9">
                                         <rect key="frame" x="205" y="170" width="150" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zLv-pz-bFw">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zLv-pz-bFw">
                                         <rect key="frame" x="140" y="212" width="215" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="See Spending Details"/>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="arrow.right.square" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="adR-0X-woo">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" image="arrow.right.square" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="adR-0X-woo">
                                         <rect key="frame" x="327" y="213" width="28" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
@@ -3867,10 +3852,15 @@
                     </view>
                     <navigationItem key="navigationItem" id="b9J-Dm-BBT"/>
                     <connections>
+                        <outlet property="addPaymentButton" destination="6Ey-UP-G19" id="8Fe-33-NtY"/>
+                        <outlet property="cancelButton" destination="k57-3F-tRt" id="Xn6-eC-kGB"/>
                         <outlet property="idLabel" destination="K0R-8G-uTY" id="5uN-aO-kmO"/>
                         <outlet property="initialPLabel" destination="veD-U3-cEM" id="JST-ZY-qKc"/>
                         <outlet property="nameLabel" destination="zNs-38-Nyf" id="peh-iO-Sox"/>
+                        <outlet property="navigationBar" destination="d93-Xb-OOG" id="cLe-0M-2M9"/>
+                        <outlet property="personalInfoView" destination="h2A-A0-ihK" id="wES-KY-5SO"/>
                         <outlet property="provisionLabel" destination="dsl-Ef-yVv" id="ZlK-MG-x1f"/>
+                        <outlet property="spendingsView" destination="2WY-w3-ZeV" id="H9J-tG-9pr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8ft-cW-8sz" sceneMemberID="firstResponder"/>
@@ -3894,9 +3884,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="K6N-RA-qZ0"/>
+        <segue reference="ijJ-JW-0EX"/>
         <segue reference="Luj-Tp-DW4"/>
-        <segue reference="EDy-bc-doz"/>
+        <segue reference="CR0-aG-bRY"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>

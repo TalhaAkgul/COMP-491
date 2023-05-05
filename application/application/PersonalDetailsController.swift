@@ -17,10 +17,15 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
     let pId = Expression<String>("pId")
     let prId = Expression<String>("prId")
     let prCount = Expression<String>("prCount")
+    @IBOutlet weak var navigationBar: UINavigationBar!
+    @IBOutlet weak var personalInfoView: UIView!
+    @IBOutlet weak var spendingsView: UIView!
     @IBOutlet weak var initialPLabel: UITextField!
     @IBOutlet weak var idLabel: UITextField!
     @IBOutlet weak var nameLabel: UITextField!
     @IBOutlet weak var provisionLabel: UITextField!
+    @IBOutlet weak var addPaymentButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
@@ -39,7 +44,27 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
         nameLabel.isUserInteractionEnabled = false
         provisionLabel.isUserInteractionEnabled = false
         initialPLabel.isUserInteractionEnabled = false
-
+        
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenHeight = screenSize.height
+        let screenWidth  = screenSize.width
+        personalInfoView.frame.size.width = screenWidth * 0.9
+        personalInfoView.center.x = self.view.center.x
+        personalInfoView.center.y = navigationBar.center.y +  navigationBar.bounds.size.height + screenHeight/25
+        
+        spendingsView.frame.size.width = screenWidth * 0.9
+        spendingsView.center.x = self.view.center.x
+        spendingsView.center.y = personalInfoView.frame.maxY + spendingsView.bounds.size.height/2 + screenHeight/25
+        
+        addPaymentButton.frame.size.width = screenWidth * 0.9
+        addPaymentButton.center.x = self.view.center.x
+        addPaymentButton.center.y = spendingsView.frame.maxY + addPaymentButton.bounds.size.height/2 + screenHeight/25
+        
+        cancelButton.frame.size.width = screenWidth * 0.9
+        cancelButton.center.x = self.view.center.x
+        cancelButton.center.y = addPaymentButton.frame.maxY + cancelButton.bounds.size.height/2 + screenHeight/25
+        
+        
     }
 
     
