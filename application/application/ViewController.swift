@@ -34,7 +34,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var instructionLabel: UILabel!
     @IBOutlet weak var identifyIdButton: UIButton!
     @IBOutlet weak var qrCodeButton: UIButton!
-    
+    @IBOutlet weak var syncButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Local database for the products
@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
-        
+        let screenWidth = screenSize.width
         //Welcome Label
         welcomeLabel.center.x = self.view.center.x
         welcomeLabel.center.y = self.view.center.y + screenHeight/20
@@ -66,6 +66,9 @@ class ViewController: UIViewController {
         //Qr Code Button
         qrCodeButton.center.x = self.view.center.x
         qrCodeButton.center.y = identifyIdButton.center.y + 1.25*qrCodeButton.bounds.size.height
+        
+        syncButton.center.x = self.view.center.x
+        syncButton.center.y = qrCodeButton.center.y + 2*syncButton.bounds.size.height
     }
     
     func initializeQRDatabase(){
