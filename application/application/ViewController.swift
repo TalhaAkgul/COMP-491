@@ -83,7 +83,6 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-        
         do {
             let drop = qrTable.drop(ifExists: true)
             try database3.run(drop)
@@ -120,7 +119,12 @@ class ViewController: UIViewController {
             print(error)
         }
         /*
-        
+        do {
+            let drop = transactionTable.drop(ifExists: true)
+            try database2.run(drop)
+        } catch {
+            print(error)
+        }
         let createTable = self.transactionTable.create { (table) in
             table.column(self.transactionId, primaryKey: true)
             table.column(self.amount)
@@ -133,8 +137,8 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-        */
-        /*
+         */
+       /*
         do {
             let drop = productsTable.drop(ifExists: true)
             try database.run(drop)

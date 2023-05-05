@@ -12,16 +12,6 @@ class PaymentSuccessfulController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showAnimate()
-        /*
-        let delay : Double = 2.0
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let mainViewController = storyBoard.instantiateViewController(withIdentifier: "mainViewController") as! ViewController
-            mainViewController.modalPresentationStyle = .fullScreen
-                    self.present(mainViewController, animated: true, completion: nil)
-         
-        }
-         */
     }
     
     func showAnimate()

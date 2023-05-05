@@ -12,6 +12,12 @@ import SQLite
 
 class PersonalDetailsController: UIViewController, URLSessionDelegate {
  
+    var database2: Connection!
+    let transactionTable = Table("Transaction")
+    let transactionId = Expression<String>("transactionId")
+    let amount = Expression<Double>("amount")
+    let passengerId = Expression<String>("passengerId")
+    
     var database3: Connection!
     let qrTable = Table("QR")
     let pId = Expression<String>("pId")
@@ -29,6 +35,7 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
+        connectDatabase2()
         readLocalData()
         do {
             // Retrieve the first row from the QR table
@@ -67,7 +74,17 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
         
     }
 
-    
+    func connectDatabase2(){
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            
+            let fileUrl = documentDirectory.appendingPathComponent("Transaction").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database2 = database
+        } catch {
+            print(error)
+        }
+    }
     
     func readLocalData(){
         guard let path = Bundle.main.path(forResource: "serverData", ofType: "json") else {
@@ -91,12 +108,19 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
                         let passengerId = serverInfo.passengerId
                         let passengerName = serverInfo.passengerName
                         let passengerSurname = serverInfo.passengerSurname
-                        let passengerEmail = serverInfo.passengerEmail
-                        let passengerAddress = serverInfo.passengerAddress
-                        let passengerPhoneNumber = serverInfo.passengerPhoneNumber
                         let amount = serverInfo.amount
-                        let provisionDate = serverInfo.provisionDate
-                        let aid = serverInfo.aid
+                        var totalSpendings = 0.0
+                        /*
+                        do {
+                            let filteredRows = try database2.prepare(transactionTable.filter(passengerId == currentId))
+                            for row in filteredRows {
+                                let transactionAmount = Double(row[amount])
+                                totalSpendings += transactionAmount
+                            }
+                        } catch {
+                            print("Error selecting transactions: \(error)")
+                        }
+*/
                         nameLabel.text = passengerName + " " + passengerSurname
                         provisionLabel.text = amount + "₺"
                         initialPLabel.text = amount + "₺"

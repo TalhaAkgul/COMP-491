@@ -18,6 +18,12 @@ class AddPaymentController: UIViewController {
     let count = Expression<Int>("count")
     let price = Expression<Double>("price")
     
+    var database2: Connection!
+    let transactionTable = Table("Transaction")
+    let transactionId = Expression<String>("transactionId")
+    let amount = Expression<Double>("amount")
+    let passengerId = Expression<String>("passengerId")
+    
     var database3: Connection!
     let qrTable = Table("QR")
     let pId = Expression<String>("pId")
@@ -46,6 +52,7 @@ class AddPaymentController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
+        connectDatabase2()
         connectDatabase3()
         
         menuImage5.image = UIImage(named: "images/add payment page images/menu2.jpeg")
@@ -106,7 +113,17 @@ class AddPaymentController: UIViewController {
         scrollView.center.y = afterFlightServicesView.frame.maxY + scrollView.frame.size.height/2 + 10
         
         scrollView.frame.size.height = totalView.frame.minY - scrollView.frame.minY - 20
-    
+        
+        do {
+            let filteredRows = try database2.prepare(transactionTable.filter(passengerId == "2"))
+            print("heyyyyyy");
+            for row in filteredRows {
+                let transactionAmount = Double(row[amount])
+                print("Transaction Amount: \(transactionAmount)")
+            }
+        } catch {
+            print("Error selecting transactions: \(error)")
+        }
     }
     
     func connectDatabase(){
@@ -119,7 +136,17 @@ class AddPaymentController: UIViewController {
             print(error)
         }
     }
-    
+    func connectDatabase2(){
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            
+            let fileUrl = documentDirectory.appendingPathComponent("Transaction").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database2 = database
+        } catch {
+            print(error)
+        }
+    }
     func updateBasket(container : UIStackView){
         
         do {
@@ -128,27 +155,17 @@ class AddPaymentController: UIViewController {
             totalPrice = 0.0
             for product in products {
                 let productLabel = UILabel()
-                //productLabel.center = CGPoint(x: 160, y: 285)
-                //productLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                 productLabel.textColor = UIColor.black
                 productLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
                 let productName = product[self.productName]
                 let count = product[self.count]
                 let productText = String(count) + "   x   " + productName
-                //productLabel.text = productText
-                //let priceLabel = UILabel()
-                //priceLabel.center = CGPoint(x: 160, y: 285)
-                //priceLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                //priceLabel.textColor = UIColor.black
                 let price = product[self.price]
                 let totalPriceForProd = price * Double(count)
                 let priceText = String(totalPriceForProd) + " ₺ "
-                //priceLabel.text = priceText
-                //priceLabel.textAlignment = .right
                 let text = productText + ": " + priceText
                 productLabel.text = text
                 container.addArrangedSubview(productLabel)
-                //container.addArrangedSubview(priceLabel)
                 totalPrice = totalPrice + totalPriceForProd
                 labelPosY = labelPosY + 30
             }
@@ -191,15 +208,27 @@ class AddPaymentController: UIViewController {
                 let decoder = JSONDecoder()
                 let serverInfos = try decoder.decode([ServerData].self, from: data)
                 var currentId = ""
+                var totalSpendings = 0.0
                 if let qrRow = try database3.pluck(qrTable) {
-                    // Retrieve the value of pId column from the row and assign it to idLabel's text
                     currentId  = qrRow[pId]
                 }
+                do {
+                    let filteredRows = try database2.prepare(transactionTable.filter(passengerId == currentId))
+                    for row in filteredRows {
+                        let transactionAmount = Double(row[amount])
+                        totalSpendings += transactionAmount
+                        print("Transaction Amount: \(transactionAmount)")
+                    }
+                } catch {
+                    print("Error selecting transactions: \(error)")
+                }
+
                 for serverInfo in serverInfos {
                     if serverInfo.passengerId == currentId {
-                        let amount = serverInfo.amount
-                        let amountValue = Double(amount) ?? 0.0
-                        if totalPrice > amountValue {
+                        let serverAmount = serverInfo.amount
+                        let amountValue = Double(serverAmount) ?? 0.0
+                        let remainingAmount = amountValue - totalSpendings
+                        if totalPrice > remainingAmount {
                             let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
                             let blurEffectView = UIVisualEffectView(effect: blurEffect)
                             blurEffectView.frame = view.bounds
@@ -212,11 +241,25 @@ class AddPaymentController: UIViewController {
                             self.view.addSubview(popOverVC.view)
                             popOverVC.didMove(toParent: self)
                         } else {
+                            do {
+                                // Insert a new row into the table
+                                let insert = transactionTable.insert(transactionId <- "1", amount <- totalSpendings, passengerId <- currentId)
+                                
+                                // Execute the insert statement
+                                try database2.run(insert)
+                                
+                                print("New transaction inserted")
+                            } catch {
+                                print("Error inserting transaction: \(error)")
+                            }
+
                             let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PaymentSuccessfulController") as! PaymentSuccessfulController
                             self.addChild(popOverVC)
                             popOverVC.view.frame = self.view.frame
                             self.view.addSubview(popOverVC.view)
-                            popOverVC.didMove(toParent: self)                        }
+                            popOverVC.didMove(toParent: self)
+                            
+                        }
                         
                     }
                         }

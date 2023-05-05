@@ -35,18 +35,14 @@ class QRCodeViewController: UIViewController {
                 codeTypes: [.qr],
                 completion: {result in
                     if case let .success(code) = result{
-                        //print(code)
-                        //print(code.string)
                         self.scannedCode = code.string
                         self.scanComplete = true
-                        //print(self.scannedCode)
                     }
                 }
             )
         }
         
         let scanView = UIHostingController(rootView: scannerSheet)
-        //scanView.view.translatesAutoresizingMaskIntoConstraints = false
         scanView.view.frame = self.view.bounds
         self.view.addSubview(scanView.view)
         self.addChild(scanView)
@@ -65,36 +61,8 @@ class QRCodeViewController: UIViewController {
     
     
     func processDataFromQRCode() {
-        //var dictonary:NSDictionary?
         var passID = ""
-        //var orderDict = ""
         var orderDict : [[String: String]]
-        //print("AAAA")
-        /*
-        if let data = self.scannedCode.data(using: String.Encoding.utf8) {
-            do {
-                
-                dictonary = try JSONSerialization.jsonObject(with: data, options: []) as? [String:AnyObject] as NSDictionary?
-                    
-                if let myDictionary = dictonary {
-                    //Passenger ID
-                    let passIDWithZeros = "\(myDictionary["passengerID"]!)"
-                    let start = passIDWithZeros.index(passIDWithZeros.startIndex, offsetBy: 4)
-                    let end = passIDWithZeros.index(passIDWithZeros.endIndex, offsetBy: (-1))
-                    let range = start...end
-                    passID = String(passIDWithZeros[range])
-                    print(passID)
-                    //print(" First name is: \(myDictionary["passengerID"]!)")
-                    
-                    //Orders
-                    orderDict = "\(myDictionary["orders"]!)"
-                    print(orderDict)
-                }
-            } catch let error as NSError {
-                print(error)
-            }
-        }
-         */
         let passengerInfoAsJsonData = self.scannedCode.data(using: .utf8)!
 
         do {
@@ -108,15 +76,12 @@ class QRCodeViewController: UIViewController {
             print(passID)
             orderDict = passengerInfo.orders
             print(orderDict)
-            //print(passID)
-            //print(passengerInfo)
-            
             for dict in orderDict {
                 let prIdValue = dict.keys.first ?? ""
                 let prCountValue = dict.values.first ?? ""
                 let insertQuery = qrTable.insert(pId <- passID, prId <- prIdValue, prCount <- prCountValue)
-                if let prId = Int(prIdValue) { // Convert the prIdValue to an Int
-                    let matchingRow = productsTable.filter(productId == prId) // Use the converted prId variable in the filter expression
+                if let prId = Int(prIdValue) {
+                    let matchingRow = productsTable.filter(productId == prId)
                     if let prCountString = dict.values.first, let prCountValue = Int(prCountString) {
                         let updateStatement = matchingRow.update(count <- prCountValue)
 
