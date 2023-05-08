@@ -41,7 +41,6 @@ class AddPaymentController: UIViewController {
     @IBOutlet weak var afterFlightServicesView: UIView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var basketImage: UIImageView!
     @IBOutlet weak var totalView: UIView!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var foodDrinkButton: UIButton!
@@ -114,16 +113,7 @@ class AddPaymentController: UIViewController {
         
         scrollView.frame.size.height = totalView.frame.minY - scrollView.frame.minY - 20
         
-        do {
-            let filteredRows = try database2.prepare(transactionTable.filter(passengerId == "2"))
-            print("heyyyyyy");
-            for row in filteredRows {
-                let transactionAmount = Double(row[amount])
-                print("Transaction Amount: \(transactionAmount)")
-            }
-        } catch {
-            print("Error selecting transactions: \(error)")
-        }
+        
     }
     
     func connectDatabase(){
@@ -244,9 +234,9 @@ class AddPaymentController: UIViewController {
                             do {
                                 let time = ("\(Date())")
                                 // Insert a new row into the table
-                                print(totalPrice)
-                                print(time)
-                                print(currentId)
+                                //print(totalPrice)
+                                //print(time)
+                                //print(currentId)
                                 let insert = transactionTable.insert(transactionId <- time, amount <- totalPrice, passengerId <- currentId)
                                 
                                 // Execute the insert statement

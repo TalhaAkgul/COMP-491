@@ -33,6 +33,7 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
     @IBOutlet weak var provisionLabel: UITextField!
     @IBOutlet weak var addPaymentButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var seeAllSpendingsButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
@@ -89,6 +90,18 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
             print(error)
         }
     }
+    @IBAction func seeSpendingDetailsClicked(_ sender: UIButton) {
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(blurEffectView)
+        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SpendingDetailsController") as! SpendingDetailsController
+        self.addChild(popOverVC)
+        popOverVC.view.frame = self.view.frame
+        self.view.addSubview(popOverVC.view)
+        popOverVC.didMove(toParent: self)
+    }
     
     func readLocalData(){
         guard let path = Bundle.main.path(forResource: "serverData", ofType: "json") else {
@@ -130,6 +143,11 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
                         provisionLabel.text = String(remainingAmount) + "₺"
                         initialPLabel.text = String(provisionAmount) + "₺"
                         spentLabel.text = String(totalSpendings) + "₺"
+                        if(totalSpendings == 0.0){
+                            seeAllSpendingsButton.isEnabled = false
+                        } else {
+                            seeAllSpendingsButton.isEnabled = true
+                        }
                     }
                         }
                     } catch {

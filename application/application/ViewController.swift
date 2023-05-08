@@ -137,7 +137,7 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-         */
+        */
        /*
         do {
             let drop = productsTable.drop(ifExists: true)
