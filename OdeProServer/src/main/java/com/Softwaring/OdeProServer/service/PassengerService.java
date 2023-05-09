@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -33,13 +34,13 @@ public class PassengerService {
         Passenger passenger = passengerRepository
                 .findById(PID)
                 .orElseThrow(RuntimeException::new);
+        System.out.println(passenger);
 
         ActiveProvision activeProvision = activeProvisionRepository
                 .findByPassenger(passenger)
                 .orElseThrow(RuntimeException::new);
 
-        ActiveProvisionDTO response = modelMapper.map(activeProvision, ActiveProvisionDTO.class);
-        return response;
+        return modelMapper.map(activeProvision, ActiveProvisionDTO.class);
     }
 
 
@@ -55,12 +56,20 @@ public class PassengerService {
         return modelMapper.map(activeProvision, ActiveProvisionDTO.class);
     }
 
-    public UsedProvisionDTO getUsedProvisionsByPassengerID(String PID) {
+    public List<UsedProvisionDTO> getUsedProvisionsByPassengerID(String PID) {
         Passenger passenger = passengerRepository.findByPID(PID)
                 .orElseThrow(RuntimeException::new);
-
+        System.out.println(passenger);
         List<UsedProvision> usedProvisionList = usedProvisionRepository.findByPassenger(passenger)
                 .orElseThrow(RuntimeException::new);
-        return modelMapper.map(usedProvisionList, UsedProvisionDTO.class);
+        System.out.println(modelMapper.map(usedProvisionList, UsedProvisionDTO.class));
+        return mapList(usedProvisionList, UsedProvisionDTO.class);
+    }
+
+    <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
+        return source
+                .stream()
+                .map(element -> modelMapper.map(element, targetClass))
+                .collect(Collectors.toList());
     }
 }

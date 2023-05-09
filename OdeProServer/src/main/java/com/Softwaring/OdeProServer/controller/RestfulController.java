@@ -93,9 +93,9 @@ public class RestfulController {
         return ResponseEntity.ok().body(results);
     }
     @PostMapping("/getUsedProvisions")
-    public ResponseEntity<UsedProvisionDTO> getUsedProvisions(@RequestBody final String PID){
+    public ResponseEntity<List<UsedProvisionDTO>> getUsedProvisions(@RequestBody final String PID){
         System.out.println("PID: "+PID);
-        UsedProvisionDTO results = passengerService.getUsedProvisionsByPassengerID(PID);
+        List<UsedProvisionDTO> results = passengerService.getUsedProvisionsByPassengerID(PID);
         return ResponseEntity.ok().body(results);
     }
     @GetMapping("/search")
