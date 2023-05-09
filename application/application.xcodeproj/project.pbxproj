@@ -32,6 +32,7 @@
 		1CDAE32229D376E0000E140A /* applicationUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE32129D376E0000E140A /* applicationUITestsLaunchTests.swift */; };
 		1CDAE33129D37987000E140A /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE33029D37987000E140A /* Background.swift */; };
 		1CE16CB32A0975F0002C6C55 /* SpendingDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE16CB22A0975F0002C6C55 /* SpendingDetailsController.swift */; };
+		775A4AEA2A0AD859001B34B4 /* MultipeerConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 775A4AE92A0AD859001B34B4 /* MultipeerConnectivity.framework */; };
 		7782C50029F6D78000C1D325 /* ServerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7782C4FF29F6D78000C1D325 /* ServerData.swift */; };
 		7782C50B29F6DFD900C1D325 /* serverData.json in Resources */ = {isa = PBXBuildFile; fileRef = 7782C50A29F6DFD900C1D325 /* serverData.json */; };
 /* End PBXBuildFile section */
@@ -144,6 +145,7 @@
 		1CDAE32129D376E0000E140A /* applicationUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applicationUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1CDAE33029D37987000E140A /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		1CE16CB22A0975F0002C6C55 /* SpendingDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingDetailsController.swift; sourceTree = "<group>"; };
+		775A4AE92A0AD859001B34B4 /* MultipeerConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MultipeerConnectivity.framework; path = System/Library/Frameworks/MultipeerConnectivity.framework; sourceTree = SDKROOT; };
 		7782C4FF29F6D78000C1D325 /* ServerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerData.swift; sourceTree = "<group>"; };
 		7782C50A29F6DFD900C1D325 /* serverData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = serverData.json; path = ../../serverData.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,6 +155,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				775A4AEA2A0AD859001B34B4 /* MultipeerConnectivity.framework in Frameworks */,
 				1C4401A729EB4A4800AF40F3 /* CodeScanner in Frameworks */,
 				1C15477C29E17F3C0011DBA2 /* SQLite.framework in Frameworks */,
 			);
@@ -192,6 +195,7 @@
 		1C15477B29E17F3C0011DBA2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				775A4AE92A0AD859001B34B4 /* MultipeerConnectivity.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -670,6 +674,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -700,6 +705,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
