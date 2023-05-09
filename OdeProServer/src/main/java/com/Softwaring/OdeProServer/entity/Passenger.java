@@ -32,6 +32,6 @@ public class Passenger {
     @Column(name = "address")
     private String address = "";
 
-    @Column(name = "phone_number", length = 13)
+    @Column(name = "phone_number", length = 17)
     private String phoneNumber = "";
 }
