@@ -9,11 +9,14 @@ import UIKit
 import SQLite
 import MultipeerConnectivity
 
-class ViewController: UIViewController, MCSessionDelegate, MCBrowserViewControllerDelegate {
+class ViewController: UIViewController, MCSessionDelegate, MCBrowserViewControllerDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
+
+    
     var peerID: MCPeerID!
     var mcSession: MCSession!
-    var mcAdvertiserAssistant: MCAdvertiserAssistant!
-
+    var mcAdvertiserAssistant: MCNearbyServiceAdvertiser!
+    var mcBrowser: MCNearbyServiceBrowser!
+    
     var database: Connection!
     let productsTable = Table("Products")
     let productId = Expression<Int>("productId")
@@ -76,8 +79,14 @@ class ViewController: UIViewController, MCSessionDelegate, MCBrowserViewControll
         
         
         peerID = MCPeerID(displayName: UIDevice.current.name)
-        mcSession = MCSession(peer: peerID, securityIdentity: nil,    encryptionPreference: .required)
+        mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .none)
+        mcAdvertiserAssistant = MCNearbyServiceAdvertiser(peer: self.peerID, discoveryInfo: nil, serviceType:  "todo")
+        mcBrowser = MCNearbyServiceBrowser(peer: self.peerID, serviceType: "todo")
+        
         mcSession.delegate = self
+        mcAdvertiserAssistant.delegate = self
+        mcBrowser.delegate = self
+
     }
     
     func initializeQRDatabase(){
@@ -269,17 +278,16 @@ class ViewController: UIViewController, MCSessionDelegate, MCBrowserViewControll
          ac.addAction(UIAlertAction(title: "Host a session", style: .default) {
              //here we will add a closure to host a session
             (UIAlertAction) in
-              self.mcAdvertiserAssistant = MCAdvertiserAssistant(serviceType:  "todo", discoveryInfo: nil, session: self.mcSession)
-              self.mcAdvertiserAssistant.start()
+             
+             self.mcAdvertiserAssistant.startAdvertisingPeer()
              
        })
          ac.addAction(UIAlertAction(title: "Join a session", style: .default) {
              //here we will add a closure to join a session
              (UIAlertAction) in
-              let mcBrowser = MCBrowserViewController(serviceType: "todo", session: self.mcSession)
-              mcBrowser.delegate = self
-              self.present(mcBrowser, animated: true, completion: nil)
-       })
+
+             self.mcBrowser.startBrowsingForPeers()
+         })
          ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
          present(ac, animated: true)
     }
@@ -301,6 +309,18 @@ class ViewController: UIViewController, MCSessionDelegate, MCBrowserViewControll
     func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {dismiss(animated: true)}
     func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {dismiss(animated: true)}
     
+    func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+        print("didReceiveInvitationFromPeer \(peerID)")
+    }
+    
+    func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
+        print("ServiceBrowser found peer: \(peerID)")
+
+    }
+    
+    func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
+        print("ServiceBrowser lost peer: \(peerID)")
+    }
     
 }
 
