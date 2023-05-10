@@ -34,29 +34,47 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
     @IBOutlet weak var addPaymentButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var seeAllSpendingsButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
         connectDatabase2()
         readLocalData()
-        do {
-            // Retrieve the first row from the QR table
-            if let qrRow = try database3.pluck(qrTable) {
-                // Retrieve the value of pId column from the row and assign it to idLabel's text
-                idLabel.text = qrRow[pId]
-                
-            }
-        } catch {
-            print("Error retrieving data: \(error)")
-        }
+        setItems()
+    }
+    
+    func setItems(){
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenHeight = screenSize.height
+        let screenWidth  = screenSize.width
+        let navigationItem = UINavigationItem(title: "Personal Details")
+        
+        let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(goBack))
+        navigationItem.leftBarButtonItem = back
+
+        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
+        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.setItems([navigationItem], animated: false)
+
+        view.addSubview(navigationBar)
+        
         idLabel.isUserInteractionEnabled = false
         nameLabel.isUserInteractionEnabled = false
         provisionLabel.isUserInteractionEnabled = false
         initialPLabel.isUserInteractionEnabled = false
         
-        let screenSize: CGRect = UIScreen.main.bounds
-        let screenHeight = screenSize.height
-        let screenWidth  = screenSize.width
+        do {
+            if let qrRow = try database3.pluck(qrTable) {
+                idLabel.text = qrRow[pId]
+            }
+        } catch {
+            print("Error retrieving data: \(error)")
+        }
+        
+        
         personalInfoView.frame.size.width = screenWidth * 0.9
         personalInfoView.center.x = self.view.center.x
         personalInfoView.center.y = navigationBar.center.y +  navigationBar.bounds.size.height + screenHeight/25
@@ -75,10 +93,16 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
         initialPLabel.isUserInteractionEnabled = false
         provisionLabel.isUserInteractionEnabled = false
         spentLabel.isUserInteractionEnabled = false
-        
-        
     }
+    
+    @objc func goBack() {
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "mainViewController") {
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true, completion: nil)
+        }
 
+    }
+    
     func connectDatabase2(){
         do {
             let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)

@@ -143,14 +143,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1wz-fY-6WO">
-                                <rect key="frame" x="-1" y="44" width="413" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="barTintColor" systemColor="systemGray6Color"/>
-                                <items>
-                                    <navigationItem title="Add Payment" id="vUn-Vw-7qr"/>
-                                </items>
-                            </navigationBar>
                             <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3o8-Yd-Q2y">
                                 <rect key="frame" x="20" y="108" width="374" height="91"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
@@ -277,7 +269,6 @@
                         <outlet property="menuImage5" destination="36j-AD-X20" id="ctl-Se-MgK"/>
                         <outlet property="menuImage6" destination="hgI-2M-chl" id="dYg-Ax-Pcf"/>
                         <outlet property="menuImage7" destination="8AY-Gs-n4p" id="z3C-Sf-aWM"/>
-                        <outlet property="navigationBar" destination="1wz-fY-6WO" id="WNL-LH-ICb"/>
                         <outlet property="proceedPaymentButton" destination="AYO-sr-TTi" id="VXM-9X-nsa"/>
                         <outlet property="scrollView" destination="woQ-7Q-Dlr" id="L3S-ly-6gh"/>
                         <outlet property="totalLabel" destination="ul3-X1-d6m" id="RFM-VZ-ry1"/>
@@ -302,13 +293,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="peZ-DD-wlK">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="3726"/>
                                         <subviews>
-                                            <navigationBar contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WAO-kv-AJa">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                                <color key="barTintColor" systemColor="systemGray6Color"/>
-                                                <items>
-                                                    <navigationItem title="Food&amp;Drinks" id="URG-ve-3gY"/>
-                                                </items>
-                                            </navigationBar>
                                             <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5kU-nP-G3n">
                                                 <rect key="frame" x="20" y="2740" width="374" height="91"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2151,7 +2135,6 @@
                             <constraint firstItem="fAH-jE-ZXy" firstAttribute="trailing" secondItem="nxy-mE-8uL" secondAttribute="trailing" id="7BE-EO-k5M"/>
                             <constraint firstAttribute="bottom" secondItem="fAH-jE-ZXy" secondAttribute="bottom" id="MlR-vr-zCA"/>
                             <constraint firstItem="fAH-jE-ZXy" firstAttribute="leading" secondItem="nxy-mE-8uL" secondAttribute="leading" id="P4J-iB-7xw"/>
-                            <constraint firstItem="WAO-kv-AJa" firstAttribute="width" secondItem="lI6-06-VeO" secondAttribute="width" id="Zx2-7W-7hy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="tYy-6f-OwT"/>
@@ -3157,13 +3140,6 @@
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
-                                            <navigationBar contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RJt-i0-Lda">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                                <color key="barTintColor" systemColor="systemGray6Color"/>
-                                                <items>
-                                                    <navigationItem title="Entertainment" id="be2-5z-xvd"/>
-                                                </items>
-                                            </navigationBar>
                                             <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fXn-Zt-Uv0">
                                                 <rect key="frame" x="19" y="1651" width="374" height="66"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3204,7 +3180,6 @@
                             <constraint firstItem="5Qd-ks-QRK" firstAttribute="width" secondItem="q3e-8D-pvx" secondAttribute="width" id="94b-O0-P19"/>
                             <constraint firstItem="rMI-ar-wQK" firstAttribute="leading" secondItem="d8k-tN-5M8" secondAttribute="leading" id="9vP-oF-VG1"/>
                             <constraint firstAttribute="bottom" secondItem="rMI-ar-wQK" secondAttribute="bottom" id="GOb-am-Nbg"/>
-                            <constraint firstItem="RJt-i0-Lda" firstAttribute="width" secondItem="q3e-8D-pvx" secondAttribute="width" id="I0S-BI-Bem"/>
                             <constraint firstItem="rMI-ar-wQK" firstAttribute="top" secondItem="d8k-tN-5M8" secondAttribute="top" id="igu-4t-sdU"/>
                             <constraint firstItem="rMI-ar-wQK" firstAttribute="trailing" secondItem="d8k-tN-5M8" secondAttribute="trailing" id="u9F-3W-qDN"/>
                         </constraints>
@@ -3578,13 +3553,6 @@
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
-                                            <navigationBar contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tBT-51-vZg">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                                <color key="barTintColor" systemColor="systemGray6Color"/>
-                                                <items>
-                                                    <navigationItem title="After Flight Services" id="m6h-EM-5qV"/>
-                                                </items>
-                                            </navigationBar>
                                             <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r7a-HM-9Ef">
                                                 <rect key="frame" x="19" y="562" width="374" height="66"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -3626,7 +3594,6 @@
                             <constraint firstItem="Zhq-6p-poy" firstAttribute="width" secondItem="qEu-7y-T5Z" secondAttribute="width" id="YD0-Ce-7Dr"/>
                             <constraint firstItem="Y9l-IG-JWv" firstAttribute="top" secondItem="5NW-IR-Eoi" secondAttribute="top" id="YpE-xG-vuk"/>
                             <constraint firstItem="Y9l-IG-JWv" firstAttribute="trailing" secondItem="5NW-IR-Eoi" secondAttribute="trailing" id="eri-0n-LPb"/>
-                            <constraint firstItem="tBT-51-vZg" firstAttribute="width" secondItem="qEu-7y-T5Z" secondAttribute="width" id="inK-qq-CVM"/>
                             <constraint firstItem="Y9l-IG-JWv" firstAttribute="leading" secondItem="5NW-IR-Eoi" secondAttribute="leading" id="lAc-Jk-9fi"/>
                         </constraints>
                     </view>
@@ -3744,14 +3711,6 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="0.36034790010000001" green="0.031093177020000001" blue="0.5775566486" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d93-Xb-OOG">
-                                <rect key="frame" x="-1" y="44" width="413" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="barTintColor" systemColor="systemGray6Color"/>
-                                <items>
-                                    <navigationItem title="Personal Details" id="ubT-hL-xbZ"/>
-                                </items>
-                            </navigationBar>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2WY-w3-ZeV">
                                 <rect key="frame" x="20" y="212" width="374" height="263"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -3861,7 +3820,6 @@
                         <outlet property="idLabel" destination="K0R-8G-uTY" id="5uN-aO-kmO"/>
                         <outlet property="initialPLabel" destination="veD-U3-cEM" id="JST-ZY-qKc"/>
                         <outlet property="nameLabel" destination="zNs-38-Nyf" id="peh-iO-Sox"/>
-                        <outlet property="navigationBar" destination="d93-Xb-OOG" id="cLe-0M-2M9"/>
                         <outlet property="personalInfoView" destination="h2A-A0-ihK" id="wES-KY-5SO"/>
                         <outlet property="provisionLabel" destination="dsl-Ef-yVv" id="ZlK-MG-x1f"/>
                         <outlet property="seeAllSpendingsButton" destination="zLv-pz-bFw" id="rm5-RN-kO0"/>
@@ -3929,8 +3887,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dft-7U-0pw"/>
-        <segue reference="Luj-Tp-DW4"/>
+        <segue reference="ijJ-JW-0EX"/>
+        <segue reference="08X-ih-pdO"/>
         <segue reference="CR0-aG-bRY"/>
     </inferredMetricsTieBreakers>
     <resources>
