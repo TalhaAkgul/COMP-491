@@ -15,6 +15,13 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>talha-pinar</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_mp-numbers._tcp</string>
+		<string>_mp-numbers._udp</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
