@@ -49,7 +49,32 @@ class QRCodeViewController: UIViewController {
         connectDatabase()
         connectDatabase3()
         
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenHeight = screenSize.height
+        let screenWidth  = screenSize.width
+        let navigationItem = UINavigationItem(title: "Scan QR Code")
         
+        let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(goBack))
+
+        navigationItem.leftBarButtonItem = back
+        
+        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
+        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.setItems([navigationItem], animated: false)
+
+        view.addSubview(navigationBar)
+        
+    }
+    
+    @objc func goBack() {
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "mainViewController") {
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true, completion: nil)
+        }
+
     }
     
     var database3: Connection!
@@ -104,32 +129,6 @@ class QRCodeViewController: UIViewController {
                     print("Error inserting data: \(error)")
                 }
             }
-            /*
-            let selectQuery = qrTable.select(*)
-            do {
-                for row in try database3.prepare(selectQuery) {
-                    let pIdValue = row[pId]
-                    let prIdValue = row[prId]
-                    let prCountValue = row[prCount]
-                    
-                    print("pId: \(pIdValue), prId: \(prIdValue), prCount: \(prCountValue)")
-                }
-            } catch {
-                print("Error selecting data: \(error)")
-            }
-             */
-            /*
-                    print("LIST TAPPED")
-                            
-                            do {
-                                let users = try self.database3.prepare(self.qrTable)
-                                for user in users {
-                                    print("userId: \(user[self.id]), name: \(user[self.name]), email: \(user[self.email])")
-                                }
-                            } catch {
-                                print(error)
-                            }
-             */
         } catch {
           print(error)
         }

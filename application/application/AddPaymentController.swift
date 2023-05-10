@@ -53,14 +53,33 @@ class AddPaymentController: UIViewController {
         connectDatabase()
         connectDatabase2()
         connectDatabase3()
+        setItems()
+    }
+    
+    func setItems(){
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenHeight = screenSize.height
+        let screenWidth  = screenSize.width
+        
+        let navigationItem = UINavigationItem(title: "Add Payment")
+        
+        let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(goBack))
+        navigationItem.leftBarButtonItem = back
+
+        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
+        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.setItems([navigationItem], animated: false)
+
+        view.addSubview(navigationBar)
         
         menuImage5.image = UIImage(named: "images/add payment page images/menu2.jpeg")
         menuImage6.image = UIImage(named: "images/add payment page images/menu6.jpeg")
         menuImage7.image = UIImage(named: "images/add payment page images/menu7.jpeg")
         
-        let screenSize: CGRect = UIScreen.main.bounds
-        let screenHeight = screenSize.height
-        let screenWidth  = screenSize.width
+        
         
         foodDrinkMenuView.frame.size.width = screenWidth
         foodDrinkMenuView.center.x = self.view.center.x
@@ -112,8 +131,13 @@ class AddPaymentController: UIViewController {
         scrollView.center.y = afterFlightServicesView.frame.maxY + scrollView.frame.size.height/2 + 10
         
         scrollView.frame.size.height = totalView.frame.minY - scrollView.frame.minY - 20
-        
-        
+    }
+    
+    @objc func goBack() {
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "PersonalDetailsController") {
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true, completion: nil)
+        }
     }
     
     func connectDatabase(){
@@ -126,6 +150,7 @@ class AddPaymentController: UIViewController {
             print(error)
         }
     }
+    
     func connectDatabase2(){
         do {
             let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -178,14 +203,6 @@ class AddPaymentController: UIViewController {
     
     
     @IBAction func proceedPaymentClicked(_ sender: UIButton) {
-        /*
-         
-         
-         
-        The main database will be updated according to the payment amount and the passenger
-         
-         
-         */
         guard let path = Bundle.main.path(forResource: "serverData", ofType: "json") else {
             fatalError("Couldn't find file 'serverData.json' in app bundle.")
         }
@@ -233,13 +250,7 @@ class AddPaymentController: UIViewController {
                         } else {
                             do {
                                 let time = ("\(Date())")
-                                // Insert a new row into the table
-                                //print(totalPrice)
-                                //print(time)
-                                //print(currentId)
                                 let insert = transactionTable.insert(transactionId <- time, amount <- totalPrice, passengerId <- currentId)
-                                
-                                // Execute the insert statement
                                 try database2.run(insert)
                                 
                                 print("New transaction inserted")

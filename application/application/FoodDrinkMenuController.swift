@@ -207,9 +207,44 @@ class FoodDrinkMenuController: UIViewController {
     var countLabels = [UILabel]()
     var plusButtons = [UIButton]()
     var minusButtons = [UIButton]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
+        setItems()
+    }
+    
+    @IBAction func buttonClicked(_ sender: UIButton) {
+        let senderInfo = sender.self.tag
+        if(senderInfo % 2 == 0){
+            var value = Int(countLabels[senderInfo/2 - 1].text!) ?? 0
+            value += 1
+            countLabels[senderInfo/2 - 1].text = "\(value)"
+        } else {
+            var value = Int(countLabels[(senderInfo-1)/2 - 1].text!) ?? 0
+            if(value > 0){
+                value -= 1
+                countLabels[(senderInfo-1)/2 - 1].text = "\(value)"
+            }
+        }
+    }
+    func setItems(){
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenHeight = screenSize.height
+        let screenWidth  = screenSize.width
+        let navigationItem = UINavigationItem(title: "Food & Drinks")
+        
+        let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(goBack))
+        navigationItem.leftBarButtonItem = back
+
+        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
+        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.setItems([navigationItem], animated: false)
+
+        view.addSubview(navigationBar)
         foodPhoto1.image = UIImage(named: "images/food menu images/foods/avocadobowl.png")
         foodPhoto2.image = UIImage(named: "images/food menu images/foods/baconwrap.png")
         foodPhoto3.image = UIImage(named: "images/food menu images/foods/chickenwrap.png")
@@ -281,20 +316,13 @@ class FoodDrinkMenuController: UIViewController {
         }
     }
     
-    @IBAction func buttonClicked(_ sender: UIButton) {
-        let senderInfo = sender.self.tag
-        if(senderInfo % 2 == 0){
-            var value = Int(countLabels[senderInfo/2 - 1].text!) ?? 0
-            value += 1
-            countLabels[senderInfo/2 - 1].text = "\(value)"
-        } else {
-            var value = Int(countLabels[(senderInfo-1)/2 - 1].text!) ?? 0
-            if(value > 0){
-                value -= 1
-                countLabels[(senderInfo-1)/2 - 1].text = "\(value)"
-            }
+    @objc func goBack() {
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "AddPayment") {
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true, completion: nil)
         }
     }
+    
     func connectDatabase(){
         do {
             let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
