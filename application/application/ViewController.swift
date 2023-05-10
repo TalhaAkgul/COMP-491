@@ -8,8 +8,11 @@
 import UIKit
 import SQLite
 
+
 class ViewController: UIViewController {
 
+   
+    
     var database: Connection!
     let productsTable = Table("Products")
     let productId = Expression<Int>("productId")
@@ -69,6 +72,8 @@ class ViewController: UIViewController {
         
         syncButton.center.x = self.view.center.x
         syncButton.center.y = qrCodeButton.center.y + 2*syncButton.bounds.size.height
+        
+        
     }
     
     func initializeQRDatabase(){
@@ -255,14 +260,6 @@ class ViewController: UIViewController {
         
     }
     
-    @IBAction func syncButtonClicked(_ sender: UIButton) {
-        /*
-        
-         */
-        
-        
-        
-    }
     
 }
 
