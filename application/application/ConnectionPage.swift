@@ -6,21 +6,40 @@
 //
 
 import MultipeerConnectivity
-
+import SQLite
 
 class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControllerDelegate, MCNearbyServiceAdvertiserDelegate  {
-    
+    var database2: Connection!
+    let transactionTable = Table("Transaction")
+    let transactionId = Expression<String>("transactionId")
+    let amount = Expression<Double>("amount")
+    let passengerId = Expression<String>("passengerId")
     @IBOutlet weak var numLabel: UILabel!
     var peerID: MCPeerID!
     var mcSession: MCSession!
     var mcAdvertiserAssistant: MCNearbyServiceAdvertiser!
     var number = 0
+    var transactionStr = ""
+    @IBOutlet weak var transactionText: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        connectDatabase2()
         peerID = MCPeerID(displayName: UIDevice.current.name)
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
         mcSession.delegate = self
         startHosting()
+    }
+    
+    func connectDatabase2(){
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            
+            let fileUrl = documentDirectory.appendingPathComponent("Transaction").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database2 = database
+        } catch {
+            print(error)
+        }
     }
     
     @IBAction func connectButtonClicked(_ sender: UIButton) {
@@ -41,8 +60,25 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
     
     @IBAction func sendButtonAction(_ sender: Any) {
         //send data to the other device
-        number = number + 1
-        sendData(data: "\(number)")
+        //number = number + 1
+        //transactionStr = ""
+        do {
+            for transaction in try database2.prepare(transactionTable) {
+                let transactionAmount = transaction[amount]
+                let transactionId = transaction[transactionId]
+            
+                
+                let formattedId = transactionId.replacingOccurrences(of: " +0000", with: "")
+
+               transactionStr += "Date: " + formattedId + " Amount: " + String(transactionAmount) + "₺"
+               //print(transactionStr)
+            }
+        } catch {
+            // Handle any errors that occur
+            print("Error: \(error)")
+        }
+        sendData(data: transactionStr)
+        //sendData(data: "\(number)")
     }
     
     func startHosting() {
@@ -94,7 +130,7 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
         if let text = String(data: data, encoding: .utf8) {
             DispatchQueue.main.async {
                 //display the text in the label
-                self.numLabel.text = text
+                self.transactionText.text = text
             }
         }
     }
