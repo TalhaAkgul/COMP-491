@@ -142,6 +142,7 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
+        
         */
        /*
         do {
@@ -182,7 +183,7 @@ class ViewController: UIViewController {
             table.column(self.count)
             table.column(self.price)
         }
-                        
+            
         do {
             try self.database.run(createTable)
             print("Created Table")

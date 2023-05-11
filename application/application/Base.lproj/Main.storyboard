@@ -96,6 +96,15 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cf5-Vi-HtT">
+                                <rect key="frame" x="242" y="124" width="59" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="close"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="fullScreen" id="cp6-Mo-0hd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="B7r-4i-xzl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -3944,7 +3953,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="ijJ-JW-0EX"/>
         <segue reference="08X-ih-pdO"/>
-        <segue reference="CR0-aG-bRY"/>
+        <segue reference="cp6-Mo-0hd"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>

@@ -20,6 +20,7 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
     var mcAdvertiserAssistant: MCNearbyServiceAdvertiser!
     var number = 0
     var transactionStr = ""
+    var count = 0
     @IBOutlet weak var transactionText: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +63,7 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
         //send data to the other device
         //number = number + 1
         //transactionStr = ""
+        /*
         do {
             for transaction in try database2.prepare(transactionTable) {
                 let transactionAmount = transaction[amount]
@@ -70,14 +72,37 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
                 
                 let formattedId = transactionId.replacingOccurrences(of: " +0000", with: "")
 
-               transactionStr += "Date: " + formattedId + " Amount: " + String(transactionAmount) + "₺"
+               transactionStr += "Date: " + formattedId + " Amount: " + String(transactionAmount) + "₺\n"
                //print(transactionStr)
             }
         } catch {
             // Handle any errors that occur
             print("Error: \(error)")
         }
-        sendData(data: transactionStr)
+        */
+        //let count = 2
+        let connectedPeers = mcSession.connectedPeers
+        let deviceCountToSend = connectedPeers.count / 2
+        //if connectedPeers.count >= count {
+            var randomPeers = Set<MCPeerID>()
+            while randomPeers.count < deviceCountToSend {
+                let randomIndex = Int(arc4random_uniform(UInt32(connectedPeers.count)))
+                let randomPeer = connectedPeers[randomIndex]
+                randomPeers.insert(randomPeer)
+            }
+            count = count + 1
+            let countStr = "\(count)"
+            let data = countStr.data(using: .utf8)!
+        
+            do {
+                try mcSession.send(data, toPeers: Array(randomPeers), with: .reliable)
+            } catch {
+                print("Error sending data: \(error.localizedDescription)")
+            }
+        //} else {
+        //    print("Not enough connected peers to send data to.")
+        //}
+        //sendData(data: transactionStr)
         //sendData(data: "\(number)")
     }
     
