@@ -20,11 +20,15 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
     var mcAdvertiserAssistant: MCNearbyServiceAdvertiser!
     var number = 0
     var transactionStr = ""
-    var count = 0
+    var transactionLocalCount = 0
+    let requestString = "Sync my transactions"
     @IBOutlet weak var transactionText: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase2()
+        let countQuery = transactionTable.count
+        transactionLocalCount = try! database2.scalar(countQuery)
+        //print(transactionLocalCount)
         peerID = MCPeerID(displayName: UIDevice.current.name)
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
         mcSession.delegate = self
@@ -61,88 +65,15 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
     
     @IBAction func sendButtonAction(_ sender: Any) {
         //send data to the other device
-        //number = number + 1
-        //transactionStr = ""
-        /*
-        do {
-            for transaction in try database2.prepare(transactionTable) {
-                let transactionAmount = transaction[amount]
-                let transactionId = transaction[transactionId]
-            
-                
-                let formattedId = transactionId.replacingOccurrences(of: " +0000", with: "")
-
-               transactionStr += "Date: " + formattedId + " Amount: " + String(transactionAmount) + "₺\n"
-               //print(transactionStr)
-            }
-        } catch {
-            // Handle any errors that occur
-            print("Error: \(error)")
-        }
-        */
-        //let count = 2
-        transactionStr = ""
         let connectedPeers = mcSession.connectedPeers
         let deviceCountToSend = connectedPeers.count / 2
-        //if connectedPeers.count >= count {
             var randomPeers = Set<MCPeerID>()
             while randomPeers.count < deviceCountToSend {
                 let randomIndex = Int(arc4random_uniform(UInt32(connectedPeers.count)))
                 let randomPeer = connectedPeers[randomIndex]
                 randomPeers.insert(randomPeer)
             }
-            //count = count + 1
-            //let countStr = "\(count)"
-            //let data = countStr.data(using: .utf8)!
-        /*
-            do {
-                for transaction in try database2.prepare(transactionTable) {
-                    let transactionAmount = transaction[amount]
-                    let transactionId = transaction[transactionId]
-                
-                    
-                    let formattedId = transactionId.replacingOccurrences(of: " +0000", with: "")
-
-                   transactionStr += "Date: " + formattedId + " Amount: " + String(transactionAmount) + "₺\n"
-                   //print(transactionStr)
-                }
-            } catch {
-                // Handle any errors that occur
-                print("Error: \(error)")
-            }
-            let data = transactionStr.data(using: .utf8)!
-            do {
-                try mcSession.send(data, toPeers: Array(randomPeers), with: .reliable)
-            } catch {
-                print("Error sending data: \(error.localizedDescription)")
-            }
-         */
-        //} else {
-        //    print("Not enough connected peers to send data to.")
-        //}
-        //sendData(data: transactionStr)
-        //sendData(data: "\(number)")
-        /*
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            
-            let fileUrl = documentDirectory.appendingPathComponent("Transaction").appendingPathExtension("sqlite3")
-            do {
-                let transactionData = try Data(contentsOf: fileUrl)
-                do {
-                    try mcSession.send(transactionData, toPeers: Array(randomPeers), with: .reliable)
-                    print("SENT", transactionData)
-                } catch {
-                    print(error)
-                }
-            } catch {
-                print(error)
-            }
-        } catch {
-            print(error)
-        }
         
-        */
         let query = transactionTable.select(transactionId, amount, passengerId)
         let transactions = try! database2.prepare(query).map { row in
             return TransactionJSONData(
@@ -155,12 +86,9 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
         let transactionData = try! encoder.encode(transactions)
         do {
             try mcSession.send(transactionData, toPeers: Array(randomPeers), with: .reliable)
-            print("SENT", transactionData)
         } catch {
             print(error)
         }
-        //let serializedData = try database2.serialize()
-
     }
     
     func startHosting() {
@@ -175,6 +103,7 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
         mcBrowser.delegate = self
         present(mcBrowser, animated: true)
     }
+    /*
     //send data to other users
     func sendData(data: String) {
         if mcSession.connectedPeers.count > 0 {
@@ -189,6 +118,7 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
             }
         }
     }
+     */
     // MARK: - Session Methods
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
@@ -209,14 +139,26 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         //data received
-        print("RECEIVED", data)
-        if let text = String(data: data, encoding: .utf8) {
-            DispatchQueue.main.async {
-                //display the text in the label
-                print(text)
-                self.transactionText.text = text
+        let dataText = String(data: data, encoding: .utf8)!
+        if dataText == requestString {
+            print("request")
+        } else {
+            if let text = String(data: data, encoding: .utf8) {
+                DispatchQueue.main.async {
+                    //display the text in the label
+                    let decoder = JSONDecoder()
+                    let transactionsReceived = try! decoder.decode([TransactionJSONData].self, from: data)
+                    let transactionsReceivedCount = transactionsReceived.count
+                    if(transactionsReceivedCount > self.transactionLocalCount){
+                        self.transactionText.text = text + "yes" + "\n" + String(transactionsReceivedCount) + "\n" + String(self.transactionLocalCount)
+                        
+                    } else {
+                        self.transactionText.text = "no" + "\n" + String(transactionsReceivedCount) + "\n" + String(self.transactionLocalCount)
+                    }
+                }
             }
         }
+        
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
