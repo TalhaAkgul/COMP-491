@@ -7,7 +7,7 @@
 
 import UIKit
 import SQLite
-
+import MultipeerConnectivity
 
 class ViewController: UIViewController {
 
@@ -33,23 +33,30 @@ class ViewController: UIViewController {
     let prId = Expression<String>("prId")
     let prCount = Expression<String>("prCount")
     
+    
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var instructionLabel: UILabel!
     @IBOutlet weak var identifyIdButton: UIButton!
     @IBOutlet weak var qrCodeButton: UIButton!
     @IBOutlet weak var syncButton: UIButton!
+    
+    let sessionManager = SessionManager.shared
+    var mcSession: MCSession!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Local database for the products
         initializeDatabase()
         initializeTransactionDatabase()
         initializeQRDatabase()
+        
         // Do any additional setup after loading the view.
         self.view.addBackground()
         
+        mcSession = self.sessionManager.mcSession
+        
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
-        let screenWidth = screenSize.width
         //Welcome Label
         welcomeLabel.center.x = self.view.center.x
         welcomeLabel.center.y = self.view.center.y + screenHeight/20
@@ -261,6 +268,9 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func connectButtonClicked(_ sender: UIButton) {
+        sessionManager.connectDevice(fromViewController: self)
+    }
     
 }
 

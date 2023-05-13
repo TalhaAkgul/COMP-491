@@ -1,53 +1,49 @@
 //
-//  ConnectionPage.swift
+//  SessionManager.swift
 //  application
 //
-//  Created by Betul on 5/10/23.
+//  Created by Doga Ege Inhanli on 12.05.2023.
 //
 
 import MultipeerConnectivity
 import SQLite
 
-class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControllerDelegate, MCNearbyServiceAdvertiserDelegate  {
+class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelegate, MCNearbyServiceAdvertiserDelegate  {
+    
+    
+    static let shared = SessionManager() // Singleton instance
+
+    var peerID: MCPeerID!
+    var mcSession: MCSession!
+    var mcAdvertiserAssistant: MCNearbyServiceAdvertiser!
+    
     var database2: Connection!
     let transactionTable = Table("Transaction")
     let transactionId = Expression<String>("transactionId")
     let amount = Expression<Double>("amount")
     let passengerId = Expression<String>("passengerId")
-    @IBOutlet weak var numLabel: UILabel!
-    var peerID: MCPeerID!
-    var mcSession: MCSession!
-    var mcAdvertiserAssistant: MCNearbyServiceAdvertiser!
-    var number = 0
-    var transactionStr = ""
     var transactionLocalCount = 0
     let requestString = "Sync my transactions"
-    @IBOutlet weak var transactionText: UITextView!
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
+    private override init() {
+        super.init()
         connectDatabase2()
         let countQuery = transactionTable.count
         transactionLocalCount = try! database2.scalar(countQuery)
-        //print(transactionLocalCount)
+        
         peerID = MCPeerID(displayName: UIDevice.current.name)
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
         mcSession.delegate = self
         startHosting()
     }
-    
-    func connectDatabase2(){
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            
-            let fileUrl = documentDirectory.appendingPathComponent("Transaction").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database2 = database
-        } catch {
-            print(error)
-        }
+    /*
+    func startAdvertising() {
+        mcAdvertiser = MCAdvertiserAssistant(serviceType: "your-service-type", discoveryInfo: nil, session: mcSession!)
+        mcAdvertiser?.start()
     }
-    
-    @IBAction func connectButtonClicked(_ sender: UIButton) {
+    */
+    /*
+    func connectDevice(){
         let ac = UIAlertController(title: "Connect to others", message: nil, preferredStyle: .alert)
          ac.addAction(UIAlertAction(title: "Host a session", style: .default) {
              //here we will add a closure to host a session
@@ -62,11 +58,12 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
          ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
          present(ac, animated: true)
     }
-    
-    @IBAction func sendButtonAction(_ sender: Any) {
+    */
+    func sendTransactions(){
         //send data to the other device
         let connectedPeers = mcSession.connectedPeers
         let deviceCountToSend = connectedPeers.count / 2
+        //let deviceCountToSend = connectedPeers.count
             var randomPeers = Set<MCPeerID>()
             while randomPeers.count < deviceCountToSend {
                 let randomIndex = Int(arc4random_uniform(UInt32(connectedPeers.count)))
@@ -83,42 +80,52 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
             )
         }
         let encoder = JSONEncoder()
+        
         let transactionData = try! encoder.encode(transactions)
         do {
             try mcSession.send(transactionData, toPeers: Array(randomPeers), with: .reliable)
+            
         } catch {
             print(error)
         }
     }
-    
     func startHosting() {
         mcAdvertiserAssistant = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: "mp-numbers")
         mcAdvertiserAssistant.delegate = self
         mcAdvertiserAssistant.startAdvertisingPeer()
     }
-    
+    /*
     //join a room
     func joinSession() {
         let mcBrowser = MCBrowserViewController(serviceType: "mp-numbers", session: mcSession)
         mcBrowser.delegate = self
         present(mcBrowser, animated: true)
     }
-    /*
-    //send data to other users
-    func sendData(data: String) {
-        if mcSession.connectedPeers.count > 0 {
-            if let textData = data.data(using: .utf8) {
-                do {
-                    //send data
-                    try mcSession.send(textData, toPeers: mcSession.connectedPeers, with: .reliable)
-                } catch let error as NSError {
-                    //error sending data
-                    print(error.localizedDescription)
-                }
-            }
-        }
+    */
+    
+    func joinSession(fromViewController viewController: UIViewController) {
+        let mcBrowser = MCBrowserViewController(serviceType: "mp-numbers", session: mcSession)
+        mcBrowser.delegate = self
+        viewController.present(mcBrowser, animated: true)
     }
-     */
+    
+    func connectDevice(fromViewController viewController: UIViewController){
+        let ac = UIAlertController(title: "Connect to others", message: nil, preferredStyle: .alert)
+         ac.addAction(UIAlertAction(title: "Host a session", style: .default) {
+             //here we will add a closure to host a session
+            (UIAlertAction) in
+             self.startHosting()
+       })
+         ac.addAction(UIAlertAction(title: "Join a session", style: .default) {
+             //here we will add a closure to join a session
+             (UIAlertAction) in
+             self.joinSession(fromViewController: viewController)
+         })
+         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        viewController.present(ac, animated: true)
+    }
+    
+    // Implement the MCSessionDelegate methods here
     // MARK: - Session Methods
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
@@ -139,6 +146,7 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         //data received
+        print("recevied")
         let dataText = String(data: data, encoding: .utf8)!
         if dataText == requestString {
             print("request")
@@ -150,16 +158,56 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
                     let transactionsReceived = try! decoder.decode([TransactionJSONData].self, from: data)
                     let transactionsReceivedCount = transactionsReceived.count
                     if(transactionsReceivedCount > self.transactionLocalCount){
-                        self.transactionText.text = text + "yes" + "\n" + String(transactionsReceivedCount) + "\n" + String(self.transactionLocalCount)
+                        //print(text + "yes" + "\n" + String(transactionsReceivedCount) + "\n" + String(self.transactionLocalCount))
+                        do {
+                            try self.database2.transaction {
+                                let deleteAllQuery = self.transactionTable.delete()
+                                try self.database2.run(deleteAllQuery)
+                            }
+                            print("All rows deleted successfully from the Transaction table.")
+                        } catch {
+                            print("Error deleting rows from Transaction table: \(error)")
+                        }
+                        do {
+                            try self.database2.transaction {
+                                for transaction in transactionsReceived {
+                                    let insertQuery = self.transactionTable.insert(
+                                        self.transactionId <- transaction.transactionId,
+                                        self.amount <- transaction.amount,
+                                        self.passengerId <- transaction.passengerId
+                                    )
+                                    try self.database2.run(insertQuery)
+                                }
+                                print("All transactions inserted successfully into the Transaction table.")
+                            }
+                        } catch {
+                            print("Error inserting transactions into Transaction table: \(error)")
+                        }
                         
                     } else {
-                        self.transactionText.text = "no" + "\n" + String(transactionsReceivedCount) + "\n" + String(self.transactionLocalCount)
+                        print("no" + "\n" + String(transactionsReceivedCount) + "\n" + String(self.transactionLocalCount))
                     }
+                    /*
+                    do {
+                        let selectQuery = self.transactionTable.select(self.transactionId, self.amount, self.passengerId)
+                        let rows = try self.database2.prepare(selectQuery)
+                        for row in rows {
+                            print("""
+                                transactionId: \(row[self.transactionId]), \
+                                amount: \(row[self.amount]), \
+                                passengerId: \(row[self.passengerId])
+                            """)
+                        }
+                    } catch {
+                        print("Error selecting transactions from Transaction table: \(error)")
+                    }
+                    */
                 }
             }
         }
         
     }
+    
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
         
@@ -176,11 +224,11 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
     // MARK: - Browser Methods
     
     func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
-        dismiss(animated: true)
+        browserViewController.dismiss(animated: true)
     }
     
     func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
-        dismiss(animated: true)
+        browserViewController.dismiss(animated: true)
     }
     
     // MARK: - Advertiser Methods
@@ -189,5 +237,16 @@ class ConnectionPage: UIViewController,MCSessionDelegate, MCBrowserViewControlle
         //accept the connection/invitation
         invitationHandler(true, mcSession)
     }
-        
+    
+    func connectDatabase2(){
+        do {
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            
+            let fileUrl = documentDirectory.appendingPathComponent("Transaction").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database2 = database
+        } catch {
+            print(error)
+        }
+    }
 }

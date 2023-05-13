@@ -7,6 +7,7 @@
 
 import UIKit
 import SQLite
+import MultipeerConnectivity
 
 class AddPaymentController: UIViewController {
     
@@ -48,12 +49,17 @@ class AddPaymentController: UIViewController {
     @IBOutlet weak var afterFlightButton: UIButton!
     @IBOutlet weak var proceedPaymentButton: UIButton!
     @IBOutlet weak var cancelPaymentButton: UIButton!
+    
+    let sessionManager = SessionManager.shared
+    var mcSession: MCSession!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
         connectDatabase2()
         connectDatabase3()
         setItems()
+        mcSession = self.sessionManager.mcSession
     }
     
     func setItems(){
@@ -258,14 +264,14 @@ class AddPaymentController: UIViewController {
                                 print("Error inserting transaction: \(error)")
                             }
                             
+                            sendTransactionsToConnectedDevices()
+                            
                             let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PaymentSuccessfulController") as! PaymentSuccessfulController
                             self.addChild(popOverVC)
                             popOverVC.view.frame = self.view.frame
                             self.view.addSubview(popOverVC.view)
                             popOverVC.didMove(toParent: self)
-                            
                         }
-                        
                     }
                         }
                     } catch {
@@ -273,9 +279,6 @@ class AddPaymentController: UIViewController {
                     }        } catch {
             fatalError("Couldn't load contents of file at path '\(url)': \(error)")
         }
-        
-        
-        
         /*
         let productsAtBasket = self.productsTable.filter(self.count != 0)
         let completeBasket = productsAtBasket.update(self.count <- 0)
@@ -296,5 +299,11 @@ class AddPaymentController: UIViewController {
         } catch {
             print(error)
         }
+    }
+    
+    func sendTransactionsToConnectedDevices(){
+        //sessionManager.connectDevice(fromViewController: self)
+        sessionManager.sendTransactions()
+        print("inside add payment")
     }
 }
