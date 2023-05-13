@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1C15477C29E17F3C0011DBA2 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C15476E29E17D6F0011DBA2 /* SQLite.framework */; };
 		1C15477D29E17F3C0011DBA2 /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1C15476E29E17D6F0011DBA2 /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1C2FEF1F2A0E4C700065EB7A /* TransactionJSONData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2FEF1E2A0E4C700065EB7A /* TransactionJSONData.swift */; };
+		1C2FEF292A0EC5800065EB7A /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2FEF282A0EC57F0065EB7A /* SessionManager.swift */; };
 		1C4401A729EB4A4800AF40F3 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 1C4401A629EB4A4800AF40F3 /* CodeScanner */; };
 		1C6BD84A29E1F8DE00E243DB /* PersonalDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6BD84929E1F8DE00E243DB /* PersonalDetailsController.swift */; };
 		1C79FBFC29D44DAF0052764A /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C79FBFB29D44DAF0052764A /* QRCodeViewController.swift */; };
@@ -32,7 +34,7 @@
 		1CDAE32229D376E0000E140A /* applicationUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE32129D376E0000E140A /* applicationUITestsLaunchTests.swift */; };
 		1CDAE33129D37987000E140A /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE33029D37987000E140A /* Background.swift */; };
 		1CE16CB32A0975F0002C6C55 /* SpendingDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE16CB22A0975F0002C6C55 /* SpendingDetailsController.swift */; };
-		775A4AF62A0C24B6001B34B4 /* ConnectionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775A4AF52A0C24B6001B34B4 /* ConnectionPage.swift */; };
+		1CED77972A10068D009749C6 /* TransactionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CED77962A10068D009749C6 /* TransactionsController.swift */; };
 		7782C50029F6D78000C1D325 /* ServerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7782C4FF29F6D78000C1D325 /* ServerData.swift */; };
 		7782C50B29F6DFD900C1D325 /* serverData.json in Resources */ = {isa = PBXBuildFile; fileRef = 7782C50A29F6DFD900C1D325 /* serverData.json */; };
 /* End PBXBuildFile section */
@@ -119,6 +121,8 @@
 
 /* Begin PBXFileReference section */
 		1C15476329E17D6E0011DBA2 /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../../Downloads/SQLite.swift-master/SQLite.xcodeproj"; sourceTree = "<group>"; };
+		1C2FEF1E2A0E4C700065EB7A /* TransactionJSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionJSONData.swift; sourceTree = "<group>"; };
+		1C2FEF282A0EC57F0065EB7A /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		1C6BD84929E1F8DE00E243DB /* PersonalDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDetailsController.swift; sourceTree = "<group>"; };
 		1C79FBFB29D44DAF0052764A /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		1C79FBFD29D44E310052764A /* IDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDViewController.swift; sourceTree = "<group>"; };
@@ -145,7 +149,7 @@
 		1CDAE32129D376E0000E140A /* applicationUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applicationUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1CDAE33029D37987000E140A /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		1CE16CB22A0975F0002C6C55 /* SpendingDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingDetailsController.swift; sourceTree = "<group>"; };
-		775A4AF52A0C24B6001B34B4 /* ConnectionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionPage.swift; sourceTree = "<group>"; };
+		1CED77962A10068D009749C6 /* TransactionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsController.swift; sourceTree = "<group>"; };
 		7782C4FF29F6D78000C1D325 /* ServerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerData.swift; sourceTree = "<group>"; };
 		7782C50A29F6DFD900C1D325 /* serverData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = serverData.json; path = ../../serverData.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -245,7 +249,9 @@
 				1C82AE7529EC34C3009B39C7 /* QRJSONData.swift */,
 				7782C4FF29F6D78000C1D325 /* ServerData.swift */,
 				1CE16CB22A0975F0002C6C55 /* SpendingDetailsController.swift */,
-				775A4AF52A0C24B6001B34B4 /* ConnectionPage.swift */,
+				1C2FEF1E2A0E4C700065EB7A /* TransactionJSONData.swift */,
+				1C2FEF282A0EC57F0065EB7A /* SessionManager.swift */,
+				1CED77962A10068D009749C6 /* TransactionsController.swift */,
 			);
 			path = application;
 			sourceTree = "<group>";
@@ -472,11 +478,12 @@
 				7782C50029F6D78000C1D325 /* ServerData.swift in Sources */,
 				1CDAE30329D376DE000E140A /* ViewController.swift in Sources */,
 				1C9BF11D29DB343400B69C37 /* EntertainmentMenuController.swift in Sources */,
+				1C2FEF292A0EC5800065EB7A /* SessionManager.swift in Sources */,
 				1C9BF11B29DB342300B69C37 /* FoodDrinkMenuController.swift in Sources */,
-				775A4AF62A0C24B6001B34B4 /* ConnectionPage.swift in Sources */,
 				1C6BD84A29E1F8DE00E243DB /* PersonalDetailsController.swift in Sources */,
 				1CDAE2FF29D376DE000E140A /* AppDelegate.swift in Sources */,
 				1CDAE30129D376DE000E140A /* SceneDelegate.swift in Sources */,
+				1C2FEF1F2A0E4C700065EB7A /* TransactionJSONData.swift in Sources */,
 				1C82AE7629EC34C3009B39C7 /* QRJSONData.swift in Sources */,
 				1CDAE33129D37987000E140A /* Background.swift in Sources */,
 				1C79FBFC29D44DAF0052764A /* QRCodeViewController.swift in Sources */,
@@ -486,6 +493,7 @@
 				1C9BF11F29DB344800B69C37 /* AfterFlightServiceController.swift in Sources */,
 				1C9BF11729DB2F3900B69C37 /* AddPaymentController.swift in Sources */,
 				1C7D052529E42C66003B1FF6 /* PaymentSuccessfulController.swift in Sources */,
+				1CED77972A10068D009749C6 /* TransactionsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,7 +600,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -647,7 +655,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
