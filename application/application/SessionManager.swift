@@ -169,9 +169,7 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        //data received
         let countQuery = transactionTable.count
-        //transactionLocalCount = try! database2.scalar(countQuery)
         do {
             try database2.transaction {
                 transactionLocalCount = try database2.scalar(countQuery)
@@ -206,40 +204,6 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
                     //display the text in the label
                     let decoder = JSONDecoder()
                     let transactionsReceived = try! decoder.decode([TransactionJSONData].self, from: data)
-                    let transactionsReceivedCount = transactionsReceived.count
-                    //if(transactionsReceivedCount > self.transactionLocalCount){
-                        //print(text + "yes" + "\n" + String(transactionsReceivedCount) + "\n" + String(self.transactionLocalCount))
-                        /*
-                        do {
-                            try self.database2.transaction {
-                                let deleteAllQuery = self.transactionTable.delete()
-                                try self.database2.run(deleteAllQuery)
-                            }
-                            print("All rows deleted successfully from the Transaction table.")
-                        } catch {
-                            print("Error deleting rows from Transaction table: \(error)")
-                        }
-                        */
-                    /*
-                        do {
-                            try self.database2.transaction {
-                                for transaction in transactionsReceived {
-                                    
-                                        let insertQuery = self.transactionTable.insert(
-                                            self.transactionId <- transaction.transactionId,
-                                            self.amount <- transaction.amount,
-                                            self.passengerId <- transaction.passengerId
-                                        )
-                                        try self.database2.run(insertQuery)
-                                    }
-                                
-                                print("All transactions inserted successfully into the Transaction table.")
-                            }
-                        } catch {
-                            print("Error inserting transactions into Transaction table: \(error)")
-                        }
-                    */
-                    
                     do {
                         try self.database2.transaction {
                             for transaction in transactionsReceived {
@@ -260,9 +224,6 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
                         print("Error inserting transactions into Transaction table: \(error)")
                     }
                      
-                    //} else {
-                    //    print("no" + "\n" + String(transactionsReceivedCount) + "\n" + String(self.transactionLocalCount))
-                    //}
                     var transactionStr = ""
                     do {
                         let selectQuery = self.transactionTable.select(self.transactionId, self.amount, self.passengerId)
