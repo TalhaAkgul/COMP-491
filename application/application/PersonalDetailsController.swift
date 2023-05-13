@@ -146,7 +146,7 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
                 }
                 for serverInfo in serverInfos {
                     if serverInfo.passengerId == currentId {
-                        let passengerId = serverInfo.passengerId
+                        //let passengerId = serverInfo.passengerId
                         let passengerName = serverInfo.passengerName
                         let passengerSurname = serverInfo.passengerSurname
                         let provisionAmount = Double(serverInfo.amount) ?? 0.0

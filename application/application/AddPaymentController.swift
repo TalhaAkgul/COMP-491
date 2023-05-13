@@ -209,6 +209,7 @@ class AddPaymentController: UIViewController {
     
     
     @IBAction func proceedPaymentClicked(_ sender: UIButton) {
+        retrieveTransactionsFromConnectedDevices()
         guard let path = Bundle.main.path(forResource: "serverData", ofType: "json") else {
             fatalError("Couldn't find file 'serverData.json' in app bundle.")
         }
@@ -304,6 +305,11 @@ class AddPaymentController: UIViewController {
     func sendTransactionsToConnectedDevices(){
         //sessionManager.connectDevice(fromViewController: self)
         sessionManager.sendTransactions()
-        print("inside add payment")
+        print("inside add payment send")
+    }
+    
+    func retrieveTransactionsFromConnectedDevices(){
+        sessionManager.sendSyncRequest()
+        print("inside add payment request")
     }
 }

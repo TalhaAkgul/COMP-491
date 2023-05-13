@@ -231,7 +231,7 @@ class FoodDrinkMenuController: UIViewController {
     func setItems(){
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
-        let screenWidth  = screenSize.width
+        
         let navigationItem = UINavigationItem(title: "Food & Drinks")
         
         let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),

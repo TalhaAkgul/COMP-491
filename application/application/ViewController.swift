@@ -267,6 +267,26 @@ class ViewController: UIViewController {
          
         
     }
+    @IBAction func refreshTransactionsClicked(_ sender: UIButton) {
+        do {
+            let drop = transactionTable.drop(ifExists: true)
+            try database2.run(drop)
+        } catch {
+            print(error)
+        }
+        let createTable = self.transactionTable.create { (table) in
+            table.column(self.transactionId, primaryKey: true)
+            table.column(self.amount)
+            table.column(self.passengerId)
+        }
+                        
+        do {
+            try self.database2.run(createTable)
+            print("Created Table")
+        } catch {
+            print(error)
+        }
+    }
     
     @IBAction func connectButtonClicked(_ sender: UIButton) {
         sessionManager.connectDevice(fromViewController: self)

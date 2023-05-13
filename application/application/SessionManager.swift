@@ -28,8 +28,8 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
     private override init() {
         super.init()
         connectDatabase2()
-        let countQuery = transactionTable.count
-        transactionLocalCount = try! database2.scalar(countQuery)
+        //let countQuery = transactionTable.count
+        //transactionLocalCount = try! database2.scalar(countQuery)
         
         peerID = MCPeerID(displayName: UIDevice.current.name)
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
@@ -64,12 +64,12 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
         let connectedPeers = mcSession.connectedPeers
         let deviceCountToSend = connectedPeers.count / 2
         //let deviceCountToSend = connectedPeers.count
-            var randomPeers = Set<MCPeerID>()
-            while randomPeers.count < deviceCountToSend {
-                let randomIndex = Int(arc4random_uniform(UInt32(connectedPeers.count)))
-                let randomPeer = connectedPeers[randomIndex]
-                randomPeers.insert(randomPeer)
-            }
+        var randomPeers = Set<MCPeerID>()
+        while randomPeers.count < deviceCountToSend {
+            let randomIndex = Int(arc4random_uniform(UInt32(connectedPeers.count)))
+            let randomPeer = connectedPeers[randomIndex]
+            randomPeers.insert(randomPeer)
+        }
         
         let query = transactionTable.select(transactionId, amount, passengerId)
         let transactions = try! database2.prepare(query).map { row in
@@ -89,6 +89,30 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
             print(error)
         }
     }
+    
+    func sendSyncRequest(){
+        //send data to the other device
+        let connectedPeers = mcSession.connectedPeers
+        let deviceCountToSend = connectedPeers.count / 2
+        //let deviceCountToSend = connectedPeers.count
+        var randomPeers = Set<MCPeerID>()
+        while randomPeers.count < deviceCountToSend {
+            let randomIndex = Int(arc4random_uniform(UInt32(connectedPeers.count)))
+            let randomPeer = connectedPeers[randomIndex]
+            randomPeers.insert(randomPeer)
+        }
+        let requestData = requestString.data(using: .utf8)!
+
+        do {
+            try mcSession.send(requestData, toPeers: Array(randomPeers), with: .reliable)
+            print("inside sendSyncReq tried")
+        } catch {
+            print(error)
+        }
+
+        print("inside sendSyncReq")
+    }
+    
     func startHosting() {
         mcAdvertiserAssistant = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: "mp-numbers")
         mcAdvertiserAssistant.delegate = self
@@ -146,19 +170,46 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         //data received
+        let countQuery = transactionTable.count
+        //transactionLocalCount = try! database2.scalar(countQuery)
+        do {
+            try database2.transaction {
+                transactionLocalCount = try database2.scalar(countQuery)
+            }
+        } catch {
+            print("Error getting transaction count: \(error)")
+        }
         print("recevied")
         let dataText = String(data: data, encoding: .utf8)!
         if dataText == requestString {
             print("request")
+            let query = transactionTable.select(transactionId, amount, passengerId)
+            let transactions = try! database2.prepare(query).map { row in
+                return TransactionJSONData(
+                    transactionId: row[transactionId],
+                    amount: row[amount],
+                    passengerId: row[passengerId]
+                )
+            }
+            let encoder = JSONEncoder()
+            
+            let transactionData = try! encoder.encode(transactions)
+            do {
+                try mcSession.send(transactionData, toPeers: [peerID], with: .reliable)
+                print("request answered", peerID)
+            } catch {
+                print(error)
+            }
         } else {
-            if let text = String(data: data, encoding: .utf8) {
+            //if let text = String(data: data, encoding: .utf8) {
                 DispatchQueue.main.async {
                     //display the text in the label
                     let decoder = JSONDecoder()
                     let transactionsReceived = try! decoder.decode([TransactionJSONData].self, from: data)
                     let transactionsReceivedCount = transactionsReceived.count
-                    if(transactionsReceivedCount > self.transactionLocalCount){
+                    //if(transactionsReceivedCount > self.transactionLocalCount){
                         //print(text + "yes" + "\n" + String(transactionsReceivedCount) + "\n" + String(self.transactionLocalCount))
+                        /*
                         do {
                             try self.database2.transaction {
                                 let deleteAllQuery = self.transactionTable.delete()
@@ -168,9 +219,33 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
                         } catch {
                             print("Error deleting rows from Transaction table: \(error)")
                         }
+                        */
+                    /*
                         do {
                             try self.database2.transaction {
                                 for transaction in transactionsReceived {
+                                    
+                                        let insertQuery = self.transactionTable.insert(
+                                            self.transactionId <- transaction.transactionId,
+                                            self.amount <- transaction.amount,
+                                            self.passengerId <- transaction.passengerId
+                                        )
+                                        try self.database2.run(insertQuery)
+                                    }
+                                
+                                print("All transactions inserted successfully into the Transaction table.")
+                            }
+                        } catch {
+                            print("Error inserting transactions into Transaction table: \(error)")
+                        }
+                    */
+                    
+                    do {
+                        try self.database2.transaction {
+                            for transaction in transactionsReceived {
+                                let query = self.transactionTable.filter(self.transactionId == transaction.transactionId && self.passengerId == transaction.passengerId)
+                                let result = try self.database2.pluck(query)
+                                if result == nil {
                                     let insertQuery = self.transactionTable.insert(
                                         self.transactionId <- transaction.transactionId,
                                         self.amount <- transaction.amount,
@@ -178,32 +253,34 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
                                     )
                                     try self.database2.run(insertQuery)
                                 }
-                                print("All transactions inserted successfully into the Transaction table.")
                             }
-                        } catch {
-                            print("Error inserting transactions into Transaction table: \(error)")
+                            print("All transactions inserted successfully into the Transaction table.")
                         }
-                        
-                    } else {
-                        print("no" + "\n" + String(transactionsReceivedCount) + "\n" + String(self.transactionLocalCount))
+                    } catch {
+                        print("Error inserting transactions into Transaction table: \(error)")
                     }
-                    /*
+                     
+                    //} else {
+                    //    print("no" + "\n" + String(transactionsReceivedCount) + "\n" + String(self.transactionLocalCount))
+                    //}
+                    var transactionStr = ""
                     do {
                         let selectQuery = self.transactionTable.select(self.transactionId, self.amount, self.passengerId)
                         let rows = try self.database2.prepare(selectQuery)
                         for row in rows {
-                            print("""
+                            transactionStr += """
                                 transactionId: \(row[self.transactionId]), \
                                 amount: \(row[self.amount]), \
                                 passengerId: \(row[self.passengerId])
-                            """)
+                            """ + "\n"
                         }
                     } catch {
                         print("Error selecting transactions from Transaction table: \(error)")
                     }
-                    */
+                    print(transactionStr)
+                    
                 }
-            }
+            //}
         }
         
     }
