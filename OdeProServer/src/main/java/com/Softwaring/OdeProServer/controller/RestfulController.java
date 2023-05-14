@@ -1,11 +1,13 @@
 package com.Softwaring.OdeProServer.controller;
 
 import com.Softwaring.OdeProServer.dto.ActiveProvisionDTO;
+import com.Softwaring.OdeProServer.dto.PassengerDTO;
 import com.Softwaring.OdeProServer.dto.UsedProvisionDTO;
 import com.Softwaring.OdeProServer.entity.ActiveProvision;
 import com.Softwaring.OdeProServer.entity.Passenger;
 import com.Softwaring.OdeProServer.entity.Transactions;
 import com.Softwaring.OdeProServer.entity.UsedProvision;
+import com.Softwaring.OdeProServer.exception.NotFoundException;
 import com.Softwaring.OdeProServer.repository.ActiveProvisionRepository;
 import com.Softwaring.OdeProServer.repository.TransactionsRepository;
 import com.Softwaring.OdeProServer.repository.UsedProvisionRepository;
@@ -24,6 +26,10 @@ import java.util.List;
 @RestController
 public class RestfulController {
 
+    private final ActiveProvisionRepository activeProvisionRepository;
+    private final UsedProvisionRepository usedProvisionRepository;
+    private final TransactionsRepository transactionsRepository;
+    private final PassengerService passengerService;
     Timestamp now = new Timestamp(Calendar.getInstance().getTimeInMillis());
     Passenger a = new Passenger("1", "Pınar", "Erbil", "24@gmail.com", "Ankara", "1234567894561");
     Passenger b = new Passenger("2", "Ahmet Talha", "Akgül", "13@gmail.com", "İstanbul", "TK7350");
@@ -31,20 +37,11 @@ public class RestfulController {
     Passenger d = new Passenger("4", "Betül", "Demirtaş", "def34@gmail.com", "Paris", "TK7350");
     ActiveProvision activeProvision1 = new ActiveProvision();
     ActiveProvision activeProvision2 = new ActiveProvision();
-
     UsedProvision usedProvision1 = new UsedProvision("2", 1234, now, "TK321", a);
     Transactions transactions1 = new Transactions("2", 12345, activeProvision1);
-    private ActiveProvisionRepository activeProvisionRepository;
-    private UsedProvisionRepository usedProvisionRepository;
-    private TransactionsRepository transactionsRepository;
-
-    private PassengerService passengerService;
 
     @Autowired
-    public RestfulController(PassengerService passengerService,
-                             ActiveProvisionRepository activeProvisionRepository,
-                             UsedProvisionRepository usedProvisionRepository,
-                             TransactionsRepository transactionsRepository) {
+    public RestfulController(PassengerService passengerService, ActiveProvisionRepository activeProvisionRepository, UsedProvisionRepository usedProvisionRepository, TransactionsRepository transactionsRepository) {
         this.passengerService = passengerService;
         this.transactionsRepository = transactionsRepository;
         this.activeProvisionRepository = activeProvisionRepository;
@@ -88,37 +85,55 @@ public class RestfulController {
     }
 
     @PostMapping("/getActiveProvision")
-    public ResponseEntity<ActiveProvisionDTO> getActiveProvisions(@RequestBody final String PID){
-        ActiveProvisionDTO results = passengerService.getActiveProvisionByPassengerID(PID);
-        return ResponseEntity.ok().body(results);
+    public ResponseEntity<?> getActiveProvisions(@RequestBody final String PID) {
+        try {
+            ActiveProvisionDTO result = passengerService.getActiveProvisionByPassengerID(PID);
+            return ResponseEntity.ok(result);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
+
     @PostMapping("/getUsedProvisions")
-    public ResponseEntity<List<UsedProvisionDTO>> getUsedProvisions(@RequestBody final String PID){
-        System.out.println("PID: "+PID);
-        List<UsedProvisionDTO> results = passengerService.getUsedProvisionsByPassengerID(PID);
-        return ResponseEntity.ok().body(results);
+    public ResponseEntity<?> getUsedProvisions(@RequestBody final String PID) {
+        try {
+            List<UsedProvisionDTO> results = passengerService.getUsedProvisionsByPassengerID(PID);
+            return ResponseEntity.ok(results);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
+
+    @PostMapping("/getPassenger")
+    public ResponseEntity<?> checkPassenger(@RequestBody final String PID) {
+        try {
+            PassengerDTO passengerDTO = passengerService.getPassenger(PID);
+            return ResponseEntity.ok(passengerDTO);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
     @GetMapping("/search")
     public ActiveProvisionDTO search() {
+
         return passengerService.getProvisionsByPassengerID("1");
     }
+
+
     @PostMapping("/product")
     public String createProduct(@RequestBody final Passenger user) {
         System.out.println("user");
         return "Empty";
     }
-/*
-    @PostMapping("/get")
-    public ResponseEntity<PassengerDto> getPassenger(@RequestBody String id) {
 
-         a = new PassengerDto();
-        return ResponseEntity.ok().body(a);
-    }
-*/
-    @PostMapping("/deneme")
-    public ResponseEntity deneme(@RequestBody String a) {
-        System.out.println(a);
-
-        return ResponseEntity.ok(HttpStatus.OK);
+    @PostMapping("/addPassenger")
+    public ResponseEntity<?> addPassenger(@RequestBody final PassengerDTO passenger){
+        try {
+            passengerService.addPassenger(passenger);
+            return ResponseEntity.ok(passenger);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }
