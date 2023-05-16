@@ -11,6 +11,7 @@ import com.Softwaring.OdeProServer.repository.ActiveProvisionRepository;
 import com.Softwaring.OdeProServer.repository.PassengerRepository;
 import com.Softwaring.OdeProServer.repository.TransactionsRepository;
 import com.Softwaring.OdeProServer.repository.UsedProvisionRepository;
+import com.Softwaring.OdeProServer.util.EntityUtils;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -48,11 +49,11 @@ public class PassengerService {
     public ActiveProvisionDTO getActiveProvisionByPassengerID(String PID) {
         Passenger passenger = passengerRepository
                 .findByPID(PID)
-                .orElseThrow(() -> new NotFoundException(Passenger.class, PID));
+                .orElseThrow(() -> new NotFoundException(Passenger.class, "PID", PID));
 
         ActiveProvision activeProvision = activeProvisionRepository
                 .findByPassenger(passenger)
-                .orElseThrow(() -> new NotFoundException(ActiveProvision.class, PID));
+                .orElseThrow(() -> new NotFoundException(ActiveProvision.class, "PID", PID));
 
         return modelMapper.map(activeProvision, ActiveProvisionDTO.class);
     }
@@ -60,19 +61,19 @@ public class PassengerService {
     public List<UsedProvisionDTO> getUsedProvisionsByPassengerID(String PID) {
         Passenger passenger = passengerRepository
                 .findByPID(PID)
-                .orElseThrow(() -> new NotFoundException(Passenger.class, PID));
+                .orElseThrow(() -> new NotFoundException(Passenger.class, "PID", PID));
 
         List<UsedProvision> usedProvisionList = usedProvisionRepository
                 .findByPassenger(passenger)
-                .orElseThrow(() -> new NotFoundException(UsedProvision.class, PID));
-        if (usedProvisionList.isEmpty()) throw new NotFoundException(UsedProvision.class, PID);
+                .orElseThrow(() -> new NotFoundException(UsedProvision.class, "PID", PID));
+        if (usedProvisionList.isEmpty()) throw new NotFoundException(UsedProvision.class, "PID", PID);
         return mapList(usedProvisionList, UsedProvisionDTO.class);
     }
 
     public PassengerDTO getPassenger(String PID) {
         Passenger passenger = passengerRepository
                 .findByPID(PID)
-                .orElseThrow(() -> new NotFoundException(Passenger.class, PID));
+                .orElseThrow(() -> new NotFoundException(Passenger.class, "PID", PID));
         return modelMapper.map(passenger, PassengerDTO.class);
     }
 
