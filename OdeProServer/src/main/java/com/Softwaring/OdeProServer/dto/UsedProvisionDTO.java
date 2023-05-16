@@ -17,4 +17,5 @@ public class UsedProvisionDTO {
     String UID;
     String amount;
     String provisionDate;
+    String flightNo;
 }

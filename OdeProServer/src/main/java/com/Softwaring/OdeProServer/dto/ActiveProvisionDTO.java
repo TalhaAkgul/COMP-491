@@ -17,4 +17,5 @@ public class ActiveProvisionDTO {
     String AID;
     String amount;
     String provisionDate;
+    String flightNo;
 }
