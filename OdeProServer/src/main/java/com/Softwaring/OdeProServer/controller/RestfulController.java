@@ -2,59 +2,33 @@ package com.Softwaring.OdeProServer.controller;
 
 import com.Softwaring.OdeProServer.dto.ActiveProvisionDTO;
 import com.Softwaring.OdeProServer.dto.PassengerDTO;
+import com.Softwaring.OdeProServer.dto.OpenProvisionDTO;
 import com.Softwaring.OdeProServer.dto.UsedProvisionDTO;
-import com.Softwaring.OdeProServer.entity.ActiveProvision;
 import com.Softwaring.OdeProServer.entity.Passenger;
-import com.Softwaring.OdeProServer.entity.Transactions;
-import com.Softwaring.OdeProServer.entity.UsedProvision;
 import com.Softwaring.OdeProServer.exception.NotFoundException;
-import com.Softwaring.OdeProServer.repository.ActiveProvisionRepository;
-import com.Softwaring.OdeProServer.repository.TransactionsRepository;
-import com.Softwaring.OdeProServer.repository.UsedProvisionRepository;
+import com.Softwaring.OdeProServer.service.BankService;
 import com.Softwaring.OdeProServer.service.PassengerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
+@AllArgsConstructor
 public class RestfulController {
 
-    private final ActiveProvisionRepository activeProvisionRepository;
-    private final UsedProvisionRepository usedProvisionRepository;
-    private final TransactionsRepository transactionsRepository;
-    private final PassengerService passengerService;
-    Timestamp now = new Timestamp(Calendar.getInstance().getTimeInMillis());
-    Passenger a = new Passenger("1", "Pınar", "Erbil", "24@gmail.com", "Ankara", "1234567894561");
-    Passenger b = new Passenger("2", "Ahmet Talha", "Akgül", "13@gmail.com", "İstanbul", "TK7350");
-    Passenger c = new Passenger("3", "Doğa", "İnhanlı", "abc44@gmail.com", "London", "TK44");
-    Passenger d = new Passenger("4", "Betül", "Demirtaş", "def34@gmail.com", "Paris", "TK7350");
-    ActiveProvision activeProvision1 = new ActiveProvision();
-    ActiveProvision activeProvision2 = new ActiveProvision();
-    UsedProvision usedProvision1 = new UsedProvision("2", 1234, now, "TK321", a);
-    Transactions transactions1 = new Transactions("2", 12345, activeProvision1);
 
-    @Autowired
-    public RestfulController(PassengerService passengerService, ActiveProvisionRepository activeProvisionRepository, UsedProvisionRepository usedProvisionRepository, TransactionsRepository transactionsRepository) {
-        this.passengerService = passengerService;
-        this.transactionsRepository = transactionsRepository;
-        this.activeProvisionRepository = activeProvisionRepository;
-        this.usedProvisionRepository = usedProvisionRepository;
-    }
+    private final PassengerService passengerService;
+    private final BankService bankService;
+
 
     private List<Passenger> allUsers() {
         ArrayList<Passenger> list = new ArrayList<Passenger>();
-        list.add(a);
-        list.add(b);
-        list.add(c);
-        list.add(d);
-        System.out.println(now);
+
         System.out.println(list);
 /*
         passengerService.saveUser(b);
@@ -132,6 +106,15 @@ public class RestfulController {
         try {
             passengerService.addPassenger(passenger);
             return ResponseEntity.ok(passenger);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+    @PostMapping("/payment")
+    public ResponseEntity<?> addPassenger(@RequestBody final OpenProvisionDTO openProvision){
+        try {
+            bankService.openProvision(openProvision);
+            return ResponseEntity.ok("Provision is opened");
         }catch (IllegalArgumentException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
