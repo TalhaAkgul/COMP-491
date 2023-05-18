@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Primary;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @ToString
 public class Passenger {
     @Id
