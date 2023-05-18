@@ -11,6 +11,6 @@ public class NotFoundException extends RuntimeException {
     }
 
     public NotFoundException(Class<?> entityClass, String fieldName, String message, Object fieldValue) {
-        super(String.format("%s not found for %s %s %s", entityClass.getSimpleName(), fieldName, message, fieldValue));
+        super(String.format("%s %s %s: %s", entityClass.getSimpleName(), message, fieldName, fieldValue));
     }
 }
