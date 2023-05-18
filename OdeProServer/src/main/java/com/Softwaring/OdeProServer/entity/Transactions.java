@@ -13,8 +13,9 @@ import lombok.*;
 @ToString
 public class Transactions {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "TID", nullable = false)
-    private String TID = "";
+    private Long TID;
 
     @Column(name = "amount", nullable = false)
     private int amount;
