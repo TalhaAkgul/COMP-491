@@ -3,6 +3,7 @@ package com.Softwaring.OdeProServer.service;
 import com.Softwaring.OdeProServer.dto.*;
 import com.Softwaring.OdeProServer.entity.ActiveProvision;
 import com.Softwaring.OdeProServer.entity.Passenger;
+import com.Softwaring.OdeProServer.entity.Transactions;
 import com.Softwaring.OdeProServer.entity.UsedProvision;
 import com.Softwaring.OdeProServer.exception.NotFoundException;
 import com.Softwaring.OdeProServer.repository.ActiveProvisionRepository;
@@ -122,5 +123,26 @@ public class PassengerService {
                 .stream()
                 .map(element -> modelMapper.map(element, targetClass))
                 .collect(Collectors.toList());
+    }
+
+    public void closeProvision(CloseProvisionRequest closeProvisionRequest) {
+        List<ActiveProvisionDTO> activeProvisionDTOList = closeProvisionRequest.getActiveProvision();
+        List<TransactionsDTO> transactionsDTOList = closeProvisionRequest.getTransactions();
+
+        List<Transactions> transactions = transactionsDTOList.stream()
+                .map(transactionsDTO -> {
+                    Transactions transaction = modelMapper.map(transactionsDTO, Transactions.class);
+                    transaction.setActiveProvision(activeProvisionRepository.findById(String.valueOf(transactionsDTO.getAID()))
+                            .orElseThrow(() -> new NotFoundException(ActiveProvision.class, "AID", transactionsDTO.getAID())));
+                    return transaction;
+                })
+                .toList();
+        transactionsRepository.saveAll(transactions);
+
+        /*List<ActiveProvision> activeProvisionList = activeProvisionDTOList.stream()
+                .map(activeProvisionDTO ->
+                    modelMapper.map(activeProvisionDTO, ActiveProvision.class)
+                ).toList();
+        activeProvisionRepository.saveAll(activeProvisionList);*/
     }
 }

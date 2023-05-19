@@ -18,7 +18,7 @@ public class Transactions {
     private Long TID;
 
     @Column(name = "amount", nullable = false)
-    private int amount;
+    private double amount;
 
     @ManyToOne
     @JoinColumn(name = "AID")//TODO Check whether you can delete this or not
