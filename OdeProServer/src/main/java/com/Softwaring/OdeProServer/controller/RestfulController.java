@@ -3,7 +3,6 @@ package com.Softwaring.OdeProServer.controller;
 import com.Softwaring.OdeProServer.dto.*;
 import com.Softwaring.OdeProServer.entity.Passenger;
 import com.Softwaring.OdeProServer.exception.NotFoundException;
-import com.Softwaring.OdeProServer.service.BankService;
 import com.Softwaring.OdeProServer.service.PassengerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,42 +16,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class RestfulController {
-
-
     private final PassengerService passengerService;
-
-
-    private List<Passenger> allUsers() {
-        ArrayList<Passenger> list = new ArrayList<Passenger>();
-
-        System.out.println(list);
-/*
-        passengerService.saveUser(b);
-        activeProvision1.setAID("2");
-        activeProvision1.setAmount(123);
-        activeProvision1.setFlightNo("21324");
-        activeProvision1.setProvisionDate(now);
-        activeProvision1.setPassenger(a);
-        activeProvision1.setUniqueCardId("2");
-
-        activeProvision2.setAID("3");
-        activeProvision2.setAmount(323456);
-        activeProvision2.setFlightNo("23455");
-        activeProvision2.setProvisionDate(now);
-        activeProvision2.setPassenger(b);
-        activeProvision2.setUniqueCardId("2345");
-
-        activeProvisionRepository.save(activeProvision2);
-        usedProvisionRepository.save(usedProvision1);
-        transactionsRepository.save(transactions1);
-*/
-        return list;
-    }
-
-    @GetMapping("/getalldata")
-    public List<Passenger> hello() {
-        return allUsers();
-    }
 
     @GetMapping("/getActiveProvision")
     public ResponseEntity<?> getActiveProvisions(@RequestParam("id") String PID) {
@@ -88,46 +52,45 @@ public class RestfulController {
         }
     }
 
-    @GetMapping("/search")
-    public ActiveProvisionDTO search() {
-
-        return passengerService.getProvisionsByPassengerID("111");
-    }
-
-
-    @PostMapping("/product")
-    public String createProduct(@RequestBody final Passenger user) {
-        System.out.println("user");
-        return "Empty";
+    @GetMapping("/deleteActiveProvision")
+    public ResponseEntity<String> search(@RequestParam("id") String PID) {
+        try {
+            System.out.println("PIDDDDD: "+PID);
+            passengerService.deleteActiveProvision(PID);
+            return ResponseEntity.ok("Passenger with id: " + PID + " deleted");
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @PostMapping("/addPassenger")
-    public ResponseEntity<?> addPassenger(@RequestBody final PassengerDTO passenger){
+    public ResponseEntity<?> addPassenger(@RequestBody final PassengerDTO passenger) {
         try {
             passengerService.addPassenger(passenger);
             return ResponseEntity.ok(passenger);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
     @PostMapping("/payment")//TODO You can try ResponseEntity<String>
-    public ResponseEntity<?> addPassenger(@RequestBody final OpenProvisionDTO openProvision){
+    public ResponseEntity<?> addPassenger(@RequestBody final OpenProvisionDTO openProvision) {
         try {
             System.out.println(openProvision);
             passengerService.openProvision(openProvision);
             return ResponseEntity.ok("Provision is opened");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @PostMapping("/close")
-    public ResponseEntity<?> closeProvision(@RequestBody final CloseProvisionRequest closeProvisionRequest){
+    public ResponseEntity<?> closeProvision(@RequestBody final CloseProvisionRequest closeProvisionRequest) {
         try {
             passengerService.closeProvision(closeProvisionRequest);
             return ResponseEntity.ok("Provision is closed");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
