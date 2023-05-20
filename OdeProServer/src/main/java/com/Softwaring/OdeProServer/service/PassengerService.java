@@ -10,6 +10,7 @@ import com.Softwaring.OdeProServer.repository.ActiveProvisionRepository;
 import com.Softwaring.OdeProServer.repository.PassengerRepository;
 import com.Softwaring.OdeProServer.repository.TransactionsRepository;
 import com.Softwaring.OdeProServer.repository.UsedProvisionRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -95,6 +96,7 @@ public class PassengerService {
         passengerRepository.save(passenger);
     }
 
+    @Transactional
     public void openProvision(OpenProvisionDTO openProvision) {
         if (activeProvisionRepository.findByPassenger_PID(openProvision.getPassengerPID()).isPresent()) {
             throw new IllegalArgumentException("Active Provision for Passenger with PID " + openProvision.getPassengerPID() + " already exists");
@@ -125,6 +127,7 @@ public class PassengerService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void closeProvision(CloseProvisionRequest closeProvisionRequest) {
         List<ActiveProvisionDTO> activeProvisionDTOList = closeProvisionRequest.getActiveProvision();
         List<TransactionsDTO> transactionsDTOList = closeProvisionRequest.getTransactions();
@@ -144,5 +147,13 @@ public class PassengerService {
                     modelMapper.map(activeProvisionDTO, ActiveProvision.class)
                 ).toList();
         activeProvisionRepository.saveAll(activeProvisionList);*/
+    }
+
+    @Transactional
+    public void deleteActiveProvision(String pid) {
+        //ActiveProvision activeProvision = activeProvisionRepository.findByPassenger_PID(pid)
+        //        .orElseThrow(()->new NotFoundException(ActiveProvision.class,"PID",pid));
+        activeProvisionRepository.deleteActiveProvisionByPassenger_PID(pid);
+        System.out.println("DELETED");
     }
 }
