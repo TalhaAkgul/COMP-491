@@ -22,9 +22,12 @@ public class BankService {
                         bankDTO.getExpiration(),
                         bankDTO.getCvc()
                 )
-                .orElseThrow(() -> new NotFoundException(Bank.class, "User", bankDTO.toString()));
-        if (amount > bank.getCreditLimit()) throw new NotFoundException(Bank.class,
-                "states that there is insufficient limit for Card No and Card Holder",
+                .orElseThrow(() -> {
+                    String error = "Bank could not found data for "+bankDTO.getCardHolder()+" with card number: **** "+ bankDTO.getCreditCardNo().substring(12, 16);
+                    return new NotFoundException(error);
+                });
+        if (amount > bank.getCreditLimit()) throw new NotFoundException(
+                "Bank states that there is insufficient limit for Card No and Card Holder"+
                 bankDTO.getCreditCardNo() + " - " + bankDTO.getCardHolder());
         bank.setCreditLimit(bank.getCreditLimit() - amount);
         bankRepository.save(bank);
