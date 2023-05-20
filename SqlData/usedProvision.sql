@@ -1,0 +1,5 @@
+﻿INSERT INTO usedProvision (AID, amount, provision_date, flight_no, PID, unique_card_id) VALUES ('6', '444.09', '2022-08-13 20:09:28', 'TK0566', '111', '6437dfe7a4d0ee22e2b242ba9f6cee5b301e07cb34f3119c4f30b3266084c2a1');
+INSERT INTO usedProvision (AID, amount, provision_date, flight_no, PID, unique_card_id) VALUES ('7', '473.89', '2023-01-11 16:12:09', 'TK3795', '111', 'e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683');
+INSERT INTO usedProvision (AID, amount, provision_date, flight_no, PID, unique_card_id) VALUES ('8', '81.83', '2022-06-25 01:59:22', 'TK2509', '222', 'd4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35');
+INSERT INTO usedProvision (AID, amount, provision_date, flight_no, PID, unique_card_id) VALUES ('9', '84.12', '2023-01-24 20:18:23', 'TK1552', '333', '4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce');
+INSERT INTO usedProvision (AID, amount, provision_date, flight_no, PID, unique_card_id) VALUES ('10', '2142.58', '2023-04-08 23:26:04', 'TK8805', '333', '4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce');

@@ -56,11 +56,11 @@ function LandingPageHeader() {
             <h1>ÖdePro</h1>
             <h3>Make in-flight payments effortless!</h3>
             <br />
-            <Button className="btn-round" color="neutral" href="/make-provision" type="button" outline>
+            <Button className="btn-round" color="danger" href="/make-provision" type="button" outline>
               Make a Provision
             </Button>
             <br /><br />
-            <Button className="btn-round" color="neutral" type="button" outline>
+            <Button className="btn-round" color="danger" type="button" outline>
               Download the App
             </Button>
           </div>

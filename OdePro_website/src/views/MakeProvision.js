@@ -74,21 +74,29 @@ function ProfilePage() {
   const [errorMessageName, setErrorMessageName] = useState("");
   var [surname, setSurname] = useState("");
   const [errorMessageSurname, setErrorMessageSurname] = useState("");
+  var [IDNumber, setIDNumber] = useState("");
+  const [errorMessageIDNumber, setErrorMessageIDNumber] = useState("");
   var [email, setEmail] = useState("");
   const [errorMessageEmail, setErrorMessageEmail] = useState("");
+  var [phoneNo, setPhoneNo] = useState("");
+  const [errorMessagePhoneNo, setErrorMessagePhoneNo] = useState("");
+  var [address, setAddress] = useState("");
+  const [errorMessageAddress, setErrorMessageAddress] = useState("");
   var [callSign, setCallSign] = useState("");
   const [errorMessageCallSign, setErrorMessageCallSign] = useState("");
   var [flightNo, setFlightNo] = useState("");
   const [errorMessageFlightNo, setErrorMessageFlightNo] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const [cardNumber] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
   const [cardHolderName, setCardHolderName] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
   const [cvv, setCvv] = useState("");
   const [cardType, setCardType] = useState("");
+  const [provisionAmount, setProvisionAmount] = useState("");
 
   // Controlled inputs
-  const setCardNumber = (e) => {
+  const setCardNumberandType = (e) => {
     if (e.substring(0, 1) === "4") {
       setCardType("Visa");
     } else if (e.substring(0, 4) === "6011") {
@@ -104,6 +112,7 @@ function ProfilePage() {
     } else {
       setCardType("");
     }
+    setCardNumber(e);
   };
 
   const toggle = (tab) => {
@@ -121,7 +130,9 @@ function ProfilePage() {
         setErrorMessageEmail("Input must be a form of email");
       }
 
-      if (!name || !surname || !email || !callSign || !flightNo || !bool) {
+      if (!name || !surname || !IDNumber || !email || !phoneNo || !callSign || !flightNo || !bool
+        || errorMessageName || errorMessageSurname || errorMessageIDNumber || errorMessageEmail || errorMessagePhoneNo
+        || errorMessageAddress || errorMessageCallSign || errorMessageFlightNo) {
         alert("Please check your information");
       } else {
         setActiveTab(tab);
@@ -130,7 +141,18 @@ function ProfilePage() {
 
     if (activeTab === "2" && tab === "2") {
       //submit
-      handleSubmit();
+      const patternCardNumber = /^[0-9 ]{19}$/; 
+      const patternCardHolderName = /^[A-Za-z/ ]{50}$/; 
+      const patternCvv = /^[0-9]{3}$/; 
+      const patternDate = /^[0-9/]{5}$/; 
+      //|| !patternCardHolderName.test(cardHolderName)  || !patternCvv.test(cvv)
+      //|| !patternDate.test(expirationDate) || !provisionAmount
+      if (!patternCardNumber.test(cardNumber) )
+      {
+        alert("Please check your credit card information");
+      }else {
+        handleSubmit();
+      }
     }
     if (activeTab === "2" && tab === "1") {
       setActiveTab(tab);
@@ -156,33 +178,47 @@ function ProfilePage() {
   };
 
   const handleSubmit = async () => {
+    const tempCardNumber = cardNumber.replaceAll(' ', '');
+    const tempProvisionNumber = provisionAmount.replaceAll(',', '');
+    const tempName = name.toLowerCase().replaceAll("ı", "i").replaceAll("ğ", "g").replaceAll("ü", "u").replaceAll("ş", "s").replaceAll("ö", "o").replaceAll("ç", "c");
+    const tempSurname = surname.toLowerCase().replaceAll("ı", "i").replaceAll("ğ", "g").replaceAll("ü", "u").replaceAll("ş", "s").replaceAll("ö", "o").replaceAll("ç", "c");
+    const tempAddress = address.toLowerCase();
+    const tempCardHolderName = cardHolderName.toLowerCase().replaceAll("ı", "i").replaceAll("ğ", "g").replaceAll("ü", "u").replaceAll("ş", "s").replaceAll("ö", "o").replaceAll("ç", "c");
+    const tempFullFlightInfo = callSign + flightNo;
     const data = {
-      name,
-      surname,
-      email,
-      callSign,
-      flightNo,
-      cardNumber,
-      cardHolderName,
-      expirationDate,
-      cvv,
+      passengerName: tempName,
+      passengerSurname: tempSurname,
+      passengerPID: IDNumber,
+      passengerEmail: email,
+      passengerPhoneNumber: phoneNo,
+      passengerAddress: tempAddress,
+      flightNo: tempFullFlightInfo,
+      creditCardNo: tempCardNumber,
+      cardHolder: tempCardHolderName,
+      expiration: expirationDate,
+      cvc: cvv,
+      amount: tempProvisionNumber,
     };
-
-    const response = await fetch("https://172.16.146.4:8080/deneme", {
-      method: "POST",
+    fetch('https://172.20.49.85:8080/payment', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data),
-    });
-
-    if (response.ok) {
-      alert("Form submitted successfully");
-    } else {
-      alert("Form submission failed");
-    }
-    //e.target.reset();
-  };
+      body: JSON.stringify(data)
+    })
+      .then(async response => {
+        if (response.ok) {
+          // Provision is opened successfully
+          const err = await response.text();
+          alert(err);
+          window.location = 'my-landing-page';
+        }  else {
+          const err = await response.text();
+          alert(err);
+        }
+      })
+      
+  }
 
   return (
     <>
@@ -204,12 +240,18 @@ function ProfilePage() {
                   <TabPane tabId="1">
                     <FormGroup>
                       <Row>
-                        <Col>
-                          <Label for="text">Name</Label>
-                          <Input
+                        <Col style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    width: "50%",
+                                  }}>
+                          <Label className="credit-card-input-label" for="text">Name</Label>
+                          <Cleave
                             type="text"
                             id="name"
+                            className="credit-card-text-input"
                             value={name}
+                            maxlength="30"
                             required="'required'"
                             onChange={(e) => {
                               const pattern = /^[A-Za-zıöçşğü ]*$/; // regex to allow only letters
@@ -222,7 +264,7 @@ function ProfilePage() {
                                 );
                               }
                             }}
-                            placeholder="Name"
+                            placeholder="Enter Your Name"
                           />
                           {errorMessageName && (
                             <span style={{ color: "red" }}>
@@ -230,11 +272,17 @@ function ProfilePage() {
                             </span>
                           )}
                         </Col>
-                        <Col>
-                          <Label for="Surname">Surname</Label>
-                          <Input
+                        <Col style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    width: "50%",
+                                  }}>
+                          <Label className="credit-card-input-label" for="Surname">Surname</Label>
+                          <Cleave
                             type="text"
                             id="surname"
+                            className="credit-card-text-input"
+                            maxlength="30"
                             value={surname}
                             required="'required'"
                             onChange={(e) => {
@@ -248,7 +296,7 @@ function ProfilePage() {
                                 );
                               }
                             }}
-                            placeholder="Surname"
+                            placeholder="Enter Your Surname"
                           />
                           {errorMessageSurname && (
                             <span style={{ color: "red" }}>
@@ -260,15 +308,57 @@ function ProfilePage() {
                     </FormGroup>
                     <FormGroup>
                       <Row>
-                        <Col>
-                          <Label for="inputEmail">Email</Label>
-                          <Input
+                        <Col style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    width: "100%",
+                                  }}>
+                          <Label className="credit-card-input-label" for="inputIDName">ID number</Label>
+                          <Cleave
                             type="text"
-                            id="inputEmail"
+                            className="credit-card-text-input"
+                            id="IDNumber"
+                            maxlength="11"
+                            value={IDNumber}
+                            required="'required'"
+                            onChange={(e) => {
+                              const pattern = /^[0-9]*$/; // regex to allow only letters
+                              if (pattern.test(e.target.value)) {
+                                setIDNumber(e.target.value);
+                                setErrorMessageIDNumber("");
+                              } else {
+                                setErrorMessageIDNumber(
+                                  "Input must contain only letters"
+                                );
+                              }
+                            }}
+                            placeholder="Enter Your ID Number"
+                          />
+                          {errorMessageIDNumber && (
+                            <span style={{ color: "red" }}>
+                              {errorMessageIDNumber}
+                            </span>
+                          )}
+                        </Col>
+                      </Row>
+                    </FormGroup>
+                    <FormGroup>
+                      <Row>
+                        <Col style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    width: "50%",
+                                  }}>
+                          <Label className="credit-card-input-label" for="inputEmail">E-mail</Label>
+                          <Cleave
+                            type="email"
+                            id="email"
+                            className="credit-card-text-input"
+                            maxlength="50"
                             onChange={(e) => setEmail(e.target.value)}
                             value={email}
                             required="'required'"
-                            placeholder="Email"
+                            placeholder="Enter Your E-mail"
                           />
                           {errorMessageEmail && (
                             <span style={{ color: "red" }}>
@@ -276,17 +366,80 @@ function ProfilePage() {
                             </span>
                           )}
                         </Col>
+                        <Col style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    width: "50%",
+                                  }}>
+                          <Label className="credit-card-input-label" for="inputPhoneNo">Phone Number</Label>
+                         <Cleave
+                            type="tel"
+                            id="phoneNo"
+                            className="credit-card-text-input"
+                            maxlength="50"
+                            onChange={(e) => {
+                              const pattern = /^\+[0-9]*$/; // regex to allow only letters
+                              if (pattern.test(e.target.value)) {
+                                setPhoneNo(e.target.value);
+                                setErrorMessagePhoneNo("");
+                              } else {
+                                setErrorMessagePhoneNo(
+                                  "Please put the country code and then the number"
+                                );
+                              }
+                            }}
+                            value={phoneNo}
+                            required="'required'"
+                            placeholder="+905321511080"
+                          />
+                          {errorMessagePhoneNo && (
+                            <span style={{ color: "red" }}>
+                              {errorMessagePhoneNo}
+                            </span>
+                          )}
+                        </Col>
                       </Row>
                     </FormGroup>
-
                     <FormGroup>
                       <Row>
-                        <Col>
-                          <Label for="airline">Flight Number</Label>
-                          <Input
+                        <Col style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    width: "100%",
+                                  }}>
+                          <Label className="credit-card-input-label" for="inputAddress">Address</Label>
+                          <Cleave
+                            type="text"
+                            id="address"
+                            maxlength="50"
+                            className="credit-card-text-input"
+                            onChange={(e) => setAddress(e.target.value)}
+                            value={address}
+                            required="'required'"
+                            placeholder="Enter Your Address"
+                          />
+                          {errorMessageAddress && (
+                            <span style={{ color: "red" }}>
+                              {errorMessageAddress}
+                            </span>
+                          )}
+                        </Col>
+                      </Row>
+                    </FormGroup>
+                    <FormGroup>
+                      <Row>
+                        <Col style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    width: "50%",
+                                  }}>
+                          <Label className="credit-card-input-label" for="airline">Flight Number</Label>
+                          <Cleave
                             type="text"
                             id="airline"
+                            className="credit-card-text-input"
                             value={callSign}
+                            maxlength="3"
                             required="'required'"
                             onChange={(e) => {
                               const pattern = /^[A-Za-z]{0,3}$/; // regex to allow only letters
@@ -299,7 +452,7 @@ function ProfilePage() {
                                 );
                               }
                             }}
-                            placeholder="Initials"
+                            placeholder="Call Sign"
                           />
                           {errorMessageCallSign && (
                             <span style={{ color: "red" }}>
@@ -307,14 +460,20 @@ function ProfilePage() {
                             </span>
                           )}
                         </Col>
-                        <Col>
-                          <Label for="airline" style={{ opacity: 0 }}>
+                        <Col style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    width: "50%",
+                                  }}>
+                          <Label className="credit-card-input-label" for="airline" style={{ opacity: 0 }}>
                             this is a hidden element
                           </Label>
 
-                          <Input
+                          <Cleave
                             type="text"
                             title="Numbers Only"
+                            maxlength="8"
+                            className="credit-card-text-input"
                             value={flightNo}
                             id="flightnum"
                             required="'required'"
@@ -329,7 +488,7 @@ function ProfilePage() {
                                 );
                               }
                             }}
-                            placeholder="Number"
+                            placeholder="Flight Number"
                           />
                           {errorMessageFlightNo && (
                             <span style={{ color: "red" }}>
@@ -368,13 +527,15 @@ function ProfilePage() {
                                       <FaCcMastercard />
                                     )}
                                   </div>
-                                  <div id="credit-card-number">
+                                  <div className="credit-card-number">
                                     {cardNumber == "" && (
                                       <div id="credit-card-number">
                                         0000 0000 0000 0000
                                       </div>
                                     )}
+                                    <div id="credit-card-number">
                                     {cardNumber}
+                                    </div>
                                   </div>
 
                                   <div id="credit-card-expiration">
@@ -404,10 +565,6 @@ function ProfilePage() {
                                     </div>
                                     CVC {cvv}
                                   </div>
-                                  <p className="credit-card-credits">
-                                    Built with Cleave.js, Anime.js, and React
-                                    Icons.
-                                  </p>
                                 </div>
                               </div>
                             </div>
@@ -423,9 +580,12 @@ function ProfilePage() {
                                 options={{ creditCard: true }}
                                 id="number-input"
                                 name="number-input"
+                                value={cardNumber}
                                 className="credit-card-text-input"
                                 required="'required'"
-                                onChange={(e) => setCardNumber(e.target.value)}
+                                onChange={(e) => {
+                                    setCardNumberandType(e.target.value);
+                                }}
                               />
                               <label className="credit-card-input-label">
                                 Card Holder Name
@@ -442,7 +602,7 @@ function ProfilePage() {
                                 maxLength="30"
                               />
                               <div
-                                className="date-and-csv"
+                                  className="date-and-csv"
                                 style={{ display: "flex" }}
                               >
                                 <div
@@ -495,6 +655,27 @@ function ProfilePage() {
                                   />
                                 </div>
                               </div>
+                              <label className="credit-card-input-label">
+                              Provision Amount
+                              </label>
+                              <Cleave
+                                placeholder="Enter your desired provision amount"
+                                options={{
+                                  numeral: "true",
+                                }}
+                                id="number-input"
+                                maxLength="13"
+                                name="number-input"
+                                value={provisionAmount}
+                                className="credit-card-text-input"
+                                required="'required'"
+                                onChange={(e) => {
+                                  const pattern = /^[0-9,.]*$/; // regex to allow only letters
+                                  if (pattern.test(e.target.value)) {
+                                    setProvisionAmount(e.target.value);
+                                  }
+                                }}
+                              />
                             </form>
                           </div>
                         </Col>

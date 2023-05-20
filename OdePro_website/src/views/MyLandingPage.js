@@ -17,25 +17,15 @@
 
 */
 import React from "react";
-import { useState } from "react";
-import axios from "axios";
 import { GoogleMap, LoadScript } from "@react-google-maps/api"
 // reactstrap components
 import {
-  Button,
   Card,
   CardBody,
-  CardFooter,
   CardTitle,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
   Container,
   Row,
   Col,
-  CardHeader
 } from "reactstrap";
 
 // core components
@@ -64,23 +54,22 @@ function LandingPage() {
           <Container>
             <Row>
               <Col className="ml-auto mr-auto" md="8">
-                <h2 className="title">Let's talk about our product</h2>
-                <h5 className="description">
-                  In this prduct we are presenting a new solution to purchases that are made offline. 
-                  Specifically, we are working with inflight purchases. Right now, the current solution 
-                  involves passengers to pay with cash or use their credit card. However, using cash is not 
-                  always suitable since change can not be available. Also, credit card transactions cannot
-                  be completed on the air when there is no internet. Therefore, it is the flight cabins
-                  responsibility to control the transactions when the plane lands and fix any problems with
-                  the passenger. Moreover, there can be more problems with returns. This method is inefficient
-                  and in this project, we proposed a new approach to this problem. In flight purchases can be
-                  done with a QR code or ID card of the passenger because  the passenger created a provision
-                  before the flight. With this provision, we ensure the airlines that the passenger has the
-                  money in their account and after the flight, the transaction will be successful. Similarly,
-                  in flight returns can be done easier offline. With this work, we presented a <b>reliable, certain
-                  and novel solution.</b>   </h5>
-                <br />
-               
+                <h2 className="title" style={{color:"#51cbce"}}>Let's talk about our product</h2>
+                <h4 className="description">
+                  In this prduct we are presenting a <b style={{color:"#51bcda"}}>new solution</b> to inflight purchases that are made offline. 
+                  The current solutions involve passengers to pay with cash or use their credit card 
+                  but it is problematic and not efficient for multiple transactions
+                  <br /><br />
+                  We propose a platform that can make inflight purchases via <b style={{color:"#6bd098"}}>QR code</b> or <b style={{color:"#6bd098"}}>ID card</b>.
+                  <br /><br />
+                  By making a provision prior to the flight, we ensure that you have sufficient money in your bank account.
+                  With our platform, all the transactions are sucessfull and we presented a <b style={{color:"#fbc658"}}>reliable, certain
+                  </b> and <b style={{color:"#fbc658"}}> novel solution.</b> 
+                  <br /><br />
+                  This project is for Koç University Comp491 - Computer Engineering Design course
+                  <br /><br />
+                  Supervised by: <b style={{color:"#F5593D"}}>Prof. Çiğdem Gündüz Demir</b>  </h4>
+                <br />               
               </Col>
             </Row>
           </Container>
@@ -180,14 +169,14 @@ function LandingPage() {
               <Col>
               <Card>
               <CardBody>
-              <h2 className="text-center">Keep in touch?</h2>
+              <h2 className="text-center" style={{color:"#51bcda"}}>Keep in touch?</h2>
                 <hr></hr>
-                <h4>SEND US AN E-MAIL</h4> 
+                <h4 style={{color:"#51bcda"}}><b>Send us an e-mail</b></h4> 
                 <h5 > <b>Ahmet Talha Akgül:</b> aakgul18@ku.edu.tr</h5>
                 <h5 > <b>Betül Demirtaş:</b> bdemirtas18@ku.edu.tr</h5>
                 <h5 > <b>Doğa Ege İnhanlı:</b> dinhanli18@ku.edu.tr</h5>
                 <h5 > <b>Pınar Erbil:</b> perbil18@ku.edu.tr</h5>
-                <h4>OR COME VISIT US</h4> 
+                <h4 style={{color:"#51bcda"}}><b>Or come visit us!</b></h4> 
                 <h5 ><b>Koç University</b>, Sarıyer, Istanbul, Turkey, 34450</h5>
                 </CardBody>
               </Card>

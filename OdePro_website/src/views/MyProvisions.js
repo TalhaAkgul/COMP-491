@@ -8,24 +8,21 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+
 // reactstrap components
 import {
   Button,
   Label,
   FormGroup,
-  Input,
   NavItem,
   NavLink,
   Nav,
   TabContent,
   TabPane,
   Container,
-  Row,
-  Col,
   Card,
   CardHeader,
   CardBody,
-  CardTitle,
   CardText,
 } from "reactstrap";
 
@@ -33,48 +30,55 @@ import {
 import ExamplesNavbar from "components/Navbars/MyNavbar.js";
 import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
 import DemoFooter from "components/Footers/DemoFooter.js";
+import Cleave from "cleave.js/react";
 
 function MyProvisionsPage() {
-  const [activeTab, setActiveTab] = React.useState("1");
-  var [search, setSearch] = useState("");
-  var [name, setName] = useState("");
-  var [surname, setSurname] = useState("");
+  const [activeTab, setActivetab] = React.useState("1");
   var [id, setId] = useState("");
+  const [errorMessageIDNumber, setErrorMessageIDNumber] = useState("");
+  var [search, setSearch] = useState("");
+  const [usersActive, setUsersActive] = useState([]);
+  const [usersUsed, setUsersUsed] = useState([]);
 
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    fetch("https://172.16.126.233:8080/getalldata")
-      .then((response) => response.json())
-      .then((data) => setUsers(data));
-  }, []);
-
-  const filteredDataUsed = users.filter(
-    (item) =>
-      search &&
-     // item.condition.toLowerCase().includes("Used".toLowerCase()) &&
-      item.name.toLowerCase().includes(search.name.toLowerCase()) &&
-      item.surname.toLowerCase().includes(search.surname.toLowerCase())
-  );
-
-  const filteredDataActive = users.filter(
-    (item) =>
-      search &&
-    //  item.condition.toLowerCase().includes("Active".toLowerCase()) &&
-      item.name.toLowerCase().includes(search.name.toLowerCase()) &&
-      item.surname.toLowerCase().includes(search.surname.toLowerCase())
-  );
 
   const toggle = (tab) => {
     if (activeTab !== tab) {
-      setActiveTab(tab);
+      setActivetab(tab);
     }
   };
 
+  const deleteProvision = () => {
+    {
+      fetch("https://172.20.49.85:8080/deleteActiveProvision?id=" + search)
+        .then((response) => response.json());
+    }
+    {
+      fetch("https://172.20.49.85:8080/getActiveProvision?id=" + search)
+        .then((response) => response.json())
+        .then((data) => setUsersActive(data));
+    }
+    alert("Your active provision is successfully deleted.");
+  }
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name && surname && id)
-      setSearch({ id: id, name: name, surname: surname });
+    if (id){
+      setSearch(id);
+      setUsersActive([]);
+      setUsersUsed([]);
+      {
+        fetch("https://172.20.49.85:8080/getActiveProvision?id=" + id)
+          .then((response) => response.json())
+          .then((data) => setUsersActive(data));
+      }
+      {
+        fetch("https://172.20.49.85:8080/getUsedProvisions?id=" + id)
+          .then((response) => response.json())
+          .then((data) => setUsersUsed(data));
+      }
+      setId("");
+    }
     e.target.reset();
   };
 
@@ -93,37 +97,47 @@ function MyProvisionsPage() {
           </div>
           <form onSubmit={handleSubmit}>
             <div className="form-row center">
+            <FormGroup className="col-md-4"></FormGroup>
+
               <FormGroup className="col-md-4">
-                <Label for="inputName">Name</Label>
-                <Input
+                <Label className="credit-card-input-label" for="inputID">Identity Number</Label>
+                <Cleave
                   type="text"
-                  onChange={(e) => setName(e.target.value)}
-                  id="inputName"
-                  placeholder="Name"
-                />
-              </FormGroup>
-              <FormGroup className="col-sm-4">
-                <Label for="inputSurname">Surname</Label>
-                <Input
-                  type="text"
-                  onChange={(e) => setSurname(e.target.value)}
-                  id="inputSurname"
-                  placeholder="Surname"
-                />
-              </FormGroup>
-              <FormGroup className="col-md-4">
-                <Label>Identity Number</Label>
-                <Input
-                  type="text"
-                  onChange={(e) => setId(e.target.value)}
+                  maxLength="11"
+                  className="credit-card-text-input"
                   id="inputID"
-                  placeholder="Identity Number"
+                  value={id}
+                  placeholder="Enter Your Identity Number"
+                  onChange={(e) => {
+                    const pattern = /^[0-9]*$/; // regex to allow only letters
+                    if (pattern.test(e.target.value)) {
+                      setId(e.target.value);
+                      setErrorMessageIDNumber("");
+                    } else {
+                      setErrorMessageIDNumber(
+                        "Input must contain only digits"
+                      );
+                    }
+                  }}
                 />
+                
+                {errorMessageIDNumber && (
+                  <span style={{ color: "red" }}>
+                    <br></br>
+                    {errorMessageIDNumber}
+                  </span>
+                )}
               </FormGroup>
-            </div>
-            <Button className="btn-round" type="submit" color="info">
+              <FormGroup className="col-md-2">
+              <Label className="credit-card-input-label" for="airline" style={{ opacity: 0}}>
+              this is a long hidden element
+            </Label>
+                    <br></br>
+              <Button className="btn-round" type="submit" color="info">
               <i className="fa fa-search" /> Search{" "}
             </Button>
+              </FormGroup>
+            </div>
           </form>
           <br />
           <br />
@@ -162,44 +176,55 @@ function MyProvisionsPage() {
             <CardBody>
               <TabContent className="following" activeTab={activeTab}>
                 <TabPane tabId="1">
-                  {(!search || !filteredDataActive[0]) && (
+                  {(!search || !usersActive[0]) && (
                     <CardText>You don't have any active provisions</CardText>
                   )}
-                  {search && filteredDataActive[0] && (
+                  {search && usersActive[0] && (
                     <TableContainer component={Paper}>
                       <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                           <TableRow>
-                            <TableCell>ID Number</TableCell>
+                            <TableCell align="left">ID Number</TableCell>
                             <TableCell align="left">Name</TableCell>
                             <TableCell align="left">Surname</TableCell>
+                            <TableCell align="left">Email Address</TableCell>
+                            <TableCell align="left">Phone Number</TableCell>
+                            <TableCell align="left">Address</TableCell>
+                            <TableCell align="left">Flight Info</TableCell>
                             <TableCell align="left">Provision Amount</TableCell>
-                            <TableCell align="left">Payment Details</TableCell>
-                            <TableCell align="left">Flight Number</TableCell>
+                            <TableCell align="left">Card Details</TableCell>
+                            <TableCell align="left">Provision Date</TableCell>
+
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {filteredDataActive.map((d) => (
+                          {usersActive.map((d) => (
                             <TableRow
-                              key={d.name}
+                              key={d.passengerName}
                               sx={{
                                 "&:last-child td, &:last-child th": {
                                   border: 0,
                                 },
                               }}
                             >
-                              <TableCell component="th" scope="row">
-                                {d.id}
-                              </TableCell>
-                              <TableCell align="left">{d.name}</TableCell>
-                              <TableCell align="left">{d.surname}</TableCell>
-                              <TableCell align="left">
-                                {d.provisionAmount}
-                              </TableCell>
-                              <TableCell align="left">
-                                {d.paymentDetails}
-                              </TableCell>
+                              <TableCell align="left">{d.passengerPID}</TableCell>
+                              <TableCell align="left">{d.passengerName}</TableCell>
+                              <TableCell align="left">{d.passengerSurname}</TableCell>
+                              <TableCell align="left">{d.passengerEmail}</TableCell>
+                              <TableCell align="left">{d.passengerPhoneNumber}</TableCell>
+                              <TableCell align="left">{d.passengerAddress}</TableCell>
                               <TableCell align="left">{d.flightNo}</TableCell>
+                              <TableCell align="left">{d.amount}</TableCell>
+                              <TableCell align="left">{d.hiddenCardNo}</TableCell>
+                              <TableCell align="left">{d.provisionDate}</TableCell>
+                              <TableCell align="left">
+                               <button style={{ backgroundColor:"transparent",  border:"none"}}
+                                  onClick={() => {
+                                    deleteProvision();
+                                  }}>
+                                <i class="fa fa-trash-o" style={{fontSize:"200%", color:"red", cursor:"pointer"}}></i>
+                              </button>
+                              </TableCell>
                             </TableRow>
                           ))}
                         </TableBody>
@@ -208,44 +233,47 @@ function MyProvisionsPage() {
                   )}
                 </TabPane>
                 <TabPane tabId="2">
-                  {(!search || !filteredDataUsed[0]) && (
+                  {(!search || !usersUsed[0]) && (
                     <CardText>You don't have any used provisions</CardText>
                   )}
-                  {search && filteredDataUsed[0] && (
+                  {search && usersUsed[0] && (
                     <TableContainer component={Paper}>
                       <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                           <TableRow>
-                            <TableCell>ID Number</TableCell>
+                            <TableCell align="left">ID Number</TableCell>
                             <TableCell align="left">Name</TableCell>
                             <TableCell align="left">Surname</TableCell>
+                            <TableCell align="left">Email Address</TableCell>
+                            <TableCell align="left">Phone Number</TableCell>
+                            <TableCell align="left">Address</TableCell>
+                            <TableCell align="left">Flight Info</TableCell>
                             <TableCell align="left">Provision Amount</TableCell>
-                            <TableCell align="left">Payment Details</TableCell>
-                            <TableCell align="left">Flight Number</TableCell>
+                            <TableCell align="left">Card Details</TableCell>
+                            <TableCell align="left">Provision Date</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {filteredDataUsed.map((d) => (
+                          {usersUsed.map((d) => (
                             <TableRow
-                              key={d.name}
+                              key={d.passengerName}
                               sx={{
                                 "&:last-child td, &:last-child th": {
                                   border: 0,
                                 },
                               }}
                             >
-                              <TableCell component="th" scope="row">
-                                {d.id}
-                              </TableCell>
-                              <TableCell align="left">{d.name}</TableCell>
-                              <TableCell align="left">{d.surname}</TableCell>
-                              <TableCell align="left">
-                                {d.provisionAmount}
-                              </TableCell>
-                              <TableCell align="left">
-                                {d.paymentDetails}
-                              </TableCell>
+                              <TableCell align="left">{d.passengerPID}</TableCell>
+                              <TableCell align="left">{d.passengerName}</TableCell>
+                              <TableCell align="left">{d.passengerSurname}</TableCell>
+                              <TableCell align="left">{d.passengerEmail}</TableCell>
+                              <TableCell align="left">{d.passengerPhoneNumber}</TableCell>
+                              <TableCell align="left">{d.passengerAddress}</TableCell>
                               <TableCell align="left">{d.flightNo}</TableCell>
+                              <TableCell align="left">{d.amount}</TableCell>
+                              <TableCell align="left">{d.hiddenCardNo}</TableCell>
+                              <TableCell align="left">{d.provisionDate}</TableCell>
+                              
                             </TableRow>
                           ))}
                         </TableBody>
