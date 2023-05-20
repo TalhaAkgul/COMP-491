@@ -9,14 +9,16 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @ToString
 public class Transactions {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "TID", nullable = false)
-    private String TID = "";
+    private Long TID;
 
     @Column(name = "amount", nullable = false)
-    private int amount;
+    private double amount;
 
     @ManyToOne
     @JoinColumn(name = "AID")//TODO Check whether you can delete this or not

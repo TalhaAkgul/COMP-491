@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Primary;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @ToString
 public class Passenger {
     @Id
@@ -34,4 +35,5 @@ public class Passenger {
 
     @Column(name = "phone_number", length = 17)
     private String phoneNumber = "";
+
 }

@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,8 +17,8 @@ public class UsedProvisionDTO {
     String passengerEmail;
     String passengerAddress;
     String passengerPhoneNumber;
-    String UID;
-    String amount;
+    double amount;
     String provisionDate;
     String flightNo;
+    String hiddenCardNo;
 }

@@ -1,9 +1,6 @@
 package com.Softwaring.OdeProServer.controller;
 
-import com.Softwaring.OdeProServer.dto.ActiveProvisionDTO;
-import com.Softwaring.OdeProServer.dto.PassengerDTO;
-import com.Softwaring.OdeProServer.dto.OpenProvisionDTO;
-import com.Softwaring.OdeProServer.dto.UsedProvisionDTO;
+import com.Softwaring.OdeProServer.dto.*;
 import com.Softwaring.OdeProServer.entity.Passenger;
 import com.Softwaring.OdeProServer.exception.NotFoundException;
 import com.Softwaring.OdeProServer.service.BankService;
@@ -23,7 +20,6 @@ public class RestfulController {
 
 
     private final PassengerService passengerService;
-    private final BankService bankService;
 
 
     private List<Passenger> allUsers() {
@@ -58,20 +54,24 @@ public class RestfulController {
         return allUsers();
     }
 
-    @PostMapping("/getActiveProvision")
-    public ResponseEntity<?> getActiveProvisions(@RequestBody final String PID) {
+    @GetMapping("/getActiveProvision")
+    public ResponseEntity<?> getActiveProvisions(@RequestParam("id") String PID) {
         try {
-            ActiveProvisionDTO result = passengerService.getActiveProvisionByPassengerID(PID);
-            return ResponseEntity.ok(result);
+            System.out.println(PID);
+            List<ActiveProvisionDTO> results = new ArrayList<>();
+            results.add(passengerService.getActiveProvisionByPassengerID(PID));
+            System.out.println();
+            return ResponseEntity.ok(results);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
-    @PostMapping("/getUsedProvisions")
-    public ResponseEntity<?> getUsedProvisions(@RequestBody final String PID) {
+    @GetMapping("/getUsedProvisions")
+    public ResponseEntity<?> getUsedProvisions(@RequestParam("id") String PID) {
         try {
             List<UsedProvisionDTO> results = passengerService.getUsedProvisionsByPassengerID(PID);
+            System.out.println(results);
             return ResponseEntity.ok(results);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -91,7 +91,7 @@ public class RestfulController {
     @GetMapping("/search")
     public ActiveProvisionDTO search() {
 
-        return passengerService.getProvisionsByPassengerID("1");
+        return passengerService.getProvisionsByPassengerID("111");
     }
 
 
@@ -110,12 +110,25 @@ public class RestfulController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-    @PostMapping("/payment")
+    @PostMapping("/payment")//TODO You can try ResponseEntity<String>
     public ResponseEntity<?> addPassenger(@RequestBody final OpenProvisionDTO openProvision){
         try {
-            bankService.openProvision(openProvision);
+            System.out.println(openProvision);
+            passengerService.openProvision(openProvision);
             return ResponseEntity.ok("Provision is opened");
-        }catch (IllegalArgumentException e){
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/close")
+    public ResponseEntity<?> closeProvision(@RequestBody final CloseProvisionRequest closeProvisionRequest){
+        try {
+            passengerService.closeProvision(closeProvisionRequest);
+            return ResponseEntity.ok("Provision is closed");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }

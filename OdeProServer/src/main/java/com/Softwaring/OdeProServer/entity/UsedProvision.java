@@ -11,11 +11,13 @@ import java.sql.Timestamp;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @ToString
 public class UsedProvision {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "UID", nullable = false)
-    private String UID = "";
+    private Long UID;
 
     @Column(name = "amount", nullable = false)
     private int amount;
@@ -29,4 +31,7 @@ public class UsedProvision {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PID")
     private Passenger passenger;
+
+    @Column(name = "unique_card_id")
+    private String uniqueCardId;
 }

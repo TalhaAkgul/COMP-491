@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,12 +16,10 @@ public class OpenProvisionDTO {
     String passengerEmail;
     String passengerAddress;
     String passengerPhoneNumber;
-    String AID;
-    String amount;
-    String provisionDate;
+    double amount;
     String flightNo;
-    String cardNumber;
-    String cardHolderName;
-    String expirationDate;
+    String creditCardNo;
+    String cardHolder;
+    String expiration;
     String cvc;
 }
