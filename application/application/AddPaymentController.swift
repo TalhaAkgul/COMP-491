@@ -280,15 +280,6 @@ class AddPaymentController: UIViewController {
                     }        } catch {
             fatalError("Couldn't load contents of file at path '\(url)': \(error)")
         }
-        /*
-        let productsAtBasket = self.productsTable.filter(self.count != 0)
-        let completeBasket = productsAtBasket.update(self.count <- 0)
-        do {
-            try self.database.run(completeBasket)
-        } catch {
-            print(error)
-        }
-        */
     }
     
     func connectDatabase3(){
@@ -303,13 +294,10 @@ class AddPaymentController: UIViewController {
     }
     
     func sendTransactionsToConnectedDevices(){
-        //sessionManager.connectDevice(fromViewController: self)
         sessionManager.sendTransactions()
-        print("inside add payment send")
     }
     
     func retrieveTransactionsFromConnectedDevices(){
         sessionManager.sendSyncRequest()
-        print("inside add payment request")
     }
 }
