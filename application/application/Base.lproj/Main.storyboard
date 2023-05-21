@@ -62,20 +62,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="transactions" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4Ya-CF-zr5">
-                                <rect key="frame" x="20" y="159" width="374" height="616"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HlB-N1-6fL">
+                                <rect key="frame" x="58" y="238" width="269" height="416"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="5S0-aZ-JJ2"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="rom-AX-3G6"/>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="CzJ-IX-Inz"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
                     </view>
                     <connections>
-                        <outlet property="transactionText" destination="4Ya-CF-zr5" id="73J-ig-9Gm"/>
+                        <outlet property="scrollView" destination="HlB-N1-6fL" id="lZb-5Z-uHf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HLC-O0-dEA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
