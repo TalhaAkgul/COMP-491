@@ -9,15 +9,6 @@ import UIKit
 import SQLite
 
 class FoodDrinkMenuController: UIViewController {
-    /*
-    var database: Connection!
-    let productsTable = Table("Products")
-    let productId = Expression<Int>("productId")
-    let productName = Expression<String>("productName")
-    let productType = Expression<String>("productType")
-    let count = Expression<Int>("count")
-    let price = Expression<Double>("price")
-    */
     @IBOutlet weak var foodPhoto1: UIImageView!
     @IBOutlet weak var foodPhoto2: UIImageView!
     @IBOutlet weak var foodPhoto3: UIImageView!

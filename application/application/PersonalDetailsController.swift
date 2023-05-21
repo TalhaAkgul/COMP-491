@@ -10,7 +10,7 @@ import SQLite
 
 
 
-class PersonalDetailsController: UIViewController, URLSessionDelegate {
+class PersonalDetailsController: UIViewController {
     
     @IBOutlet weak var personalInfoView: UIView!
     @IBOutlet weak var spendingsView: UIView!
@@ -156,43 +156,5 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
                     }        } catch {
             fatalError("Couldn't load contents of file at path '\(url)': \(error)")
         }
-    }
-
-    func request(){
-        let postString = "test"
-        var request = URLRequest(url: URL(string: "https://172.16.146.4:8080/getalldata")!)
-        request.httpMethod = "POST"
-        request.httpBody = postString.data(using: String.Encoding.utf8)
-        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-        let task = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
-            if let error = error{
-                print("error: ")
-                print(error)
-                return
-            }
-            if let data = data{
-                print("data: ")
-                print(data)
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print(json)
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-            if let response = response{
-                print("response: ")
-                print(response)
-            }
-        }
-        task.resume()
-    }
-    
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-            if challenge.protectionSpace.host == "172.16.146.4" {
-                completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
-            } else {
-                completionHandler(.performDefaultHandling, nil)
-            }
     }
 }

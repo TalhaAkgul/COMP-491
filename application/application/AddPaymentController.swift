@@ -115,7 +115,6 @@ class AddPaymentController: UIViewController {
         scrollViewContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         scrollView.center.x = self.view.center.x
         scrollView.center.y = afterFlightServicesView.frame.maxY + scrollView.frame.size.height/2 + 10
-        
         scrollView.frame.size.height = totalView.frame.minY - scrollView.frame.minY - 20
     }
     
@@ -128,7 +127,6 @@ class AddPaymentController: UIViewController {
     
     
     func updateBasket(container : UIStackView){
-        
         do {
             let products = try databaseController.database.prepare(databaseController.productsTable.filter(databaseController.count != 0))
             var labelPosY = 20
@@ -172,7 +170,6 @@ class AddPaymentController: UIViewController {
         guard let path = Bundle.main.path(forResource: "serverData", ofType: "json") else {
             fatalError("Couldn't find file 'serverData.json' in app bundle.")
         }
-        
         let url = URL(fileURLWithPath: path)
         do {
             let data = try Data(contentsOf: url)
@@ -195,7 +192,6 @@ class AddPaymentController: UIViewController {
                 } catch {
                     print("Error selecting transactions: \(error)")
                 }
-
                 for serverInfo in serverInfos {
                     if serverInfo.passengerId == currentId {
                         let serverAmount = serverInfo.amount

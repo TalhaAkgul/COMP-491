@@ -56,7 +56,6 @@ class AfterFlightServicesController: UIViewController {
     func setItems(){
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
-        
         let navigationItem = UINavigationItem(title: "After Flight Services")
         
         let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
