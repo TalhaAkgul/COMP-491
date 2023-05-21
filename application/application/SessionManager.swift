@@ -28,42 +28,15 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
     private override init() {
         super.init()
         connectDatabase2()
-        //let countQuery = transactionTable.count
-        //transactionLocalCount = try! database2.scalar(countQuery)
-        
         peerID = MCPeerID(displayName: UIDevice.current.name)
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
         mcSession.delegate = self
         startHosting()
     }
-    /*
-    func startAdvertising() {
-        mcAdvertiser = MCAdvertiserAssistant(serviceType: "your-service-type", discoveryInfo: nil, session: mcSession!)
-        mcAdvertiser?.start()
-    }
-    */
-    /*
-    func connectDevice(){
-        let ac = UIAlertController(title: "Connect to others", message: nil, preferredStyle: .alert)
-         ac.addAction(UIAlertAction(title: "Host a session", style: .default) {
-             //here we will add a closure to host a session
-            (UIAlertAction) in
-             self.startHosting()
-       })
-         ac.addAction(UIAlertAction(title: "Join a session", style: .default) {
-             //here we will add a closure to join a session
-             (UIAlertAction) in
-             self.joinSession()
-         })
-         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-         present(ac, animated: true)
-    }
-    */
+    
     func sendTransactions(){
-        //send data to the other device
         let connectedPeers = mcSession.connectedPeers
         let deviceCountToSend = connectedPeers.count / 2
-        //let deviceCountToSend = connectedPeers.count
         var randomPeers = Set<MCPeerID>()
         while randomPeers.count < deviceCountToSend {
             let randomIndex = Int(arc4random_uniform(UInt32(connectedPeers.count)))
@@ -91,10 +64,8 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
     }
     
     func sendSyncRequest(){
-        //send data to the other device
         let connectedPeers = mcSession.connectedPeers
         let deviceCountToSend = connectedPeers.count / 2
-        //let deviceCountToSend = connectedPeers.count
         var randomPeers = Set<MCPeerID>()
         while randomPeers.count < deviceCountToSend {
             let randomIndex = Int(arc4random_uniform(UInt32(connectedPeers.count)))
@@ -118,14 +89,6 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
         mcAdvertiserAssistant.delegate = self
         mcAdvertiserAssistant.startAdvertisingPeer()
     }
-    /*
-    //join a room
-    func joinSession() {
-        let mcBrowser = MCBrowserViewController(serviceType: "mp-numbers", session: mcSession)
-        mcBrowser.delegate = self
-        present(mcBrowser, animated: true)
-    }
-    */
     
     func joinSession(fromViewController viewController: UIViewController) {
         let mcBrowser = MCBrowserViewController(serviceType: "mp-numbers", session: mcSession)
@@ -136,12 +99,10 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
     func connectDevice(fromViewController viewController: UIViewController){
         let ac = UIAlertController(title: "Connect to others", message: nil, preferredStyle: .alert)
          ac.addAction(UIAlertAction(title: "Host a session", style: .default) {
-             //here we will add a closure to host a session
             (UIAlertAction) in
              self.startHosting()
        })
          ac.addAction(UIAlertAction(title: "Join a session", style: .default) {
-             //here we will add a closure to join a session
              (UIAlertAction) in
              self.joinSession(fromViewController: viewController)
          })
@@ -199,9 +160,7 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
                 print(error)
             }
         } else {
-            //if let text = String(data: data, encoding: .utf8) {
                 DispatchQueue.main.async {
-                    //display the text in the label
                     let decoder = JSONDecoder()
                     let transactionsReceived = try! decoder.decode([TransactionJSONData].self, from: data)
                     do {
@@ -238,12 +197,8 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
                     } catch {
                         print("Error selecting transactions from Transaction table: \(error)")
                     }
-                    print(transactionStr)
-                    
                 }
-            //}
         }
-        
     }
     
     
@@ -272,7 +227,6 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
     // MARK: - Advertiser Methods
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        //accept the connection/invitation
         invitationHandler(true, mcSession)
     }
     

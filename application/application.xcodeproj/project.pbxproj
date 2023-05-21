@@ -13,6 +13,7 @@
 		1C2FEF292A0EC5800065EB7A /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2FEF282A0EC57F0065EB7A /* SessionManager.swift */; };
 		1C4401A729EB4A4800AF40F3 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 1C4401A629EB4A4800AF40F3 /* CodeScanner */; };
 		1C678FFF2A1A4ED000B18010 /* AdminController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C678FFE2A1A4ED000B18010 /* AdminController.swift */; };
+		1C6790022A1A6D5300B18010 /* DatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6790012A1A6D5300B18010 /* DatabaseController.swift */; };
 		1C6BD84A29E1F8DE00E243DB /* PersonalDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6BD84929E1F8DE00E243DB /* PersonalDetailsController.swift */; };
 		1C79FBFC29D44DAF0052764A /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C79FBFB29D44DAF0052764A /* QRCodeViewController.swift */; };
 		1C79FBFE29D44E310052764A /* IDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C79FBFD29D44E310052764A /* IDViewController.swift */; };
@@ -125,6 +126,7 @@
 		1C2FEF1E2A0E4C700065EB7A /* TransactionJSONData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionJSONData.swift; sourceTree = "<group>"; };
 		1C2FEF282A0EC57F0065EB7A /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		1C678FFE2A1A4ED000B18010 /* AdminController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminController.swift; sourceTree = "<group>"; };
+		1C6790012A1A6D5300B18010 /* DatabaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseController.swift; sourceTree = "<group>"; };
 		1C6BD84929E1F8DE00E243DB /* PersonalDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDetailsController.swift; sourceTree = "<group>"; };
 		1C79FBFB29D44DAF0052764A /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		1C79FBFD29D44E310052764A /* IDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDViewController.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				1C2FEF282A0EC57F0065EB7A /* SessionManager.swift */,
 				1CED77962A10068D009749C6 /* TransactionsController.swift */,
 				1C678FFE2A1A4ED000B18010 /* AdminController.swift */,
+				1C6790012A1A6D5300B18010 /* DatabaseController.swift */,
 			);
 			path = application;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				1C9BF11729DB2F3900B69C37 /* AddPaymentController.swift in Sources */,
 				1C7D052529E42C66003B1FF6 /* PaymentSuccessfulController.swift in Sources */,
 				1CED77972A10068D009749C6 /* TransactionsController.swift in Sources */,
+				1C6790022A1A6D5300B18010 /* DatabaseController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

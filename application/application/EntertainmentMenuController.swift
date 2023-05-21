@@ -9,7 +9,7 @@ import UIKit
 import SQLite
 
 class EntertainmentMenuController: UIViewController {
-    
+    /*
     var database: Connection!
     let productsTable = Table("Products")
     let productId = Expression<Int>("productId")
@@ -17,7 +17,7 @@ class EntertainmentMenuController: UIViewController {
     let productType = Expression<String>("productType")
     let count = Expression<Int>("count")
     let price = Expression<Double>("price")
-    
+    */
     @IBOutlet weak var entPhoto1: UIImageView!
     @IBOutlet weak var entPhoto2: UIImageView!
     @IBOutlet weak var entPhoto3: UIImageView!
@@ -125,9 +125,12 @@ class EntertainmentMenuController: UIViewController {
     var prodLabels = [UILabel]()
     var plusButtons = [UIButton]()
     var minusButtons = [UIButton]()
+    
+    let databaseController = DatabaseController.instance
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        connectDatabase()
+        databaseController.connectMenuDatabase()
         setItems()
     }
     
@@ -180,10 +183,10 @@ class EntertainmentMenuController: UIViewController {
         
         for i in countLabels.indices {
             do {
-                let products = try self.database.prepare(self.productsTable.filter(self.productId == i + 6))
+                let products = try databaseController.database.prepare(databaseController.productsTable.filter(databaseController.productId == i + 6))
                 for prod in products{
-                    countLabels[i].text = String(prod[self.count])
-                    priceLabels[i].text = String(prod[self.price]) + " ₺"
+                    countLabels[i].text = String(prod[databaseController.count])
+                    priceLabels[i].text = String(prod[databaseController.price]) + " ₺"
                 }
             } catch {
                 print(error)
@@ -211,25 +214,16 @@ class EntertainmentMenuController: UIViewController {
             }
         }
     }
-    func connectDatabase(){
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let fileUrl = documentDirectory.appendingPathComponent("Products").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database = database
-        } catch {
-            print(error)
-        }
-    }
+    
     func updateTable(){
         
         do {
-            let products = try self.database.prepare(self.productsTable.filter(self.productType == "Entertainment"))
+            let products = try databaseController.database.prepare(databaseController.productsTable.filter(databaseController.productType == "Entertainment"))
             for product in products {
-                let currentCount = Int(countLabels[product[self.productId] - 6].text!) ?? 0
-                let updateProduct = self.productsTable.filter(self.productId == product[self.productId]).update(self.count <- currentCount)
+                let currentCount = Int(countLabels[product[databaseController.productId] - 6].text!) ?? 0
+                let updateProduct = databaseController.productsTable.filter(databaseController.productId == product[databaseController.productId]).update(databaseController.count <- currentCount)
                 do {
-                    try self.database.run(updateProduct)
+                    try databaseController.database.run(updateProduct)
                 } catch {
                     print(error)
                 }

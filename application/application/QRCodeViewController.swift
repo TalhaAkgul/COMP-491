@@ -13,14 +13,6 @@ import SQLite
 
 class QRCodeViewController: UIViewController {
     
-    var database: Connection!
-    let productsTable = Table("Products")
-    let productId = Expression<Int>("productId")
-    let productName = Expression<String>("productName")
-    let productType = Expression<String>("productType")
-    let count = Expression<Int>("count")
-    let price = Expression<Double>("price")
-    
     var scannedCode: String = ""
     var scanComplete: Bool = false {
         didSet {
@@ -28,8 +20,14 @@ class QRCodeViewController: UIViewController {
             movePersonalDetailsPage()
         }
     }
+    
+    let databaseController = DatabaseController.instance
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        databaseController.connectMenuDatabase()
+        databaseController.connectQRDatabase()
+        
         var scannerSheet : CodeScannerView {
             CodeScannerView(
                 codeTypes: [.qr],
@@ -41,13 +39,10 @@ class QRCodeViewController: UIViewController {
                 }
             )
         }
-        
         let scanView = UIHostingController(rootView: scannerSheet)
         scanView.view.frame = self.view.bounds
         self.view.addSubview(scanView.view)
         self.addChild(scanView)
-        connectDatabase()
-        connectDatabase3()
         
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
@@ -74,16 +69,7 @@ class QRCodeViewController: UIViewController {
             viewController.modalPresentationStyle = .fullScreen
             present(viewController, animated: true, completion: nil)
         }
-
     }
-    
-    var database3: Connection!
-    let qrTable = Table("QR")
-    let pId = Expression<String>("pId")
-    let prId = Expression<String>("prId")
-    let prCount = Expression<String>("prCount")
-    
-    
     
     func processDataFromQRCode() {
         var passID = ""
@@ -104,15 +90,14 @@ class QRCodeViewController: UIViewController {
             for dict in orderDict {
                 let prIdValue = dict.keys.first ?? ""
                 let prCountValue = dict.values.first ?? ""
-                let insertQuery = qrTable.insert(pId <- passID, prId <- prIdValue, prCount <- prCountValue)
+                let insertQuery = databaseController.qrTable.insert(databaseController.pId <- passID, databaseController.prId <- prIdValue, databaseController.prCount <- prCountValue)
                 if let prId = Int(prIdValue) {
-                    let matchingRow = productsTable.filter(productId == prId)
+                    let matchingRow = databaseController.productsTable.filter(databaseController.productId == prId)
                     if let prCountString = dict.values.first, let prCountValue = Int(prCountString) {
-                        let updateStatement = matchingRow.update(count <- prCountValue)
+                        let updateStatement = matchingRow.update(databaseController.count <- prCountValue)
 
                         do {
-                            try database.run(updateStatement)
-                            print("Successfully updated count value")
+                            try databaseController.database.run(updateStatement)
                         } catch {
                             print("Error updating count value: \(error)")
                         }
@@ -124,7 +109,7 @@ class QRCodeViewController: UIViewController {
                 }
                 
                 do {
-                    try database3.run(insertQuery)
+                    try databaseController.database3.run(insertQuery)
                 } catch {
                     print("Error inserting data: \(error)")
                 }
@@ -141,27 +126,9 @@ class QRCodeViewController: UIViewController {
         self.view.addSubview(personalDetailsController.view)
         personalDetailsController.didMove(toParent: self)
     }
-    func connectDatabase3(){
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let fileUrl = documentDirectory.appendingPathComponent("QR").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database3 = database
-        } catch {
-            print(error)
-        }
-    }
     
-    func connectDatabase(){
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let fileUrl = documentDirectory.appendingPathComponent("Products").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database = database
-        } catch {
-            print(error)
-        }
-    }
+    
+    
 }
 
 

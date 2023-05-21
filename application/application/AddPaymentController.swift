@@ -11,25 +11,6 @@ import MultipeerConnectivity
 
 class AddPaymentController: UIViewController {
     
-    var database: Connection!
-    let productsTable = Table("Products")
-    let productId = Expression<Int>("productId")
-    let productName = Expression<String>("productName")
-    let productType = Expression<String>("productType")
-    let count = Expression<Int>("count")
-    let price = Expression<Double>("price")
-    
-    var database2: Connection!
-    let transactionTable = Table("Transaction")
-    let transactionId = Expression<String>("transactionId")
-    let amount = Expression<Double>("amount")
-    let passengerId = Expression<String>("passengerId")
-    
-    var database3: Connection!
-    let qrTable = Table("QR")
-    let pId = Expression<String>("pId")
-    let prId = Expression<String>("prId")
-    let prCount = Expression<String>("prCount")
     
     @IBOutlet weak var foodDrinkMenuView: UIView!
     var totalPrice: Double!
@@ -40,7 +21,6 @@ class AddPaymentController: UIViewController {
     @IBOutlet weak var foodMenuView: UIView!
     @IBOutlet weak var entertainmentMenuView: UIView!
     @IBOutlet weak var afterFlightServicesView: UIView!
-    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var totalView: UIView!
     @IBOutlet weak var totalLabel: UILabel!
@@ -53,11 +33,13 @@ class AddPaymentController: UIViewController {
     let sessionManager = SessionManager.shared
     var mcSession: MCSession!
     
+    let databaseController = DatabaseController.instance
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        connectDatabase()
-        connectDatabase2()
-        connectDatabase3()
+        databaseController.connectMenuDatabase()
+        databaseController.connectTransactionDatabase()
+        databaseController.connectQRDatabase()
         setItems()
         mcSession = self.sessionManager.mcSession
     }
@@ -84,8 +66,6 @@ class AddPaymentController: UIViewController {
         menuImage5.image = UIImage(named: "images/add payment page images/menu2.jpeg")
         menuImage6.image = UIImage(named: "images/add payment page images/menu6.jpeg")
         menuImage7.image = UIImage(named: "images/add payment page images/menu7.jpeg")
-        
-        
         
         foodDrinkMenuView.frame.size.width = screenWidth
         foodDrinkMenuView.center.x = self.view.center.x
@@ -146,42 +126,21 @@ class AddPaymentController: UIViewController {
         }
     }
     
-    func connectDatabase(){
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let fileUrl = documentDirectory.appendingPathComponent("Products").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database = database
-        } catch {
-            print(error)
-        }
-    }
     
-    func connectDatabase2(){
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            
-            let fileUrl = documentDirectory.appendingPathComponent("Transaction").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database2 = database
-        } catch {
-            print(error)
-        }
-    }
     func updateBasket(container : UIStackView){
         
         do {
-            let products = try self.database.prepare(self.productsTable.filter(self.count != 0))
+            let products = try databaseController.database.prepare(databaseController.productsTable.filter(databaseController.count != 0))
             var labelPosY = 20
             totalPrice = 0.0
             for product in products {
                 let productLabel = UILabel()
                 productLabel.textColor = UIColor.black
                 productLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
-                let productName = product[self.productName]
-                let count = product[self.count]
+                let productName = product[databaseController.productName]
+                let count = product[databaseController.count]
                 let productText = String(count) + "   x   " + productName
-                let price = product[self.price]
+                let price = product[databaseController.price]
                 let totalPriceForProd = price * Double(count)
                 let priceText = String(totalPriceForProd) + " ₺ "
                 let text = productText + ": " + priceText
@@ -198,10 +157,10 @@ class AddPaymentController: UIViewController {
     }
     
     @IBAction func cancelPaymentClicked(_ sender: UIButton) {
-        let productsAtBasket = self.productsTable.filter(self.count != 0)
-        let cancelBasket = productsAtBasket.update(self.count <- 0)
+        let productsAtBasket = databaseController.productsTable.filter(databaseController.count != 0)
+        let cancelBasket = productsAtBasket.update(databaseController.count <- 0)
         do {
-            try self.database.run(cancelBasket)
+            try databaseController.database.run(cancelBasket)
         } catch {
             print(error)
         }
@@ -223,13 +182,13 @@ class AddPaymentController: UIViewController {
                 let serverInfos = try decoder.decode([ServerData].self, from: data)
                 var currentId = ""
                 var totalSpendings = 0.0
-                if let qrRow = try database3.pluck(qrTable) {
-                    currentId  = qrRow[pId]
+                if let qrRow = try databaseController.database3.pluck(databaseController.qrTable) {
+                    currentId  = qrRow[databaseController.pId]
                 }
                 do {
-                    let filteredRows = try database2.prepare(transactionTable.filter(passengerId == currentId))
+                    let filteredRows = try databaseController.database2.prepare(databaseController.transactionTable.filter(databaseController.passengerId == currentId))
                     for row in filteredRows {
-                        let transactionAmount = Double(row[amount])
+                        let transactionAmount = Double(row[databaseController.amount])
                         totalSpendings += transactionAmount
                         print("Transaction Amount: \(transactionAmount)")
                     }
@@ -257,10 +216,8 @@ class AddPaymentController: UIViewController {
                         } else {
                             do {
                                 let time = ("\(Date())")
-                                let insert = transactionTable.insert(transactionId <- time, amount <- totalPrice, passengerId <- currentId)
-                                try database2.run(insert)
-                                
-                                print("New transaction inserted")
+                                let insert = databaseController.transactionTable.insert(databaseController.transactionId <- time, databaseController.amount <- totalPrice, databaseController.passengerId <- currentId)
+                                try databaseController.database2.run(insert)
                             } catch {
                                 print("Error inserting transaction: \(error)")
                             }
@@ -279,17 +236,6 @@ class AddPaymentController: UIViewController {
                       print(error)
                     }        } catch {
             fatalError("Couldn't load contents of file at path '\(url)': \(error)")
-        }
-    }
-    
-    func connectDatabase3(){
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let fileUrl = documentDirectory.appendingPathComponent("QR").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database3 = database
-        } catch {
-            print(error)
         }
     }
     

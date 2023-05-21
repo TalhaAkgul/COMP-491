@@ -81,20 +81,14 @@ class SpendingDetailsController: UIViewController {
                 currentId  = qrRow[pId]
             }
         } catch {
-            // Handle the error here
             print("Error occurred while accessing database: \(error)")
         }
         
         do {
-            // Filter transactions by passengerId
             let filteredTransactions = transactionTable.filter(passengerId == currentId)
-            
-            // Iterate through the filtered transactions and print the amounts
             for transaction in try database2.prepare(filteredTransactions) {
                 let transactionAmount = transaction[amount]
                 let transactionId = transaction[transactionId]
-                //print("Amount: \(transactionAmount)")
-                //let spentLabel = UILabel()
                 let lineStackView = UIStackView()
                 lineStackView.axis = .horizontal
                 lineStackView.spacing = 8.0
@@ -106,8 +100,7 @@ class SpendingDetailsController: UIViewController {
                 
                 spentLabel.text = spentText
                 spentLabel.textColor = UIColor.black
-                //spentLabel.font = UIFont(name: "Montserrat-Light", size: 6.0)
-                spentLabel.font = UIFont.systemFont(ofSize: 12.0) // Set the desired font size here
+                spentLabel.font = UIFont.systemFont(ofSize: 12.0)
 
                 let button = UIButton(type: .system)
                 button.frame = CGRect(x: 220, y: 0, width: 40, height: 10)
@@ -118,27 +111,14 @@ class SpendingDetailsController: UIViewController {
                 button.heightAnchor.constraint(equalToConstant: 15).isActive = true
                 button.addTarget(self, action: #selector(refundButtonTapped(_:)), for: .touchUpInside)
                 
-
-                // Round button corners
-                //button.layer.cornerRadius = 8.0
-                //button.layer.masksToBounds = true
-                //container.addArrangedSubview(spentLabel)
-                //container.addArrangedSubview(button)
                 lineStackView.addArrangedSubview(spentLabel)
                 lineStackView.addArrangedSubview(button)
-                            
-                            // Add the line stack view to the main stack view
                 container.addArrangedSubview(lineStackView)
             }
         } catch {
-            // Handle any errors that occur
             print("Error: \(error)")
         }
-
-
-            
     }
-    
     
     @objc func refundButtonTapped(_ sender: UIButton) {
         guard let lineStackView = sender.superview as? UIStackView else {
@@ -171,7 +151,6 @@ class SpendingDetailsController: UIViewController {
                 }
             }
         } catch {
-            // Handle the error here
             print("Error occurred while accessing database: \(error)")
         }
         

@@ -9,16 +9,14 @@ import SQLite
 
 class TransactionsController: UIViewController {
     
-    var database2: Connection!
-    let transactionTable = Table("Transaction")
-    let transactionId = Expression<String>("transactionId")
-    let amount = Expression<Double>("amount")
-    let passengerId = Expression<String>("passengerId")
-    
     @IBOutlet weak var transactionText: UITextView!
+    
+    let databaseController = DatabaseController.instance
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        connectDatabase2()
+        databaseController.connectTransactionDatabase()
+        
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
         let navigationItem = UINavigationItem(title: "Transactions")
@@ -36,13 +34,13 @@ class TransactionsController: UIViewController {
         view.addSubview(navigationBar)
         var transactionStr = ""
         do {
-            let selectQuery = self.transactionTable.select(self.transactionId, self.amount, self.passengerId)
-            let rows = try self.database2.prepare(selectQuery)
+            let selectQuery = databaseController.transactionTable.select(databaseController.transactionId, databaseController.amount, databaseController.passengerId)
+            let rows = try databaseController.database2.prepare(selectQuery)
             for row in rows {
                 transactionStr += """
-                    transactionId: \(row[self.transactionId]), \
-                    amount: \(row[self.amount]), \
-                    passengerId: \(row[self.passengerId])
+                    transactionId: \(row[databaseController.transactionId]), \
+                    amount: \(row[databaseController.amount]), \
+                    passengerId: \(row[databaseController.passengerId])
                 """ + "\n"
             }
         } catch {
@@ -50,22 +48,12 @@ class TransactionsController: UIViewController {
         }
         transactionText.text = transactionStr
     }
+    
     @objc func goBack() {
         if let viewController = storyboard?.instantiateViewController(withIdentifier: "AdminController") {
             viewController.modalPresentationStyle = .fullScreen
             present(viewController, animated: true, completion: nil)
         }
 
-    }
-    func connectDatabase2(){
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            
-            let fileUrl = documentDirectory.appendingPathComponent("Transaction").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database2 = database
-        } catch {
-            print(error)
-        }
     }
 }

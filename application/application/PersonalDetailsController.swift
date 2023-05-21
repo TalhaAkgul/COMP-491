@@ -11,19 +11,7 @@ import SQLite
 
 
 class PersonalDetailsController: UIViewController, URLSessionDelegate {
- 
-    var database2: Connection!
-    let transactionTable = Table("Transaction")
-    let transactionId = Expression<String>("transactionId")
-    let amount = Expression<Double>("amount")
-    let passengerId = Expression<String>("passengerId")
     
-    var database3: Connection!
-    let qrTable = Table("QR")
-    let pId = Expression<String>("pId")
-    let prId = Expression<String>("prId")
-    let prCount = Expression<String>("prCount")
-    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var personalInfoView: UIView!
     @IBOutlet weak var spendingsView: UIView!
     @IBOutlet weak var initialPLabel: UITextField!
@@ -35,10 +23,12 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var seeAllSpendingsButton: UIButton!
     
+    let databaseController = DatabaseController.instance
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        connectDatabase()
-        connectDatabase2()
+        databaseController.connectQRDatabase()
+        databaseController.connectTransactionDatabase()
         readLocalData()
         setItems()
     }
@@ -67,8 +57,8 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
         initialPLabel.isUserInteractionEnabled = false
         
         do {
-            if let qrRow = try database3.pluck(qrTable) {
-                idLabel.text = qrRow[pId]
+            if let qrRow = try databaseController.database3.pluck(databaseController.qrTable) {
+                idLabel.text = qrRow[databaseController.pId]
             }
         } catch {
             print("Error retrieving data: \(error)")
@@ -103,17 +93,6 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
 
     }
     
-    func connectDatabase2(){
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            
-            let fileUrl = documentDirectory.appendingPathComponent("Transaction").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database2 = database
-        } catch {
-            print(error)
-        }
-    }
     @IBAction func seeSpendingDetailsClicked(_ sender: UIButton) {
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -140,22 +119,20 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
                 let decoder = JSONDecoder()
                 let serverInfos = try decoder.decode([ServerData].self, from: data)
                 var currentId = ""
-                if let qrRow = try database3.pluck(qrTable) {
-                    // Retrieve the value of pId column from the row and assign it to idLabel's text
-                    currentId  = qrRow[pId]
+                if let qrRow = try databaseController.database3.pluck(databaseController.qrTable) {
+                    currentId  = qrRow[databaseController.pId]
                 }
                 for serverInfo in serverInfos {
                     if serverInfo.passengerId == currentId {
-                        //let passengerId = serverInfo.passengerId
                         let passengerName = serverInfo.passengerName
                         let passengerSurname = serverInfo.passengerSurname
                         let provisionAmount = Double(serverInfo.amount) ?? 0.0
                         var totalSpendings = 0.0
                         
                         do {
-                            let filteredRows = try database2.prepare(transactionTable.filter(self.passengerId == currentId))
+                            let filteredRows = try databaseController.database2.prepare(databaseController.transactionTable.filter(databaseController.passengerId == currentId))
                             for row in filteredRows {
-                                let transactionAmount = Double(row[amount])
+                                let transactionAmount = Double(row[databaseController.amount])
                                 totalSpendings += transactionAmount
                             }
                         } catch {
@@ -217,16 +194,5 @@ class PersonalDetailsController: UIViewController, URLSessionDelegate {
             } else {
                 completionHandler(.performDefaultHandling, nil)
             }
-    }
-    
-    func connectDatabase(){
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let fileUrl = documentDirectory.appendingPathComponent("QR").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database3 = database
-        } catch {
-            print(error)
-        }
     }
 }

@@ -16,21 +16,23 @@ class AdminController: UIViewController {
     @IBOutlet weak var seeAllTransactionsButton: UIButton!
     @IBOutlet weak var resetTransactionsButton: UIButton!
     
-    var database2: Connection!
-    let transactionTable = Table("Transaction")
-    let transactionId = Expression<String>("transactionId")
-    let amount = Expression<Double>("amount")
-    let passengerId = Expression<String>("passengerId")
-    
     let sessionManager = SessionManager.shared
     var mcSession: MCSession!
     
+    let databaseController = DatabaseController.instance
     override func viewDidLoad() {
         super.viewDidLoad()
-        initializeTransactionDatabase()
+        databaseController.connectTransactionDatabase()
         mcSession = self.sessionManager.mcSession
         setItems()
-        
+    }
+    
+    @objc func goBack() {
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "mainViewController") {
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true, completion: nil)
+        }
+
     }
     
     func setItems(){
@@ -45,6 +47,25 @@ class AdminController: UIViewController {
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
         
+        let navigationItem = UINavigationItem(title: "Admin Page")
+        
+        let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(goBack))
+        navigationItem.leftBarButtonItem = back
+
+        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
+        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.setItems([navigationItem], animated: false)
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar.shadowImage = UIImage()
+        navigationBar.isTranslucent = true
+        navigationBar.tintColor = .white
+        navigationBar.backgroundColor = .clear
+        navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+
+        view.addSubview(navigationBar)
         connectCabinCrewButton.center.x = self.view.center.x
         connectCabinCrewButton.center.y = self.view.center.y - screenHeight/20
         
@@ -60,21 +81,7 @@ class AdminController: UIViewController {
         resetTransactionsButton.center.x = self.view.center.x
         resetTransactionsButton.center.y = seeAllTransactionsButton.frame.maxY + resetTransactionsButton.bounds.size.height
     }
-    
-    func initializeTransactionDatabase(){
-        
-        
-        do {
-            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            
-            let fileUrl = documentDirectory.appendingPathComponent("Transaction").appendingPathExtension("sqlite3")
-            let database = try Connection(fileUrl.path)
-            self.database2 = database
-        } catch {
-            print(error)
-        }
-    }
-    
+   
     @IBAction func connectCabinCrewClicked(_ sender: Any) {
         sessionManager.connectDevice(fromViewController: self)
     }
@@ -89,23 +96,6 @@ class AdminController: UIViewController {
     }
     
     @IBAction func resetTransactionsClicked(_ sender: Any) {
-        do {
-            let drop = transactionTable.drop(ifExists: true)
-            try database2.run(drop)
-        } catch {
-            print(error)
-        }
-        let createTable = self.transactionTable.create { (table) in
-            table.column(self.transactionId, primaryKey: true)
-            table.column(self.amount)
-            table.column(self.passengerId)
-        }
-                        
-        do {
-            try self.database2.run(createTable)
-            print("Created Table")
-        } catch {
-            print(error)
-        }
+        databaseController.resetTransactions()
     }
 }
