@@ -50,30 +50,32 @@ class ViewController: UIViewController {
         initializeTransactionDatabase()
         initializeQRDatabase()
         
-        // Do any additional setup after loading the view.
-        self.view.addBackground()
+        let backgroundImage = UIImageView(image: UIImage(named: "images/entrance page images/entrance.png"))
+                backgroundImage.contentMode = .scaleAspectFill
+                backgroundImage.frame = view.bounds
+                backgroundImage.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                backgroundImage.center = view.center
+                // Add the UIImageView as a subview to the view controller's view
+                view.addSubview(backgroundImage)
+                view.sendSubviewToBack(backgroundImage)
         
         mcSession = self.sessionManager.mcSession
         
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
-        //Welcome Label
+        
         welcomeLabel.center.x = self.view.center.x
         welcomeLabel.center.y = self.view.center.y + screenHeight/20
         welcomeLabel.textAlignment = .center
-        
-        //Identification Label
         
         instructionLabel.center.x = self.view.center.x
         instructionLabel.center.y = welcomeLabel.center.y + welcomeLabel.bounds.size.height
         instructionLabel.textAlignment = .center
         
-        //ID Button
         identifyIdButton.center.x = self.view.center.x
         identifyIdButton.center.y = instructionLabel.center.y +
         2.5*instructionLabel.bounds.size.height
        
-        //Qr Code Button
         qrCodeButton.center.x = self.view.center.x
         qrCodeButton.center.y = identifyIdButton.center.y + 1.25*qrCodeButton.bounds.size.height
         
@@ -130,42 +132,9 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-        /*
-        do {
-            let drop = transactionTable.drop(ifExists: true)
-            try database2.run(drop)
-        } catch {
-            print(error)
-        }
-        let createTable = self.transactionTable.create { (table) in
-            table.column(self.transactionId, primaryKey: true)
-            table.column(self.amount)
-            table.column(self.passengerId)
-        }
-                        
-        do {
-            try self.database2.run(createTable)
-            print("Created Table")
-        } catch {
-            print(error)
-        }
-        
-        */
-       /*
-        do {
-            let drop = productsTable.drop(ifExists: true)
-            try database.run(drop)
-        } catch {
-            print(error)
-        }
-        */
     }
     
-    
-    
     func initializeDatabase(){
-        
-        
         do {
             let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             
@@ -256,40 +225,11 @@ class ViewController: UIViewController {
                                                         [self.productId <- 55, self.productName <- "Rose Wine", self.productType <- "Food Drink", self.count <- 0, self.price <- 60.4],
                                                         [self.productId <- 56, self.productName <- "Tea", self.productType <- "Food Drink", self.count <- 0, self.price <- 14.3],
                                                         [self.productId <- 57, self.productName <- "White Wine", self.productType <- "Food Drink", self.count <- 0, self.price <- 60.1]])
-        
         do {
             try self.database.run(insertUser)
         } catch {
             print(error)
         }
-        
-        
-         
-        
-    }
-    @IBAction func refreshTransactionsClicked(_ sender: UIButton) {
-        do {
-            let drop = transactionTable.drop(ifExists: true)
-            try database2.run(drop)
-        } catch {
-            print(error)
-        }
-        let createTable = self.transactionTable.create { (table) in
-            table.column(self.transactionId, primaryKey: true)
-            table.column(self.amount)
-            table.column(self.passengerId)
-        }
-                        
-        do {
-            try self.database2.run(createTable)
-            print("Created Table")
-        } catch {
-            print(error)
-        }
-    }
-    
-    @IBAction func connectButtonClicked(_ sender: UIButton) {
-        sessionManager.connectDevice(fromViewController: self)
     }
     
 }

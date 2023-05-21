@@ -59,11 +59,11 @@
             <objects>
                 <viewController id="IBQ-Oh-ze9" customClass="TransactionsController" customModule="application" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bIu-te-VrR">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="transactions" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4Ya-CF-zr5">
-                                <rect key="frame" x="20" y="56" width="374" height="719"/>
+                                <rect key="frame" x="20" y="159" width="374" height="616"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -80,7 +80,107 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HLC-O0-dEA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1588.4057971014495" y="89.732142857142847"/>
+            <point key="canvasLocation" x="-1613.0434782608697" y="970.98214285714278"/>
+        </scene>
+        <!--Admin Controller-->
+        <scene sceneID="iji-oo-oN5">
+            <objects>
+                <viewController restorationIdentifier="AdminController" storyboardIdentifier="AdminController" id="hdk-NX-aqd" customClass="AdminController" customModule="application" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1BX-Sd-WRi">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lal-uT-e9L">
+                                <rect key="frame" x="106" y="100" width="203" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Connect Cabin Crew" cornerStyle="capsule">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="strokeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="connectCabinCrewClicked:" destination="hdk-NX-aqd" eventType="touchUpInside" id="vsH-Ej-8Cd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jdq-TW-eEf">
+                                <rect key="frame" x="106" y="179" width="203" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Get Provisions" cornerStyle="capsule">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="strokeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="getProvisionsClicked:" destination="hdk-NX-aqd" eventType="touchUpInside" id="c4K-Fz-eYu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9bT-Og-cli">
+                                <rect key="frame" x="106" y="262" width="203" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Close Transactions" cornerStyle="capsule">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="strokeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="closeTransactionsClicked:" destination="hdk-NX-aqd" eventType="touchUpInside" id="a4K-nv-XTY"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aye-2I-RJU">
+                                <rect key="frame" x="106" y="346" width="203" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="See All Transactions" cornerStyle="capsule">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="strokeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="seeAllTransactionsClicked:" destination="hdk-NX-aqd" eventType="touchUpInside" id="HFG-Yi-w4B"/>
+                                    <segue destination="IBQ-Oh-ze9" kind="presentation" modalPresentationStyle="fullScreen" id="Xue-4N-xIq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tt7-Wh-hMZ">
+                                <rect key="frame" x="106" y="430" width="203" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Reset Transactions" cornerStyle="capsule">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="strokeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="resetTransactionsClicked:" destination="hdk-NX-aqd" eventType="touchUpInside" id="rH2-v1-4fX"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="u1n-S9-vWc"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="closeTransactionsButton" destination="9bT-Og-cli" id="KGe-7w-VVD"/>
+                        <outlet property="connectCabinCrewButton" destination="Lal-uT-e9L" id="lyV-k8-5kG"/>
+                        <outlet property="getProvisionsButton" destination="Jdq-TW-eEf" id="cAl-6G-MmC"/>
+                        <outlet property="resetTransactionsButton" destination="Tt7-Wh-hMZ" id="wh2-rC-NlS"/>
+                        <outlet property="seeAllTransactionsButton" destination="Aye-2I-RJU" id="9OH-6E-Mkj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sVT-ec-D3n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1597" y="85"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -144,25 +244,7 @@
                                     </backgroundConfiguration>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="connectButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gu7-ig-oyL"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uur-Cg-caH">
-                                <rect key="frame" x="130" y="100" width="155" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="See All Transactions"/>
-                                <connections>
-                                    <segue destination="IBQ-Oh-ze9" kind="presentation" id="mfZ-e3-ISq"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jk4-Ly-arQ">
-                                <rect key="frame" x="124" y="170" width="161" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Refresh Transactions"/>
-                                <connections>
-                                    <action selector="refreshTransactionsClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZCY-UC-V8I"/>
+                                    <segue destination="hdk-NX-aqd" kind="presentation" modalPresentationStyle="fullScreen" id="H4h-9P-ddt"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -3933,8 +4015,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dft-7U-0pw"/>
-        <segue reference="Muc-V5-1tg"/>
+        <segue reference="K6N-RA-qZ0"/>
+        <segue reference="Luj-Tp-DW4"/>
         <segue reference="CR0-aG-bRY"/>
     </inferredMetricsTieBreakers>
     <resources>
