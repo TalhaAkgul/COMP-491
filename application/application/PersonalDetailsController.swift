@@ -107,26 +107,50 @@ class PersonalDetailsController: UIViewController {
     }
     
     func readLocalData(){
+        /*
         guard let path = Bundle.main.path(forResource: "serverData", ofType: "json") else {
             fatalError("Couldn't find file 'serverData.json' in app bundle.")
         }
-        
+         */
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            fatalError("Couldn't access the document directory.")
+        }
+
+        let fileURL = documentsDirectory.appendingPathComponent("serverData.json")
+/*
+        print("AKSALKLKSAKLS ", path)
         let url = URL(fileURLWithPath: path)
+        print("AKSALKLKSAKLS ", url)
+ */
         do {
-            let data = try Data(contentsOf: url)
+            let data = try Data(contentsOf: fileURL)
             print(data)
             do {
                 let decoder = JSONDecoder()
+                print("DKDKDS")
                 let serverInfos = try decoder.decode([ServerData].self, from: data)
+                print(serverInfos)
                 var currentId = ""
                 if let qrRow = try databaseController.database3.pluck(databaseController.qrTable) {
                     currentId  = qrRow[databaseController.pId]
+                    print(currentId)
+                    print("current id")
                 }
                 for serverInfo in serverInfos {
-                    if serverInfo.passengerId == currentId {
+                    print("ifffff")
+                    print(serverInfo.passengerPID)
+                    print(type(of: serverInfo.passengerPID))
+                    print(type(of: currentId))
+                    print(currentId)
+                    if serverInfo.passengerPID == currentId {
                         let passengerName = serverInfo.passengerName
                         let passengerSurname = serverInfo.passengerSurname
+                        print("SDAS111111111")
                         let provisionAmount = Double(serverInfo.amount) ?? 0.0
+                        print("SDAS2222222")
+                        //let provisionAmount = serverInfo.amount
+                        print(provisionAmount)
+                        //provisionAmount += 1.0
                         var totalSpendings = 0.0
                         
                         do {
@@ -154,7 +178,7 @@ class PersonalDetailsController: UIViewController {
                     } catch {
                       print(error)
                     }        } catch {
-            fatalError("Couldn't load contents of file at path '\(url)': \(error)")
+            fatalError("Couldn't load contents of file at path '\(fileURL)': \(error)")
         }
     }
 }

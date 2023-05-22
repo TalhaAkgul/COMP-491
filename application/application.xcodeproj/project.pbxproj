@@ -37,7 +37,6 @@
 		1CE16CB32A0975F0002C6C55 /* SpendingDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE16CB22A0975F0002C6C55 /* SpendingDetailsController.swift */; };
 		1CED77972A10068D009749C6 /* TransactionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CED77962A10068D009749C6 /* TransactionsController.swift */; };
 		7782C50029F6D78000C1D325 /* ServerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7782C4FF29F6D78000C1D325 /* ServerData.swift */; };
-		7782C50B29F6DFD900C1D325 /* serverData.json in Resources */ = {isa = PBXBuildFile; fileRef = 7782C50A29F6DFD900C1D325 /* serverData.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,7 +152,6 @@
 		1CE16CB22A0975F0002C6C55 /* SpendingDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingDetailsController.swift; sourceTree = "<group>"; };
 		1CED77962A10068D009749C6 /* TransactionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsController.swift; sourceTree = "<group>"; };
 		7782C4FF29F6D78000C1D325 /* ServerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerData.swift; sourceTree = "<group>"; };
-		7782C50A29F6DFD900C1D325 /* serverData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = serverData.json; path = ../../serverData.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,7 +227,6 @@
 		1CDAE2FD29D376DE000E140A /* application */ = {
 			isa = PBXGroup;
 			children = (
-				7782C50A29F6DFD900C1D325 /* serverData.json */,
 				1C9BF12429DB47C900B69C37 /* images */,
 				1CDAE2FE29D376DE000E140A /* AppDelegate.swift */,
 				1CDAE30029D376DE000E140A /* SceneDelegate.swift */,
@@ -450,7 +447,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C9BF12529DB47C900B69C37 /* images in Resources */,
-				7782C50B29F6DFD900C1D325 /* serverData.json in Resources */,
 				1CDAE30B29D376E0000E140A /* LaunchScreen.storyboard in Resources */,
 				1CDAE30829D376E0000E140A /* Assets.xcassets in Resources */,
 				1CDAE30629D376DE000E140A /* Main.storyboard in Resources */,
@@ -680,6 +676,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = application/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera to scan QR Codes.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "talha-pinar";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -710,6 +707,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = application/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera to scan QR Codes.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "talha-pinar";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

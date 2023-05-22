@@ -87,11 +87,11 @@ class AdminController: UIViewController, URLSessionDelegate {
     }
     
     @IBAction func getProvisionsClicked(_ sender: Any) {
-        //request()
+        request()
     }
     
     @IBAction func closeTransactionsClicked(_ sender: Any) {
-        
+        send()
     }
     
     @IBAction func seeAllTransactionsClicked(_ sender: Any) {
@@ -102,11 +102,45 @@ class AdminController: UIViewController, URLSessionDelegate {
         databaseController.resetTransactions()
     }
     
-    func request(){
-        let postString = "test"
-        var request = URLRequest(url: URL(string: "https://172.16.146.4:8080/getalldata")!)
+    func send(){
+        var transactions: [[String: Any]] = []
+        var postString = "test"
+        // Iterate over the rows in the transactionTable
+        do {
+            // Perform the database query
+            for row in try databaseController.database2.prepare(databaseController.transactionTable) {
+                let transaction: [String: Any] = [
+                    "amount": String(row[databaseController.amount]),
+                    "pid": row[databaseController.passengerId]
+                ]
+                transactions.append(transaction)
+            }
+
+            // Create the JSON object
+            let jsonObject: [String: Any] = [
+                "flightNo": "TK3480",
+                "transactions": transactions
+            ]
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: [])
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    print(jsonString)
+                    postString = jsonString
+                }
+            } catch {
+                print("Error converting JSON object to string: \(error)")
+            }
+            // Use the jsonObject as needed
+            //print(jsonObject)
+        } catch {
+            // Handle any exceptions that occur during the database query
+            print("Error: \(error)")
+        }
+        
+        var request = URLRequest(url: URL(string: "https://172.20.56.202:8080/close")!)
         request.httpMethod = "POST"
         request.httpBody = postString.data(using: String.Encoding.utf8)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
         let task = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if let error = error{
@@ -117,6 +151,77 @@ class AdminController: UIViewController, URLSessionDelegate {
             if let data = data{
                 print("data: ")
                 print(data)
+                
+                guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                    fatalError("Couldn't access the document directory.")
+                }
+                let fileURL = documentsDirectory.appendingPathComponent("serverData.json")
+                print(fileURL)
+                // Check if the file already exists
+                if FileManager.default.fileExists(atPath: fileURL.path) {
+                    do {
+                        try FileManager.default.removeItem(at: fileURL)
+                        print("File 'serverData.json' deleted.")
+                    } catch {
+                        fatalError("Failed to delete the file: \(error)")
+                    }
+                }
+                do {
+                    try data.write(to: fileURL, options: .atomic)
+                    print("New file 'serverData.json' created.")
+                } catch {
+                    fatalError("Failed to create the file: \(error)")
+                }
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+            if let response = response{
+                print("response: ")
+                print(response)
+            }
+        }
+        task.resume()
+         
+    }
+    func request(){
+        var request = URLRequest(url: URL(string: "https://172.20.56.202:8080/getProvisionsByFlightNo?flightNo=TK3480")!)
+        request.httpMethod = "GET"
+        //request.httpBody = postString.data(using: String.Encoding.utf8)
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        let task = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+            if let error = error{
+                print("error: ")
+                print(error)
+                return
+            }
+            if let data = data{
+                print("data: ")
+                print(data)
+                
+                guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                    fatalError("Couldn't access the document directory.")
+                }
+                let fileURL = documentsDirectory.appendingPathComponent("serverData.json")
+                print(fileURL)
+                // Check if the file already exists
+                if FileManager.default.fileExists(atPath: fileURL.path) {
+                    do {
+                        try FileManager.default.removeItem(at: fileURL)
+                        print("File 'serverData.json' deleted.")
+                    } catch {
+                        fatalError("Failed to delete the file: \(error)")
+                    }
+                }
+                do {
+                    try data.write(to: fileURL, options: .atomic)
+                    print("New file 'serverData.json' created.")
+                } catch {
+                    fatalError("Failed to create the file: \(error)")
+                }
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     print(json)
@@ -134,7 +239,7 @@ class AdminController: UIViewController, URLSessionDelegate {
     
     
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-            if challenge.protectionSpace.host == "172.16.146.4" {
+            if challenge.protectionSpace.host == "172.20.56.202" {
                 completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
             } else {
                 completionHandler(.performDefaultHandling, nil)

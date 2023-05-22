@@ -8,6 +8,6 @@
 import Foundation
 
 struct ServerData: Codable {
-    let passengerId, passengerName, passengerSurname, passengerEmail, passengerAddress: String
-    let passengerPhoneNumber, amount, provisionDate, aid: String
+    let passengerPID, passengerName, passengerSurname, passengerEmail, passengerAddress: String
+    let passengerPhoneNumber, amount, provisionDate: String
 }

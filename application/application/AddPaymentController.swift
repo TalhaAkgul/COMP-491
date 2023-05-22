@@ -156,10 +156,11 @@ class AddPaymentController: UIViewController {
     
     @IBAction func proceedPaymentClicked(_ sender: UIButton) {
         retrieveTransactionsFromConnectedDevices()
-        guard let path = Bundle.main.path(forResource: "serverData", ofType: "json") else {
-            fatalError("Couldn't find file 'serverData.json' in app bundle.")
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            fatalError("Couldn't access the document directory.")
         }
-        let url = URL(fileURLWithPath: path)
+
+        let url = documentsDirectory.appendingPathComponent("serverData.json")
         do {
             let data = try Data(contentsOf: url)
             print(data)
@@ -182,7 +183,7 @@ class AddPaymentController: UIViewController {
                     print("Error selecting transactions: \(error)")
                 }
                 for serverInfo in serverInfos {
-                    if serverInfo.passengerId == currentId {
+                    if serverInfo.passengerPID == currentId {
                         let serverAmount = serverInfo.amount
                         let amountValue = Double(serverAmount) ?? 0.0
                         let remainingAmount = amountValue - totalSpendings
