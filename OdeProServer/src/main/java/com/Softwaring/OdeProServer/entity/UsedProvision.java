@@ -15,12 +15,12 @@ import java.sql.Timestamp;
 @ToString
 public class UsedProvision {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "UID", nullable = false)
     private Long UID;
 
     @Column(name = "amount", nullable = false)
-    private int amount;
+    private double amount;
 
     @Column(name = "provision_date", nullable = false)
     private Timestamp provisionDate;
