@@ -8,6 +8,51 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Completed Pop Up-->
+        <scene sceneID="jxU-4D-Ji2">
+            <objects>
+                <viewController restorationIdentifier="CompletedPopUp" storyboardIdentifier="CompletedPopUp" id="ooR-oR-d8R" customClass="CompletedPopUp" customModule="application" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rq1-9p-gbE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6fe-tI-okD">
+                                <rect key="frame" x="87" y="384" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1CJ-ho-t3f">
+                                        <rect key="frame" x="24" y="75" width="192" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="OK">
+                                            <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <segue destination="hdk-NX-aqd" kind="presentation" modalPresentationStyle="fullScreen" id="whR-Iw-4Hx"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Completed!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tOe-E1-JcB">
+                                        <rect key="frame" x="8" y="18" width="224" height="49"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cyj-Zz-Dxm"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <connections>
+                        <outlet property="completedLabel" destination="tOe-E1-JcB" id="qBG-dy-sgz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zfo-iH-ehJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1654" y="-695"/>
+        </scene>
         <!--Payment Successful Controller-->
         <scene sceneID="8Pb-cz-e2k">
             <objects>
@@ -3800,7 +3845,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GEO-HX-PZG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="709" y="-822"/>
+            <point key="canvasLocation" x="526" y="-822"/>
         </scene>
         <!--Personal Details Controller-->
         <scene sceneID="uds-VW-Pyg">
@@ -4012,8 +4057,9 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="ijJ-JW-0EX"/>
-        <segue reference="Luj-Tp-DW4"/>
+        <segue reference="P3N-e5-V71"/>
         <segue reference="CR0-aG-bRY"/>
+        <segue reference="whR-Iw-4Hx"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>

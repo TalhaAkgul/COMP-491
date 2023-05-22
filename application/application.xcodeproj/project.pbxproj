@@ -25,6 +25,7 @@
 		1C9BF11D29DB343400B69C37 /* EntertainmentMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11C29DB343400B69C37 /* EntertainmentMenuController.swift */; };
 		1C9BF11F29DB344800B69C37 /* AfterFlightServiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9BF11E29DB344800B69C37 /* AfterFlightServiceController.swift */; };
 		1C9BF12529DB47C900B69C37 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 1C9BF12429DB47C900B69C37 /* images */; };
+		1C9D06B42A1C148700BAEDE6 /* CompletedPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9D06B32A1C148700BAEDE6 /* CompletedPopUp.swift */; };
 		1CDAE2FF29D376DE000E140A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE2FE29D376DE000E140A /* AppDelegate.swift */; };
 		1CDAE30129D376DE000E140A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE30029D376DE000E140A /* SceneDelegate.swift */; };
 		1CDAE30329D376DE000E140A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE30229D376DE000E140A /* ViewController.swift */; };
@@ -136,6 +137,7 @@
 		1C9BF11C29DB343400B69C37 /* EntertainmentMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntertainmentMenuController.swift; sourceTree = "<group>"; };
 		1C9BF11E29DB344800B69C37 /* AfterFlightServiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterFlightServiceController.swift; sourceTree = "<group>"; };
 		1C9BF12429DB47C900B69C37 /* images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = images; sourceTree = SOURCE_ROOT; };
+		1C9D06B32A1C148700BAEDE6 /* CompletedPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedPopUp.swift; sourceTree = "<group>"; };
 		1CDAE2FB29D376DE000E140A /* application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = application.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CDAE2FE29D376DE000E140A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1CDAE30029D376DE000E140A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				1CED77962A10068D009749C6 /* TransactionsController.swift */,
 				1C678FFE2A1A4ED000B18010 /* AdminController.swift */,
 				1C6790012A1A6D5300B18010 /* DatabaseController.swift */,
+				1C9D06B32A1C148700BAEDE6 /* CompletedPopUp.swift */,
 			);
 			path = application;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				1C79FBFE29D44E310052764A /* IDViewController.swift in Sources */,
 				1C678FFF2A1A4ED000B18010 /* AdminController.swift in Sources */,
 				1C7D051929E3F984003B1FF6 /* PopupAfterProceedPaymentController.swift in Sources */,
+				1C9D06B42A1C148700BAEDE6 /* CompletedPopUp.swift in Sources */,
 				1CE16CB32A0975F0002C6C55 /* SpendingDetailsController.swift in Sources */,
 				1C9BF11F29DB344800B69C37 /* AfterFlightServiceController.swift in Sources */,
 				1C9BF11729DB2F3900B69C37 /* AddPaymentController.swift in Sources */,

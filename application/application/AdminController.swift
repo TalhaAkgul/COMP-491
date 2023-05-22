@@ -103,11 +103,10 @@ class AdminController: UIViewController, URLSessionDelegate {
     }
     
     func send(){
+        var closeCompleted = false
         var transactions: [[String: Any]] = []
         var postString = "test"
-        // Iterate over the rows in the transactionTable
         do {
-            // Perform the database query
             for row in try databaseController.database2.prepare(databaseController.transactionTable) {
                 let transaction: [String: Any] = [
                     "amount": String(row[databaseController.amount]),
@@ -116,7 +115,6 @@ class AdminController: UIViewController, URLSessionDelegate {
                 transactions.append(transaction)
             }
 
-            // Create the JSON object
             let jsonObject: [String: Any] = [
                 "flightNo": "TK3480",
                 "transactions": transactions
@@ -130,10 +128,7 @@ class AdminController: UIViewController, URLSessionDelegate {
             } catch {
                 print("Error converting JSON object to string: \(error)")
             }
-            // Use the jsonObject as needed
-            //print(jsonObject)
         } catch {
-            // Handle any exceptions that occur during the database query
             print("Error: \(error)")
         }
         
@@ -169,6 +164,19 @@ class AdminController: UIViewController, URLSessionDelegate {
                 do {
                     try data.write(to: fileURL, options: .atomic)
                     print("New file 'serverData.json' created.")
+                    closeCompleted = true
+                    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+                    let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                    blurEffectView.frame = self.view.bounds
+                    blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                    self.view.addSubview(blurEffectView)
+                    
+                    let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CompletedPopUp") as! CompletedPopUp
+                    self.addChild(popOverVC)
+                    popOverVC.view.frame = self.view.frame
+                    self.view.addSubview(popOverVC.view)
+                    popOverVC.didMove(toParent: self)
+                    
                 } catch {
                     fatalError("Failed to create the file: \(error)")
                 }
@@ -185,12 +193,13 @@ class AdminController: UIViewController, URLSessionDelegate {
             }
         }
         task.resume()
-         
+        if(closeCompleted == false){
+            
+        }
     }
     func request(){
         var request = URLRequest(url: URL(string: "https://172.20.56.202:8080/getProvisionsByFlightNo?flightNo=TK3480")!)
         request.httpMethod = "GET"
-        //request.httpBody = postString.data(using: String.Encoding.utf8)
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
         let task = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if let error = error{
@@ -207,7 +216,6 @@ class AdminController: UIViewController, URLSessionDelegate {
                 }
                 let fileURL = documentsDirectory.appendingPathComponent("serverData.json")
                 print(fileURL)
-                // Check if the file already exists
                 if FileManager.default.fileExists(atPath: fileURL.path) {
                     do {
                         try FileManager.default.removeItem(at: fileURL)
@@ -219,6 +227,17 @@ class AdminController: UIViewController, URLSessionDelegate {
                 do {
                     try data.write(to: fileURL, options: .atomic)
                     print("New file 'serverData.json' created.")
+                    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+                    let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                    blurEffectView.frame = self.view.bounds
+                    blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                    self.view.addSubview(blurEffectView)
+                    
+                    let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CompletedPopUp") as! CompletedPopUp
+                    self.addChild(popOverVC)
+                    popOverVC.view.frame = self.view.frame
+                    self.view.addSubview(popOverVC.view)
+                    popOverVC.didMove(toParent: self)
                 } catch {
                     fatalError("Failed to create the file: \(error)")
                 }
