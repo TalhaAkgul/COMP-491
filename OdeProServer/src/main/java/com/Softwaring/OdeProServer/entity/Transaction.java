@@ -4,14 +4,14 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "transactions")
+@Table(name = "transaction")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Transactions {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "TID", nullable = false)
@@ -20,7 +20,6 @@ public class Transactions {
     @Column(name = "amount", nullable = false)
     private double amount;
 
-    @ManyToOne
-    @JoinColumn(name = "AID")//TODO Check whether you can delete this or not
-    private ActiveProvision activeProvision;
+    @Column(name = "ProvID")//TODO Check whether you can delete this or not
+    private Long provID;
 }

@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionsDTO {
+public class TransactionDTO {
     Long TID;
     double amount;
-    Long AID;
+    String pid;
 }
