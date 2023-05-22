@@ -67,43 +67,32 @@ class AddPaymentController: UIViewController {
         menuImage6.image = UIImage(named: "images/add payment page images/menu6.jpeg")
         menuImage7.image = UIImage(named: "images/add payment page images/menu7.jpeg")
         
-        foodDrinkMenuView.frame.size.width = screenWidth
+        
+        foodDrinkMenuView.frame.size.width = screenWidth * 0.9
+        foodDrinkMenuView.center.y = navigationBar.frame.maxY + 1.25 * foodDrinkMenuView.bounds.size.height/2
         foodDrinkMenuView.center.x = self.view.center.x
-        foodDrinkMenuView.center.y = navigationBar.frame.maxY + foodDrinkMenuView.bounds.size.height/2
-        foodDrinkButton.center.x = self.view.center.x
-        menuImage5.center.x = self.view.center.x
         
-        entertainmentMenuView.frame.size.width = screenWidth
+        entertainmentMenuView.frame.size.width = screenWidth * 0.9
+        entertainmentMenuView.center.y = foodDrinkMenuView.frame.maxY + 1.25 * entertainmentMenuView.bounds.size.height/2
         entertainmentMenuView.center.x = self.view.center.x
-        entertainmentMenuView.center.y = foodDrinkMenuView.frame.maxY + entertainmentMenuView.bounds.size.height/2
-        entertainmentButton.center.x = self.view.center.x
-        menuImage6.center.x = self.view.center.x
         
-        afterFlightServicesView.frame.size.width = screenWidth
+        afterFlightServicesView.frame.size.width = screenWidth * 0.9
+        afterFlightServicesView.center.y = entertainmentMenuView.frame.maxY + 1.25 * afterFlightServicesView.bounds.size.height/2
         afterFlightServicesView.center.x = self.view.center.x
-        afterFlightServicesView.center.y = entertainmentMenuView.frame.maxY + afterFlightServicesView.bounds.size.height/2
-        afterFlightButton.center.x = self.view.center.x
-        menuImage7.center.x = self.view.center.x
         
-        cancelPaymentButton.center.x = self.view.center.x
         cancelPaymentButton.center.y = screenHeight * 0.95
-        
-        proceedPaymentButton.center.x = self.view.center.x
         proceedPaymentButton.center.y = cancelPaymentButton.center.y - 1.5 * proceedPaymentButton.bounds.size.height
-        
-        totalView.center.x = self.view.center.x
         totalView.center.y = proceedPaymentButton.center.y - 1.1 * totalView.frame.size.height
         
         let scrollViewContainer: UIStackView = {
             let view = UIStackView()
-
             view.axis = .vertical
             view.spacing = 10
             view.backgroundColor = .white
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
         }()
-        
+        scrollView.frame.size.width = screenWidth * 0.9
         updateBasket(container : scrollViewContainer)
         view.addSubview(scrollView)
         scrollView.addSubview(scrollViewContainer)
