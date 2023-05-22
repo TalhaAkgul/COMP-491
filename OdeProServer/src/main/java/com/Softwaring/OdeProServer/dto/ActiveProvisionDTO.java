@@ -16,7 +16,7 @@ public class ActiveProvisionDTO {
     String passengerEmail;
     String passengerAddress;
     String passengerPhoneNumber;
-    double amount;
+    String amount;
     String provisionDate;
     String flightNo;
     String hiddenCardNo;

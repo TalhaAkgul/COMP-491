@@ -23,12 +23,12 @@ public class BankService {
                         bankDTO.getCvc()
                 )
                 .orElseThrow(() -> {
-                    String error = "Bank could not found data for "+bankDTO.getCardHolder()+" with card number: **** "+ bankDTO.getCreditCardNo().substring(12, 16);
+                    String error = "Bank could not found data for " + bankDTO.getCardHolder() + " with card number: **** " + bankDTO.getCreditCardNo().substring(12, 16);
                     return new NotFoundException(error);
                 });
         if (amount > bank.getCreditLimit()) throw new NotFoundException(
-                "Bank states that there is insufficient limit for Card No and Card Holder"+
-                bankDTO.getCreditCardNo() + " - " + bankDTO.getCardHolder());
+                "Bank states that there is insufficient limit for " +
+                        bankDTO.getCardHolder() + " with card number: **** " + bankDTO.getCreditCardNo().substring(12, 16));
         bank.setCreditLimit(bank.getCreditLimit() - amount);
         bankRepository.save(bank);
         return bank.getUniqueCardId();
@@ -36,8 +36,14 @@ public class BankService {
 
     public String getHiddenCardNo(String uniqueCardId) {
         Bank bank = bankRepository.findByUniqueCardId(uniqueCardId)
-                .orElseThrow(() -> new NotFoundException(Bank.class, "states that there is no card info for user", "classified info"));
+                .orElseThrow(() -> new NotFoundException(Bank.class, "states that there is no card info for user ->", "classified info"));
         String cardNumber = bank.getCreditCardNo();
         return "**** " + cardNumber.substring(12, 16);
+    }
+
+    public void closeProvision(String uniqueCardId, double amount) {
+        Bank bank = bankRepository.findByUniqueCardId(uniqueCardId)
+                .orElseThrow(() -> new NotFoundException(Bank.class, "states that there is no card info for user ->", "classified info"));
+        bank.setCreditLimit(bank.getCreditLimit() + amount);
     }
 }

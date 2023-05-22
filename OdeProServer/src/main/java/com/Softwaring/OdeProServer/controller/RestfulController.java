@@ -19,7 +19,7 @@ public class RestfulController {
     private final PassengerService passengerService;
 
     @GetMapping("/getActiveProvision")
-    public ResponseEntity<?> getActiveProvisions(@RequestParam("id") String PID) {
+    public ResponseEntity<?> getActiveProvisionsByPID(@RequestParam("id") String PID) {
         try {
             System.out.println(PID);
             List<ActiveProvisionDTO> results = new ArrayList<>();
@@ -31,6 +31,16 @@ public class RestfulController {
         }
     }
 
+    @GetMapping("/getProvisionsByFlightNo")
+    public ResponseEntity<?> getActiveProvisionsByFlightNo(@RequestParam("flightNo") String flightNo) {
+        try {
+            System.out.println(flightNo);
+            List<ActiveProvisionDTO> results = passengerService.getActiveProvisionByFlightNo(flightNo);
+            return ResponseEntity.ok(results);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
     @GetMapping("/getUsedProvisions")
     public ResponseEntity<?> getUsedProvisions(@RequestParam("id") String PID) {
         try {
@@ -89,6 +99,8 @@ public class RestfulController {
     public ResponseEntity<?> closeProvision(@RequestBody final CloseProvisionRequest closeProvisionRequest) {
         try {
             passengerService.closeProvision(closeProvisionRequest);
+            System.out.println(closeProvisionRequest);
+
             return ResponseEntity.ok("Provision is closed");
         } catch (Exception e) {
             System.out.println(e.getMessage());
