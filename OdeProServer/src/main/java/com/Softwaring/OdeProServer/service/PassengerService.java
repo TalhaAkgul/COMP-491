@@ -113,7 +113,7 @@ public class PassengerService {
                 .orElse(passengerRepository.save(modelMapper.map(openProvision, Passenger.class)));
     }
 
-    <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {//TODO You can use this one also to set hiddenCardNo
+    <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
         return source
                 .stream()
                 .map(element -> modelMapper.map(element, targetClass))
