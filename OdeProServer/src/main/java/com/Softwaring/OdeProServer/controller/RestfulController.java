@@ -27,7 +27,7 @@ public class RestfulController {
             results.add(passengerService.getActiveProvisionByPassengerID(PID));
             return ResponseEntity.ok(results);
         } catch (NotFoundException e) {
-            log.error(e.getMessage());
+            log.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
@@ -39,7 +39,7 @@ public class RestfulController {
             List<ActiveProvisionDTO> results = passengerService.getActiveProvisionByFlightNo(flightNo);
             return ResponseEntity.ok(results);
         } catch (NotFoundException e) {
-            log.error(e.getMessage());
+            log.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
@@ -51,7 +51,7 @@ public class RestfulController {
             List<UsedProvisionDTO> results = passengerService.getUsedProvisionsByPassengerID(PID);
             return ResponseEntity.ok(results);
         } catch (NotFoundException e) {
-            log.error(e.getMessage());
+            log.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
@@ -62,7 +62,7 @@ public class RestfulController {
             PassengerDTO passengerDTO = passengerService.getPassenger(PID);
             return ResponseEntity.ok(passengerDTO);
         } catch (NotFoundException e) {
-            log.error(e.getMessage());
+            log.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
