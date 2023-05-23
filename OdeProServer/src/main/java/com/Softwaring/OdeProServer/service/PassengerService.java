@@ -12,6 +12,7 @@ import com.Softwaring.OdeProServer.repository.TransactionRepository;
 import com.Softwaring.OdeProServer.repository.UsedProvisionRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class PassengerService {
     private final ModelMapper modelMapper = new ModelMapper();
     private final BankService bankService;
@@ -32,32 +34,15 @@ public class PassengerService {
     private UsedProvisionRepository usedProvisionRepository;
     private TransactionRepository transactionRepository;
 
-    public void saveUser(Passenger p) {
-        passengerRepository.save(p);
-    }
-
-    public ActiveProvisionDTO getProvisionsByPassengerID(String PID) {
-        Passenger passenger = passengerRepository
-                .findById(PID)
-                .orElseThrow(RuntimeException::new);
-        System.out.println(passenger);
-
-        ActiveProvision activeProvision = activeProvisionRepository
-                .findByPassenger(passenger)
-                .orElseThrow(RuntimeException::new);
-
-        return modelMapper.map(activeProvision, ActiveProvisionDTO.class);
-    }
-
 
     public ActiveProvisionDTO getActiveProvisionByPassengerID(String PID) {
         Passenger passenger = passengerRepository
                 .findByPID(PID)
                 .orElseThrow(() -> new NotFoundException(Passenger.class, "PID", PID));
-
         ActiveProvision activeProvision = activeProvisionRepository
                 .findByPassenger(passenger)
                 .orElseThrow(() -> new NotFoundException(ActiveProvision.class, "PID", PID));
+        log.info("Active provision is found for PID: " + PID);
         ActiveProvisionDTO result = modelMapper.map(activeProvision, ActiveProvisionDTO.class);
         result.setHiddenCardNo(bankService.getHiddenCardNo(activeProvision.getUniqueCardId()));
         return result;
@@ -72,7 +57,7 @@ public class PassengerService {
                 .findByPassenger(passenger)
                 .orElseThrow(() -> new NotFoundException(UsedProvision.class, "PID", PID));
         if (usedProvisionList.isEmpty()) throw new NotFoundException(UsedProvision.class, "PID", PID);
-
+        log.info("Used provisions are found for PID: " + PID);
         return usedProvisionList.stream()
                 .map(usedProvision -> {
                     UsedProvisionDTO usedProvisionDTO = modelMapper.map(usedProvision, UsedProvisionDTO.class);
@@ -86,6 +71,7 @@ public class PassengerService {
         Passenger passenger = passengerRepository
                 .findByPID(PID)
                 .orElseThrow(() -> new NotFoundException(Passenger.class, "PID", PID));
+        log.info("Passenger is found for PID: " + PID);
         return modelMapper.map(passenger, PassengerDTO.class);
     }
 
@@ -93,7 +79,7 @@ public class PassengerService {
         if (passengerRepository.findByPID(passengerDTO.getPID()).isPresent()) {
             throw new IllegalArgumentException("Passenger with PID " + passengerDTO.getPID() + " already exists");
         }
-        System.out.println(passengerDTO);
+        log.info("Passenger is added with PID: " + passengerDTO.getPID());
         Passenger passenger = modelMapper.map(passengerDTO, Passenger.class);
         passengerRepository.save(passenger);
     }
@@ -105,6 +91,8 @@ public class PassengerService {
         }
 
         Passenger passenger = findOrCreatePassenger(openProvision);
+        log.info("Passenger is found or added with PID: " + passenger.getPID());
+
         BankDTO bankDTO = modelMapper.map(openProvision, BankDTO.class);
 
         String uniqueCardId = bankService.openProvision(bankDTO, openProvision.getAmount());
@@ -113,10 +101,9 @@ public class PassengerService {
         activeProvision.setAmount(openProvision.getAmount());
         activeProvision.setProvisionDate(Timestamp.from(Instant.now()));
         activeProvision.setUniqueCardId(uniqueCardId);
-        System.out.println("qweqweqweqwe"+activeProvision);
         activeProvision.setPassenger(passenger);
-        System.out.println("asşşdşsaşd "+activeProvision);
         activeProvisionRepository.save(activeProvision);
+        log.info("Active provision is created for PID: " + passenger.getPID());
     }
 
 
@@ -147,12 +134,14 @@ public class PassengerService {
                     Long provID = activeProvisionRepository.findByPassenger_PID(PID)
                             .orElseThrow(() -> new NotFoundException(ActiveProvision.class, "PID", PID)).getAID();
                     transaction.setProvID(provID);
-                    if(passengerSpending.containsKey(PID)) passengerSpending.put(PID, passengerSpending.get(PID) + transactionDTO.getAmount());
+                    if (passengerSpending.containsKey(PID))
+                        passengerSpending.put(PID, passengerSpending.get(PID) + transactionDTO.getAmount());
                     else passengerSpending.put(PID, transactionDTO.getAmount());
                     return transaction;
                 })
                 .toList();
         transactionRepository.saveAll(transactions);
+        log.info("Transactions are saved to the table successfully");
 
         for (Map.Entry<String, Double> entry : passengerSpending.entrySet()) {
             String PID = entry.getKey();
@@ -166,18 +155,19 @@ public class PassengerService {
             usedProvisionRepository.save(usedProvision);
             activeProvisionRepository.deleteActiveProvisionByPassenger_PID(PID);
         }
-
+        log.info("Active provisions for the flight are saved to used provision table");
+        log.info("Active provisions for the flight are deleted");
     }
 
     @Transactional
     public void deleteActiveProvision(String pid) {
         ActiveProvision activeProvision = activeProvisionRepository.findByPassenger_PID(pid)
-                .orElseThrow(()->new NotFoundException(ActiveProvision.class,"PID",pid));
+                .orElseThrow(() -> new NotFoundException(ActiveProvision.class, "PID", pid));
         String uniqueCardId = activeProvision.getUniqueCardId();
         double amount = activeProvision.getAmount();
-        bankService.closeProvision(uniqueCardId,amount);
+        bankService.closeProvision(uniqueCardId, amount);
         activeProvisionRepository.deleteActiveProvisionByPassenger_PID(pid);
-        System.out.println("DELETED");
+        log.info("Active provision is deleted for PID: " + pid);
     }
 
     public List<ActiveProvisionDTO> getActiveProvisionByFlightNo(String flightNo) {
@@ -185,6 +175,8 @@ public class PassengerService {
                 .findByFlightNo(flightNo)
                 .orElseThrow(() -> new NotFoundException(ActiveProvision.class, "flightNo", flightNo));
         if (activeProvisions.isEmpty()) throw new NotFoundException(ActiveProvision.class, "flightNo", flightNo);
+        log.info("Active provisions are found for the flightNo: " + flightNo);
+
         return activeProvisions.stream()
                 .map(activeProvision -> modelMapper.map(activeProvision, ActiveProvisionDTO.class))
                 .toList();
