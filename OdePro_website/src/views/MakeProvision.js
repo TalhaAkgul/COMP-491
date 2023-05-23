@@ -52,6 +52,7 @@ import {
   Form,
   Container,
   Row,
+  Modal,
   Col,
 } from "reactstrap";
 
@@ -95,6 +96,13 @@ function ProfilePage() {
   const [cardType, setCardType] = useState("");
   const [provisionAmount, setProvisionAmount] = useState("");
 
+  const [liveDemo, setLiveDemo] = React.useState(false);
+  const [err, setErr] = useState("");
+  const [liveDemoOk, setLiveDemoOk] = React.useState(false);
+  const [errOk, setErrOk] = useState("");
+  const [nextOk, setNextOk] = useState("");
+  const [submitOk, setSubmitOk] = useState("");
+
   // Controlled inputs
   const setCardNumberandType = (e) => {
     if (e.substring(0, 1) === "4") {
@@ -133,7 +141,7 @@ function ProfilePage() {
       if (!name || !surname || !IDNumber || !email || !phoneNo || !callSign || !flightNo || !bool
         || errorMessageName || errorMessageSurname || errorMessageIDNumber || errorMessageEmail || errorMessagePhoneNo
         || errorMessageAddress || errorMessageCallSign || errorMessageFlightNo) {
-        alert("Please check your information");
+        setNextOk("true");
       } else {
         setActiveTab(tab);
       }
@@ -149,7 +157,7 @@ function ProfilePage() {
       //|| !patternDate.test(expirationDate) || !provisionAmount
       if (!patternCardNumber.test(cardNumber) )
       {
-        alert("Please check your credit card information");
+        setSubmitOk("true");
       }else {
         handleSubmit();
       }
@@ -199,7 +207,7 @@ function ProfilePage() {
       cvc: cvv,
       amount: tempProvisionNumber,
     };
-    fetch('https://172.20.49.85:8080/payment', {
+    fetch('https://172.20.56.202:8080/payment', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -209,12 +217,14 @@ function ProfilePage() {
       .then(async response => {
         if (response.ok) {
           // Provision is opened successfully
-          const err = await response.text();
-          alert(err);
-          window.location = 'my-landing-page';
+          const errOk = await response.text();
+          setErrOk(errOk);
+          setLiveDemoOk(true);
+          
         }  else {
           const err = await response.text();
-          alert(err);
+          setErr(err);
+          setLiveDemo(true);
         }
       })
       
@@ -713,6 +723,123 @@ function ProfilePage() {
                       >
                         {activeTab === "2" ? "Submit" : "Next"}
                       </Button>
+                      <Modal isOpen={nextOk} toggle={() => setNextOk(false)}>
+                        <div className="modal-header">
+
+                        <button
+                            aria-label="Close"
+                            className="close"
+                            data-dismiss="modal"
+                            type="button"
+                            onClick={() => setNextOk(false)}
+                          >
+                            <span aria-hidden={true}>×</span>
+                          </button>
+                          <h5 className="modal-title" id="exampleModalLiveLabel">
+                            <b><div style={{color:"red"}}>Error</div></b>
+                          </h5>
+                        </div>
+                        <div className="modal-body">
+                        <p style={{textAlign:"center"}}>Please check your personal information!</p>
+                        <button
+                            aria-label="Close"
+                            className="close"
+                            data-dismiss="modal"
+                            type="button"
+                            onClick={() => setNextOk(false)}
+                          >
+                            <p aria-hidden={true}><b>Okay</b></p>
+                          </button>
+                        </div>
+                      </Modal>
+
+                      <Modal isOpen={submitOk} toggle={() => setSubmitOk(false)}>
+                        <div className="modal-header">
+
+                        <button
+                            aria-label="Close"
+                            className="close"
+                            data-dismiss="modal"
+                            type="button"
+                            onClick={() => setSubmitOk(false)}
+                          >
+                            <span aria-hidden={true}>×</span>
+                          </button>
+                          <h5 className="modal-title" id="exampleModalLiveLabel">
+                            <b><div style={{color:"red"}}>Error</div></b>
+                          </h5>
+                        </div>
+                        <div className="modal-body">
+                          <p style={{textAlign:"center"}}>Please check your credit card information!</p>
+                          <button
+                            aria-label="Close"
+                            className="close"
+                            data-dismiss="modal"
+                            type="button"
+                            onClick={() => setSubmitOk(false)}
+                          >
+                            <p aria-hidden={true}><b>Okay</b></p>
+                            </button>
+                        </div>
+                      </Modal>
+                      <Modal isOpen={liveDemo} toggle={() => setLiveDemo(false)}>
+                      <div className="modal-header">
+
+                      <button
+                          aria-label="Close"
+                          className="close"
+                          data-dismiss="modal"
+                          type="button"
+                          onClick={() => setLiveDemo(false)}
+                        >
+                          <span aria-hidden={true}>×</span>
+                        </button>
+                        <h5 className="modal-title" id="exampleModalLiveLabel">
+                          <b><div style={{color:"red"}}>Error</div></b>
+                        </h5>
+                      </div>
+                      <div className="modal-body">
+                        <p style={{textAlign:"center"}} > <b>{err}</b></p>
+                        <button
+                          aria-label="Close"
+                          className="close"
+                          data-dismiss="modal"
+                          type="button"
+                          onClick={() => setLiveDemo(false)}
+                        >
+                            <p aria-hidden={true}><b>Okay</b></p>
+                        </button>
+                      </div>
+                    </Modal>
+                    <Modal isOpen={liveDemoOk} toggle={() => setLiveDemoOk(false)}>
+                      <div className="modal-header">
+
+                      <button
+                          aria-label="Close"
+                          className="close"
+                          data-dismiss="modal"
+                          type="button"
+                          onClick={() => {setLiveDemoOk(false); window.location = 'my-landing-page'}}
+                        >
+                          <span aria-hidden={true}>×</span>
+                        </button>
+                        <h5 className="modal-title" id="exampleModalLiveLabel">
+                          <b><div style={{color:"green"}}>Success!</div></b>
+                        </h5>
+                      </div>
+                      <div className="modal-body">
+                        <p style={{textAlign:"center"}} > <b>{errOk}</b></p>
+                        <button
+                          aria-label="Close"
+                          className="close"
+                          data-dismiss="modal"
+                          type="button"
+                          onClick={() => {setLiveDemoOk(false); window.location = 'my-landing-page'}}
+                        >
+                          <p aria-hidden={true}> <b>Okay</b></p>
+                        </button>
+                      </div>
+                    </Modal>
                     </NavItem>
                   </Nav>
                 </Nav>

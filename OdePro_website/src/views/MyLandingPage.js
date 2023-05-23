@@ -42,9 +42,6 @@ function LandingPage() {
     };
   });
 
-
-  const Marker = ({ text }) => <div>{text}</div>;
-
   return (
     <>
       <ExamplesNavbar />

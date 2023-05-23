@@ -24,6 +24,7 @@ import {
   CardHeader,
   CardBody,
   CardText,
+  Modal
 } from "reactstrap";
 
 // core components
@@ -39,7 +40,8 @@ function MyProvisionsPage() {
   var [search, setSearch] = useState("");
   const [usersActive, setUsersActive] = useState([]);
   const [usersUsed, setUsersUsed] = useState([]);
-
+  const [liveDemo, setLiveDemo] = React.useState(false);
+  const [ok, setOk] = useState(false);
 
   const toggle = (tab) => {
     if (activeTab !== tab) {
@@ -47,18 +49,23 @@ function MyProvisionsPage() {
     }
   };
 
-  const deleteProvision = () => {
-    {
-      fetch("https://172.20.49.85:8080/deleteActiveProvision?id=" + search)
+  const deleteProvision = (del) => {
+    setLiveDemo(true);
+    if (del == true){
+      {
+        fetch("https://172.20.56.202:8080/deleteActiveProvision?id=" + search)
         .then((response) => response.json());
+      }
+      setUsersActive([]);
+      {
+        fetch("https://172.20.56.202:8080/getActiveProvision?id=" + search)
+          .then((response) => response.json())
+          .then((data) => setUsersActive(data));
+      }
+      setOk(true);
     }
-    {
-      fetch("https://172.20.49.85:8080/getActiveProvision?id=" + search)
-        .then((response) => response.json())
-        .then((data) => setUsersActive(data));
-    }
-    alert("Your active provision is successfully deleted.");
   }
+
 
 
   const handleSubmit = (e) => {
@@ -68,12 +75,12 @@ function MyProvisionsPage() {
       setUsersActive([]);
       setUsersUsed([]);
       {
-        fetch("https://172.20.49.85:8080/getActiveProvision?id=" + id)
+        fetch("https://172.20.56.202:8080/getActiveProvision?id=" + id)
           .then((response) => response.json())
           .then((data) => setUsersActive(data));
       }
       {
-        fetch("https://172.20.49.85:8080/getUsedProvisions?id=" + id)
+        fetch("https://172.20.56.202:8080/getUsedProvisions?id=" + id)
           .then((response) => response.json())
           .then((data) => setUsersUsed(data));
       }
@@ -81,6 +88,7 @@ function MyProvisionsPage() {
     }
     e.target.reset();
   };
+  
 
   return (
     <>
@@ -220,10 +228,56 @@ function MyProvisionsPage() {
                               <TableCell align="left">
                                <button style={{ backgroundColor:"transparent",  border:"none"}}
                                   onClick={() => {
-                                    deleteProvision();
+                                    deleteProvision(false);
                                   }}>
                                 <i class="fa fa-trash-o" style={{fontSize:"200%", color:"red", cursor:"pointer"}}></i>
                               </button>
+                              <Modal isOpen={liveDemo} toggle={() => setLiveDemo(false)}>
+                                <div className="modal-header">
+
+                                <button
+                                    aria-label="Close"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    type="button"
+                                    onClick={() => setLiveDemo(false)}
+                                  >
+                                    <span aria-hidden={true}>×</span>
+                                  </button>
+                                  <h5 className="modal-title" id="exampleModalLiveLabel">
+                                    <b><div style={{color:"red"}}>Are you sure to delete this active provision?</div></b>
+                                  </h5>
+                                </div>
+                                <div className="modal-body" style={{ display: 'flex', justifyContent: 'center' }}>
+                                  <Button className="btn-round" type="submit" color="info"
+                                    onClick={() => {deleteProvision(true); setLiveDemo(false)}}
+                                    style={{ marginRight: '10px' }}>Yes</Button>
+                                  <Button className="btn-round" type="submit" color="info"
+                                    onClick={() => {setLiveDemo(false); }}>No</Button>
+                                </div>
+                              </Modal>
+                              <Modal isOpen={ok} toggle={() => setOk(false)}>
+                                <div className="modal-header">
+
+                                <button
+                                    aria-label="Close"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    type="button"
+                                    onClick={() => setOk(false)}
+                                  >
+                                    <span aria-hidden={true}>×</span>
+                                  </button>
+                                  <h5 className="modal-title" id="exampleModalLiveLabel">
+                                    <b><div style={{color:"green"}}>Your provision is successfully deleted.</div></b>
+                                  </h5>
+                                </div>
+                                <div className="modal-body" style={{ display: 'flex', justifyContent: 'center' }}>
+                                  <Button className="btn-round" type="submit" color="info"
+                                    onClick={() => {setOk(false);}}
+                                    style={{ marginRight: '10px' }}>Close</Button>
+                                </div>
+                              </Modal>
                               </TableCell>
                             </TableRow>
                           ))}

@@ -20,12 +20,13 @@ import React from "react";
 
 // reactstrap components
 import { Button, Container } from "reactstrap";
+import {FormGroup, Input, Modal } from "reactstrap";
 
 // core components
 
 function LandingPageHeader() {
   let pageHeader = React.createRef();
-
+  const [liveDemo, setLiveDemo] = React.useState(false);
   React.useEffect(() => {
     if (window.innerWidth < 991) {
       const updateScroll = () => {
@@ -60,9 +61,39 @@ function LandingPageHeader() {
               Make a Provision
             </Button>
             <br /><br />
-            <Button className="btn-round" color="danger" type="button" outline>
-              Download the App
-            </Button>
+            <Button className="btn-round" color="danger" type="button" onClick={() => setLiveDemo(true)} outline>
+            Dowload the App
+          </Button>
+          <Modal isOpen={liveDemo} toggle={() => setLiveDemo(false)}>
+            <div className="modal-header">
+
+            <button
+                aria-label="Close"
+                className="close"
+                data-dismiss="modal"
+                type="button"
+                onClick={() => setLiveDemo(false)}
+              >
+                <span aria-hidden={true}>×</span>
+              </button>
+              <h5 className="modal-title" id="exampleModalLiveLabel">
+                <b><div style={{color:"red"}}>Error</div> Dowload the App</b>
+              </h5>
+            </div>
+            <div className="modal-body">
+              <p style={{textAlign:"center"}}>Sorry our app is not on AppStore yet!</p>
+              <p style={{textAlign:"center"}}>Please stay tuned :)</p>
+              <button
+                aria-label="Close"
+                className="close"
+                data-dismiss="modal"
+                type="button"
+                onClick={() => setLiveDemo(false)}
+              >
+                <p aria-hidden={true}><b>Okay</b></p>
+              </button>
+            </div>
+          </Modal>
           </div>
         </Container>
       </div>
