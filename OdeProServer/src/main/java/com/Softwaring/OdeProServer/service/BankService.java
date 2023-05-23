@@ -6,7 +6,6 @@ import com.Softwaring.OdeProServer.exception.NotFoundException;
 import com.Softwaring.OdeProServer.repository.BankRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PassengerRepository extends JpaRepository<Passenger,String> {
+public interface PassengerRepository extends JpaRepository<Passenger, String> {
     Optional<Passenger> findByPID(String PID);
 }
