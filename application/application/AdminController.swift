@@ -10,6 +10,7 @@ import SQLite
 import MultipeerConnectivity
 
 class AdminController: UIViewController, URLSessionDelegate {
+    
     @IBOutlet weak var connectCabinCrewButton: UIButton!
     @IBOutlet weak var getProvisionsButton: UIButton!
     @IBOutlet weak var closeTransactionsButton: UIButton!
@@ -20,11 +21,15 @@ class AdminController: UIViewController, URLSessionDelegate {
     var mcSession: MCSession!
     
     let databaseController = DatabaseController.instance
+    
+    static var flightNo = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         databaseController.connectTransactionDatabase()
         mcSession = self.sessionManager.mcSession
         setItems()
+        
     }
     
     @objc func goBack() {
@@ -87,10 +92,19 @@ class AdminController: UIViewController, URLSessionDelegate {
     }
     
     @IBAction func getProvisionsClicked(_ sender: Any) {
-        request()
+        print(AdminController.flightNo)
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "FlightNoEntry") {
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true, completion: nil)
+        }
+        print(AdminController.flightNo)
+        if(AdminController.flightNo != ""){
+            request()
+        }
     }
     
     @IBAction func closeTransactionsClicked(_ sender: Any) {
+        print(AdminController.flightNo)
         send()
     }
     
@@ -99,6 +113,7 @@ class AdminController: UIViewController, URLSessionDelegate {
     }
     
     @IBAction func resetTransactionsClicked(_ sender: Any) {
+        
         databaseController.resetTransactions()
     }
     
@@ -116,7 +131,7 @@ class AdminController: UIViewController, URLSessionDelegate {
             }
 
             let jsonObject: [String: Any] = [
-                "flightNo": "TK3480",
+                "flightNo": AdminController.flightNo,
                 "transactions": transactions
             ]
             do {
@@ -176,7 +191,7 @@ class AdminController: UIViewController, URLSessionDelegate {
                     popOverVC.view.frame = self.view.frame
                     self.view.addSubview(popOverVC.view)
                     popOverVC.didMove(toParent: self)
-                    
+                    AdminController.flightNo = ""
                 } catch {
                     fatalError("Failed to create the file: \(error)")
                 }
@@ -198,7 +213,7 @@ class AdminController: UIViewController, URLSessionDelegate {
         }
     }
     func request(){
-        var request = URLRequest(url: URL(string: "https://172.20.56.202:8080/getProvisionsByFlightNo?flightNo=TK3480")!)
+        var request = URLRequest(url: URL(string: "https://172.20.56.202:8080/getProvisionsByFlightNo?flightNo=" + AdminController.flightNo)!)
         request.httpMethod = "GET"
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
         let task = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
