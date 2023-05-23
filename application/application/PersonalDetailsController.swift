@@ -107,21 +107,12 @@ class PersonalDetailsController: UIViewController {
     }
     
     func readLocalData(){
-        /*
-        guard let path = Bundle.main.path(forResource: "serverData", ofType: "json") else {
-            fatalError("Couldn't find file 'serverData.json' in app bundle.")
-        }
-         */
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             fatalError("Couldn't access the document directory.")
         }
-
+        
         let fileURL = documentsDirectory.appendingPathComponent("serverData.json")
-/*
-        print("AKSALKLKSAKLS ", path)
-        let url = URL(fileURLWithPath: path)
-        print("AKSALKLKSAKLS ", url)
- */
+        print(fileURL)
         do {
             let data = try Data(contentsOf: fileURL)
             print(data)

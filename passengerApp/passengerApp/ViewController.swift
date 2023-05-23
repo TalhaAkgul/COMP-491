@@ -80,7 +80,13 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-        /*
+        do {
+            let drop = productsTable.drop(ifExists: true)
+            try database.run(drop)
+        } catch {
+            print(error)
+        }
+        
         let createTable = self.productsTable.create { (table) in
             table.column(self.productId, primaryKey: true)
             table.column(self.productName)
@@ -95,7 +101,7 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-         */
+         
         let createTable2 = self.customerTable.create { (table) in
             table.column(self.passId, primaryKey: true)
         }

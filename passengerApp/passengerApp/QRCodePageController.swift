@@ -91,7 +91,9 @@ class QRCodePageController: UIViewController {
         } catch {
             print(error)
         }
+        
         orderDict.updateValue(orderArray, forKey: "orders")
+        print(orderDict)
         return orderDict
     }
     
