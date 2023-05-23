@@ -20,7 +20,7 @@ import React from "react";
 
 // reactstrap components
 import { Button, Container } from "reactstrap";
-import {FormGroup, Input, Modal } from "reactstrap";
+import { Modal } from "reactstrap";
 
 // core components
 

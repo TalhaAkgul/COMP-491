@@ -1,23 +1,6 @@
-/*!
 
-=========================================================
-* Paper Kit React - v1.3.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-kit-react
-
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/paper-kit-react/blob/main/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 import Cleave from "cleave.js/react";
 import anime from "animejs/lib/anime.es.js";
@@ -40,16 +23,13 @@ import {
   Button,
   Label,
   FormGroup,
-  Input,
   Card,
   CardBody,
   CardHeader,
   NavItem,
-  NavLink,
   Nav,
   TabContent,
   TabPane,
-  Form,
   Container,
   Row,
   Modal,
@@ -87,7 +67,6 @@ function ProfilePage() {
   const [errorMessageCallSign, setErrorMessageCallSign] = useState("");
   var [flightNo, setFlightNo] = useState("");
   const [errorMessageFlightNo, setErrorMessageFlightNo] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   const [cardNumber, setCardNumber] = useState("");
   const [cardHolderName, setCardHolderName] = useState("");
@@ -150,11 +129,6 @@ function ProfilePage() {
     if (activeTab === "2" && tab === "2") {
       //submit
       const patternCardNumber = /^[0-9 ]{19}$/; 
-      const patternCardHolderName = /^[A-Za-z/ ]{50}$/; 
-      const patternCvv = /^[0-9]{3}$/; 
-      const patternDate = /^[0-9/]{5}$/; 
-      //|| !patternCardHolderName.test(cardHolderName)  || !patternCvv.test(cvv)
-      //|| !patternDate.test(expirationDate) || !provisionAmount
       if (!patternCardNumber.test(cardNumber) )
       {
         setSubmitOk("true");

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -66,8 +66,6 @@ function MyProvisionsPage() {
     }
   }
 
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (id){
@@ -89,7 +87,6 @@ function MyProvisionsPage() {
     e.target.reset();
   };
   
-
   return (
     <>
       <ExamplesNavbar />
