@@ -1,13 +1,13 @@
-# COMP-491
-
+# COMP-491 OdePro
+OdeProServer contains Spring project for server <br />
+OdePro_website contains React project for website <br />
+SqlData contains sql files to initialize the database <br />
+application contains Swift project for cabin crew application <br />
 
 ## Website Prereq.
-- npm install react-table
-- npm install axios
-- npm i react-router-dom --force
-- npm install @mui/material @emotion/react @emotion/styled
-- npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
-- npm install styled-components
-- npm install --save cleave.js
-- npm install animejs --save
-- npm install react-icons --save
+- npm install --force
+
+## Server Prereq.
+- Maven
+- Java 17 
+- mvn clean install
