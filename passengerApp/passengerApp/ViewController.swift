@@ -8,7 +8,7 @@
 import UIKit
 import SQLite
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextViewDelegate {
 
     var database: Connection!
     let productsTable = Table("Products")
@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     let passId = Expression<String>("passId")
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var instructionLabel: UILabel!
-    @IBOutlet weak var idTextField: UITextField!
+    @IBOutlet weak var idTextField: UITextView!
     @IBOutlet weak var generateQRWithoutOrderButton: UIButton!
     @IBOutlet weak var generateQRWithOrderButton: UIButton!
     override func viewDidLoad() {
@@ -58,9 +58,30 @@ class ViewController: UIViewController {
         
         generateQRWithOrderButton.center.x = self.view.center.x
         generateQRWithOrderButton.center.y = generateQRWithoutOrderButton.center.y + 1.25*generateQRWithOrderButton.bounds.size.height
-        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        view.addGestureRecognizer(tapGesture)
+        idTextField.delegate = self
+        idTextField.textColor = UIColor.lightGray
+        idTextField.textAlignment = .center
     }
-    
+    @objc func handleTap() {
+        view.endEditing(true) // Dismiss the keyboard
+    }
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+                textView.text = nil
+                textView.textColor = UIColor.black
+        }
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y -= 250 // Adjust the value to match the height of the keyboard
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
+        }
+    }
     func initializeDatabase(){
         
         
@@ -177,6 +198,10 @@ class ViewController: UIViewController {
         }
     }
     @IBAction func generateQRCodeWithoutOrderButtonClicked(_ sender: UIButton) {
+        view.endEditing(true)
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
+        }
         let insertPass = self.customerTable.insert(self.passId <- idTextField.text!)
                             
         do {
@@ -199,6 +224,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func generateQRCodeWithOrderButtonClicked(_ sender: UIButton) {
+        view.endEditing(true)
+        UIView.animate(withDuration: 0.3) {
+            self.view.frame.origin.y = 0
+        }
         let insertPass = self.customerTable.insert(self.passId <- idTextField.text!)
                             
         do {

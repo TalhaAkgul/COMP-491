@@ -11,8 +11,10 @@ import SQLite
 import SwiftUI
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import PassKit
 
-class QRCodePageController: UIViewController {
+
+class QRCodePageController: UIViewController, PKAddPassesViewControllerDelegate {
     
     var database: Connection!
     let productsTable = Table("Products")
@@ -66,7 +68,28 @@ class QRCodePageController: UIViewController {
         qrCodeImageView.image = image
         //print(orderDict)
     }
-    
+    func addPassToWallet() {
+            guard let passImage = qrCodeImageView.image else {
+                return
+            }
+
+            let passData = passImage.pngData()
+
+            do {
+                let pass = try PKPass(data: passData!)
+                let passViewController = PKAddPassesViewController(pass: pass)
+                passViewController!.delegate = self
+
+                present(passViewController!, animated: true, completion: nil)
+            } catch {
+                print("Error creating PKPass: \(error.localizedDescription)")
+            }
+        }
+        
+        func addPassesViewControllerDidFinish(_ controller: PKAddPassesViewController) {
+            controller.dismiss(animated: true, completion: nil)
+        }
+
     func generateJSON() -> [String: Any]{
         connectDatabase()
         var orderDict : [String: Any] = [ "orders": [ ],"passengerID": "" ]
@@ -102,7 +125,7 @@ class QRCodePageController: UIViewController {
     }
     
     @IBAction func addWalletClicked(_ sender: UIButton) {
-        
+        addPassToWallet()
     }
     
    

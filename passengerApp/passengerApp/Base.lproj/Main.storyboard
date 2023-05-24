@@ -44,15 +44,6 @@
                                     <action selector="generateQRCodeWithoutOrderButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5lG-qG-7nZ"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4BO-nw-grU">
-                                <rect key="frame" x="33" y="559" width="348" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wL-4y-9Ai">
                                 <rect key="frame" x="33" y="674" width="348" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -68,6 +59,14 @@
                                     <segue destination="mi5-1y-fxx" kind="presentation" id="OjC-eY-ern"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Please, enter your id number!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="77F-4f-edq">
+                                <rect key="frame" x="87" y="548" width="240" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NX2-k4-gBI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -75,14 +74,14 @@
                     <connections>
                         <outlet property="generateQRWithOrderButton" destination="4wL-4y-9Ai" id="WKw-7u-a06"/>
                         <outlet property="generateQRWithoutOrderButton" destination="OWn-zF-mjI" id="h3V-w8-ehW"/>
-                        <outlet property="idTextField" destination="4BO-nw-grU" id="Fdi-HD-GDV"/>
+                        <outlet property="idTextField" destination="77F-4f-edq" id="V0K-Ep-uzZ"/>
                         <outlet property="instructionLabel" destination="PoQ-9Y-nRM" id="mcr-Vr-mVr"/>
                         <outlet property="welcomeLabel" destination="MMq-cV-t3M" id="HOk-MC-5dU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="94" y="68"/>
+            <point key="canvasLocation" x="92.753623188405811" y="67.633928571428569"/>
         </scene>
         <!--Order Controller-->
         <scene sceneID="slE-O5-TXZ">
@@ -3690,6 +3689,9 @@
         <segue reference="3C1-7z-M7W"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
