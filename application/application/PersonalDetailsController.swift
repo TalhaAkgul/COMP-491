@@ -114,6 +114,18 @@ class PersonalDetailsController: UIViewController {
         let fileURL = documentsDirectory.appendingPathComponent("serverData.json")
         print(fileURL)
         do {
+            let rows = try databaseController.database3.prepare(databaseController.qrTable)
+                for row in rows {
+                    let pIdValue = row[databaseController.pId]
+                    let prIdValue = row[databaseController.prId]
+                    let prCountValue = row[databaseController.prCount]
+                    
+                    print("pId: \(pIdValue), prId: \(prIdValue), prCount: \(prCountValue)")
+                }
+            } catch {
+                print("Error printing rows: \(error)")
+            }
+        do {
             let data = try Data(contentsOf: fileURL)
             print(data)
             do {
