@@ -18,11 +18,8 @@ class OrderController: UIViewController {
     let count = Expression<Int>("count")
     let price = Expression<Double>("price")
     
-    @IBOutlet weak var menuImage1: UIImageView!
-    @IBOutlet weak var menuImage2: UIImageView!
+
     @IBOutlet weak var menuImage3: UIImageView!
-    @IBOutlet weak var menuImage4: UIImageView!
-    @IBOutlet weak var menuImage5: UIImageView!
     @IBOutlet weak var menuImage6: UIImageView!
     @IBOutlet weak var menuImage7: UIImageView!
     @IBOutlet weak var foodMenuView: UIView!
@@ -33,13 +30,13 @@ class OrderController: UIViewController {
     @IBOutlet weak var proceedPaymentButton: UIButton!
     @IBOutlet weak var totalView: UIView!
     @IBOutlet weak var totalLabel: UILabel!
+    @IBOutlet weak var cancelPaymentButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
-        let screenWidth  = screenSize.width
-        
+        let screenWidth = screenSize.width
         let navigationItem = UINavigationItem(title: "Order")
         
         let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
@@ -53,24 +50,32 @@ class OrderController: UIViewController {
         navigationBar.setItems([navigationItem], animated: false)
 
         view.addSubview(navigationBar)
-        menuImage1.image = UIImage(named: "images/add payment page images/menu1.jpeg")
-        menuImage2.image = UIImage(named: "images/add payment page images/menu2.jpeg")
-        menuImage3.image = UIImage(named: "images/add payment page images/menu3.jpeg")
-        menuImage4.image = UIImage(named: "images/add payment page images/menu4.jpeg")
-        menuImage5.image = UIImage(named: "images/add payment page images/menu5.jpeg")
+      
+        menuImage3.image = UIImage(named: "images/add payment page images/menu2.jpeg")
         menuImage6.image = UIImage(named: "images/add payment page images/menu6.jpeg")
         menuImage7.image = UIImage(named: "images/add payment page images/menu7.jpeg")
+        foodMenuView.frame.size.width = screenWidth * 0.9
+        foodMenuView.center.y = navigationBar.frame.maxY + 1.25 * foodMenuView.bounds.size.height/2
+        
+        entertainmentMenuView.frame.size.width = screenWidth * 0.9
+        entertainmentMenuView.center.y = foodMenuView.frame.maxY + 1.25 * entertainmentMenuView.bounds.size.height/2
+        
+        afterFlightServicesView.frame.size.width = screenWidth * 0.9
+        afterFlightServicesView.center.y = entertainmentMenuView.frame.maxY + 1.25 * afterFlightServicesView.bounds.size.height/2
+        
+        cancelPaymentButton.center.y = screenHeight * 0.95
+        proceedPaymentButton.center.y = cancelPaymentButton.center.y - 1.5 * proceedPaymentButton.bounds.size.height
+        totalView.center.y = proceedPaymentButton.center.y - 1.1 * totalView.frame.size.height
         
         let scrollViewContainer: UIStackView = {
             let view = UIStackView()
-
             view.axis = .vertical
             view.spacing = 10
             view.backgroundColor = .white
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
         }()
-        
+        scrollView.frame.size.width = screenWidth * 0.9
         updateBasket(container : scrollViewContainer)
         view.addSubview(scrollView)
         scrollView.addSubview(scrollViewContainer)
@@ -80,10 +85,9 @@ class OrderController: UIViewController {
         scrollViewContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
         // this is important for scrolling
         scrollViewContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-        /*
-        scrollViewContainer2.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
-        scrollViewContainer2.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        scrollViewContainer2.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true*/
+        scrollView.center.x = self.view.center.x
+        scrollView.center.y = afterFlightServicesView.frame.maxY + scrollView.frame.size.height/2 + 10
+        scrollView.frame.size.height = totalView.frame.minY - scrollView.frame.minY - 20
     }
     
     @objc func goBack() {
@@ -111,28 +115,17 @@ class OrderController: UIViewController {
             var totalPrice = 0.0
             for product in products {
                 let productLabel = UILabel()
-                //productLabel.center = CGPoint(x: 160, y: 285)
-                //productLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                 productLabel.textColor = UIColor.black
                 productLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
                 let productName = product[self.productName]
                 let count = product[self.count]
                 let productText = String(count) + "   x   " + productName
-                //productLabel.text = productText
-                //let priceLabel = UILabel()
-                //priceLabel.center = CGPoint(x: 160, y: 285)
-                //priceLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                //priceLabel.textColor = UIColor.black
                 let price = product[self.price]
                 let totalPriceForProd = price * Double(count)
                 let priceText = String(totalPriceForProd) + " ₺ "
-                //priceLabel.text = priceText
-                //priceLabel.textAlignment = .right
                 let text = productText + ": " + priceText
                 productLabel.text = text
                 container.addArrangedSubview(productLabel)
-                //container.addArrangedSubview(priceLabel)
-                
                 totalPrice = totalPrice + totalPriceForProd
                 labelPosY = labelPosY + 30
             }
@@ -154,14 +147,6 @@ class OrderController: UIViewController {
     }
     
     @IBAction func proceedPaymentClicked(_ sender: UIButton) {
-        /*
-         
-         
-         
-        The main database will be updated according to the payment amount and the passenger
-         
-         
-         */
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = view.bounds
@@ -173,16 +158,6 @@ class OrderController: UIViewController {
         popOverVC.view.frame = self.view.frame
         self.view.addSubview(popOverVC.view)
         popOverVC.didMove(toParent: self)
-        
-         /*
-        let productsAtBasket = self.productsTable.filter(self.count != 0)
-        let completeBasket = productsAtBasket.update(self.count <- 0)
-        do {
-            try self.database.run(completeBasket)
-        } catch {
-            print(error)
-        }
-        */
     }
 }
 

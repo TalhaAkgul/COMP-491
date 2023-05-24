@@ -96,51 +96,17 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="barTintColor" systemColor="systemGray6Color"/>
                             </navigationBar>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NhX-gL-IWW">
-                                <rect key="frame" x="20" y="108" width="374" height="120"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="asI-q6-DXH">
+                                <rect key="frame" x="20" y="199" width="374" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPe-gC-UpG">
-                                        <rect key="frame" x="14" y="77" width="347" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="See Food &amp; Drinks Menu">
-                                            <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <segue destination="smM-ff-3eq" kind="presentation" modalPresentationStyle="fullScreen" id="Ug1-7r-lvW"/>
-                                        </connections>
-                                    </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dhw-Kx-t1q">
-                                        <rect key="frame" x="14" y="8" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uqp-Fz-jAt">
+                                        <rect key="frame" x="14" y="8" width="347" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iA2-KX-xE5">
-                                        <rect key="frame" x="83" y="8" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S58-ou-6bD">
-                                        <rect key="frame" x="152" y="8" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CWr-fa-34B">
-                                        <rect key="frame" x="291" y="8" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pie-gh-jfk">
-                                        <rect key="frame" x="221" y="8" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="asI-q6-DXH">
-                                <rect key="frame" x="20" y="236" width="374" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lay-i1-n13">
-                                        <rect key="frame" x="14" y="77" width="347" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lay-i1-n13">
+                                        <rect key="frame" x="14" y="49" width="347" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="See Entertainment Menu">
                                             <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -149,20 +115,20 @@
                                             <segue destination="c8R-F0-Dk0" kind="presentation" modalPresentationStyle="fullScreen" id="V9x-FS-pAa"/>
                                         </connections>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uqp-Fz-jAt">
-                                        <rect key="frame" x="14" y="8" width="347" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jzx-a7-qg2">
-                                <rect key="frame" x="20" y="371" width="374" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jzx-a7-qg2">
+                                <rect key="frame" x="20" y="311" width="374" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8tJ-SP-AKg">
-                                        <rect key="frame" x="14" y="77" width="347" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aHN-tR-zlQ">
+                                        <rect key="frame" x="14" y="8" width="347" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8tJ-SP-AKg">
+                                        <rect key="frame" x="14" y="49" width="347" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="See After Flight Services">
                                             <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -171,22 +137,18 @@
                                             <segue destination="eng-d5-u33" kind="presentation" modalPresentationStyle="fullScreen" id="POf-Qn-sq8"/>
                                         </connections>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aHN-tR-zlQ">
-                                        <rect key="frame" x="14" y="8" width="347" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i5L-0P-4Gv">
-                                <rect key="frame" x="20" y="525" width="374" height="188"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i5L-0P-4Gv">
+                                <rect key="frame" x="20" y="419" width="374" height="141"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="contentLayoutGuide" id="uDY-6P-J7c"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="4QE-Q8-2J9"/>
                             </scrollView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Umr-P9-6ED">
-                                <rect key="frame" x="20" y="727" width="374" height="49"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Umr-P9-6ED">
+                                <rect key="frame" x="20" y="568" width="374" height="49"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbw-2d-hec">
                                         <rect key="frame" x="8" y="14" width="358" height="21"/>
@@ -198,9 +160,9 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KkH-C9-IA4">
-                                <rect key="frame" x="34" y="784" width="347" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KkH-C9-IA4">
+                                <rect key="frame" x="32" y="625" width="347" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Proceed Order &amp; Generate QR Code">
                                     <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -209,9 +171,9 @@
                                     <action selector="proceedPaymentClicked:" destination="mi5-1y-fxx" eventType="touchUpInside" id="t80-yn-Eb6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GdJ-Q8-rkV">
-                                <rect key="frame" x="34" y="823" width="347" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GdJ-Q8-rkV">
+                                <rect key="frame" x="34" y="664" width="347" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Cancel Order">
                                     <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -220,19 +182,38 @@
                                     <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="fullScreen" id="nSj-rs-CES"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NhX-gL-IWW">
+                                <rect key="frame" x="20" y="88" width="374" height="103"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S58-ou-6bD">
+                                        <rect key="frame" x="14" y="8" width="347" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPe-gC-UpG">
+                                        <rect key="frame" x="14" y="52" width="347" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="See Food &amp; Drinks Menu">
+                                            <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <segue destination="smM-ff-3eq" kind="presentation" modalPresentationStyle="fullScreen" id="Ug1-7r-lvW"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XCN-Zs-xiK"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                     </view>
                     <connections>
                         <outlet property="afterFlightServicesView" destination="Jzx-a7-qg2" id="DIU-qH-FTK"/>
+                        <outlet property="cancelPaymentButton" destination="GdJ-Q8-rkV" id="Rma-O0-Kh3"/>
                         <outlet property="entertainmentMenuView" destination="asI-q6-DXH" id="IU7-K6-SP9"/>
                         <outlet property="foodMenuView" destination="NhX-gL-IWW" id="m20-ZI-a8p"/>
-                        <outlet property="menuImage1" destination="dhw-Kx-t1q" id="VKv-24-PcG"/>
-                        <outlet property="menuImage2" destination="iA2-KX-xE5" id="Kxz-XI-6AR"/>
                         <outlet property="menuImage3" destination="S58-ou-6bD" id="r1S-3M-QZZ"/>
-                        <outlet property="menuImage4" destination="Pie-gh-jfk" id="pvJ-Ir-g3V"/>
-                        <outlet property="menuImage5" destination="CWr-fa-34B" id="32J-Se-Yh8"/>
                         <outlet property="menuImage6" destination="uqp-Fz-jAt" id="8TP-X8-nIo"/>
                         <outlet property="menuImage7" destination="aHN-tR-zlQ" id="YpL-oM-Icu"/>
                         <outlet property="navigationBar" destination="8Ug-n0-OmB" id="B7C-mG-Xze"/>
@@ -244,7 +225,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="krC-wA-yjf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="916" y="68"/>
+            <point key="canvasLocation" x="915.94202898550736" y="67.633928571428569"/>
         </scene>
         <!--After Flight Service Controller-->
         <scene sceneID="MPW-ha-7Kf">
@@ -3644,7 +3625,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="OjC-eY-ern"/>
+        <segue reference="POf-Qn-sq8"/>
+        <segue reference="mTE-7N-XmD"/>
         <segue reference="nSj-rs-CES"/>
     </inferredMetricsTieBreakers>
     <resources>
