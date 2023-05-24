@@ -47,18 +47,11 @@ class QRCodePageController: UIViewController, PKAddPassesViewControllerDelegate 
     }
     func generateQRCode(){
         let orderDict : [String: Any] = generateJSON()
-        
-        //let data = Data.data(using: String.Encoding.ascii, allowLossyConversion: false)
-        
         guard let jsonData = try? JSONSerialization.data(withJSONObject: orderDict, options: [.prettyPrinted]) else {
             return
         }
         let filter = CIFilter(name: "CIQRCodeGenerator")
         filter?.setValue(jsonData, forKey: "InputMessage")
-        
-        
-        //filter.setValue(data, forKey: "InputMessage")
-        
         let ciImage = filter?.outputImage
         
         let transform = CGAffineTransform(scaleX: 10, y: 10)
@@ -66,30 +59,9 @@ class QRCodePageController: UIViewController, PKAddPassesViewControllerDelegate 
         
         image = UIImage(ciImage: transformImage!)
         qrCodeImageView.image = image
-        //print(orderDict)
     }
-    func addPassToWallet() {
-            guard let passImage = qrCodeImageView.image else {
-                return
-            }
-
-            let passData = passImage.pngData()
-
-            do {
-                let pass = try PKPass(data: passData!)
-                let passViewController = PKAddPassesViewController(pass: pass)
-                passViewController!.delegate = self
-
-                present(passViewController!, animated: true, completion: nil)
-            } catch {
-                print("Error creating PKPass: \(error.localizedDescription)")
-            }
-        }
-        
-        func addPassesViewControllerDidFinish(_ controller: PKAddPassesViewController) {
-            controller.dismiss(animated: true, completion: nil)
-        }
-
+    
+    
     func generateJSON() -> [String: Any]{
         connectDatabase()
         var orderDict : [String: Any] = [ "orders": [ ],"passengerID": "" ]
@@ -124,9 +96,6 @@ class QRCodePageController: UIViewController, PKAddPassesViewControllerDelegate 
         removeAnimate()
     }
     
-    @IBAction func addWalletClicked(_ sender: UIButton) {
-        addPassToWallet()
-    }
     
    
     func showAnimate()

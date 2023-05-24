@@ -49,8 +49,7 @@ class ViewController: UIViewController, UITextViewDelegate {
         
         
         idTextField.center.x = self.view.center.x
-        idTextField.center.y = instructionLabel.center.y +
-        2.5*instructionLabel.bounds.size.height
+        idTextField.center.y = instructionLabel.center.y + 2.5*instructionLabel.bounds.size.height
        
         
         generateQRWithoutOrderButton.center.x = self.view.center.x
