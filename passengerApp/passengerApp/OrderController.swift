@@ -36,6 +36,23 @@ class OrderController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenHeight = screenSize.height
+        let screenWidth  = screenSize.width
+        
+        let navigationItem = UINavigationItem(title: "Order")
+        
+        let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(goBack))
+        navigationItem.leftBarButtonItem = back
+
+        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
+        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.setItems([navigationItem], animated: false)
+
+        view.addSubview(navigationBar)
         menuImage1.image = UIImage(named: "images/add payment page images/menu1.jpeg")
         menuImage2.image = UIImage(named: "images/add payment page images/menu2.jpeg")
         menuImage3.image = UIImage(named: "images/add payment page images/menu3.jpeg")
@@ -69,6 +86,12 @@ class OrderController: UIViewController {
         scrollViewContainer2.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true*/
     }
     
+    @objc func goBack() {
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "mainViewController") {
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true, completion: nil)
+        }
+    }
     func connectDatabase(){
         do {
             let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)

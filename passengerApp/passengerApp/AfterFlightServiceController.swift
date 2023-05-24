@@ -57,6 +57,21 @@ class AfterFlightServiceController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenHeight = screenSize.height
+        let navigationItem = UINavigationItem(title: "After Flight Services")
+        
+        let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(goBack))
+        navigationItem.leftBarButtonItem = back
+
+        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
+        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.setItems([navigationItem], animated: false)
+
+        view.addSubview(navigationBar)
         aftPhoto1.image = UIImage(named: "images/afterflight menu images/Blue and Orange Game Time Instagram Post.png")
         aftPhoto2.image = UIImage(named: "images/afterflight menu images/Blue and Orange Game Time Instagram Post-2.jpg")
         aftPhoto3.image = UIImage(named: "images/afterflight menu images/Blue and Orange Game Time Instagram Post-3.jpg")
@@ -84,7 +99,12 @@ class AfterFlightServiceController: UIViewController {
             }
         }
     }
-    
+    @objc func goBack() {
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "OrderController") {
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true, completion: nil)
+        }
+    }
     @IBAction func buttonClicked(_ sender: UIButton) {
         let senderInfo = sender.self.tag
         if(senderInfo % 2 == 0){

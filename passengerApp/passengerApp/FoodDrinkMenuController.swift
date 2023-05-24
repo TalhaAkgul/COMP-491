@@ -210,6 +210,21 @@ class FoodDrinkMenuController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenHeight = screenSize.height
+        let navigationItem = UINavigationItem(title: "Food & Drink")
+        
+        let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(goBack))
+        navigationItem.leftBarButtonItem = back
+
+        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
+        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.setItems([navigationItem], animated: false)
+
+        view.addSubview(navigationBar)
         foodPhoto1.image = UIImage(named: "images/food menu images/foods/avocadobowl.png")
         foodPhoto2.image = UIImage(named: "images/food menu images/foods/baconwrap.png")
         foodPhoto3.image = UIImage(named: "images/food menu images/foods/chickenwrap.png")
@@ -280,7 +295,12 @@ class FoodDrinkMenuController: UIViewController {
             }
         }
     }
-    
+    @objc func goBack() {
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "OrderController") {
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true, completion: nil)
+        }
+    }
     @IBAction func buttonClicked(_ sender: UIButton) {
         let senderInfo = sender.self.tag
         if(senderInfo % 2 == 0){
