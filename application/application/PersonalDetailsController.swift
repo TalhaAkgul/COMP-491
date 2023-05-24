@@ -132,28 +132,30 @@ class PersonalDetailsController: UIViewController {
                 let decoder = JSONDecoder()
                 print("DKDKDS")
                 let serverInfos = try decoder.decode([ServerData].self, from: data)
+                print("DKDKDS2")
                 print(serverInfos)
                 var currentId = ""
                 if let qrRow = try databaseController.database3.pluck(databaseController.qrTable) {
                     currentId  = qrRow[databaseController.pId]
                     print(currentId)
-                    print("current id")
                 }
+                var passengerFound = false
+                print("beforeserverinfo")
                 for serverInfo in serverInfos {
                     print("ifffff")
                     print(serverInfo.passengerPID)
                     print(type(of: serverInfo.passengerPID))
                     print(type(of: currentId))
                     print(currentId)
+                   
                     if serverInfo.passengerPID == currentId {
+                        passengerFound = true
                         let passengerName = serverInfo.passengerName
                         let passengerSurname = serverInfo.passengerSurname
                         print("SDAS111111111")
                         let provisionAmount = Double(serverInfo.amount) ?? 0.0
                         print("SDAS2222222")
-                        //let provisionAmount = serverInfo.amount
                         print(provisionAmount)
-                        //provisionAmount += 1.0
                         var totalSpendings = 0.0
                         
                         do {
@@ -177,11 +179,21 @@ class PersonalDetailsController: UIViewController {
                             seeAllSpendingsButton.isEnabled = true
                         }
                     }
+                    
                         }
+                if(passengerFound == false){
+                    print("no passenger found")
+                    let personalDetailsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainViewController") as! PersonalDetailsController
+                    self.addChild(personalDetailsController)
+                    personalDetailsController.view.frame = self.view.frame
+                    self.view.addSubview(personalDetailsController.view)
+                    personalDetailsController.didMove(toParent: self)
+                    
+                }
                     } catch {
                       print(error)
                     }        } catch {
-            fatalError("Couldn't load contents of file at path '\(fileURL)': \(error)")
+                            fatalError("Couldn't load contents of file at path '\(fileURL)': \(error)")
         }
     }
 }

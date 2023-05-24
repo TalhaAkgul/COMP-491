@@ -106,6 +106,7 @@ class IDViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDel
                     
                 } else {
                     print("No identity number found")
+                    self?.movePage(controllerName: "mainViewController")
                 }
                 self?.identityNumberList.removeAll()
                 }
