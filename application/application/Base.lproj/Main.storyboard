@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -99,6 +100,44 @@
             </objects>
             <point key="canvasLocation" x="-688.40579710144937" y="-822.32142857142856"/>
         </scene>
+        <!--Close Controller-->
+        <scene sceneID="9nD-3g-tYT">
+            <objects>
+                <viewController restorationIdentifier="CloseController" storyboardIdentifier="CloseController" id="Hdr-29-yXu" customClass="CloseController" customModule="application" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EQe-uM-ej9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TbA-81-EdV">
+                                <rect key="frame" x="73" y="240" width="269" height="299"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="3zq-8e-bRu"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="dxK-IE-x3j"/>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xji-1e-LWt">
+                                <rect key="frame" x="31" y="831" width="353" height="31"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Approve and Close Transactions">
+                                    <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="closeTransactionsClicked:" destination="Hdr-29-yXu" eventType="touchUpInside" id="wI2-4q-HsK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="uk2-jS-X7D"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="TbA-81-EdV" id="qXl-N8-B2v"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hFP-Op-phU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2426.0869565217395" y="983.70535714285711"/>
+        </scene>
         <!--Transactions Controller-->
         <scene sceneID="Ajg-1R-Isl">
             <objects>
@@ -119,7 +158,7 @@
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                     </view>
                     <connections>
-                        <outlet property="scrollView" destination="HlB-N1-6fL" id="lZb-5Z-uHf"/>
+                        <outlet property="scrollView" destination="HlB-N1-6fL" id="0rX-XD-gx3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HLC-O0-dEA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -4119,7 +4158,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="ijJ-JW-0EX"/>
-        <segue reference="P3N-e5-V71"/>
+        <segue reference="Luj-Tp-DW4"/>
         <segue reference="CR0-aG-bRY"/>
         <segue reference="H4h-9P-ddt"/>
     </inferredMetricsTieBreakers>

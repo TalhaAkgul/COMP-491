@@ -24,7 +24,8 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
     let passengerId = Expression<String>("passengerId")
     var transactionLocalCount = 0
     let requestString = "Sync my transactions"
-
+    static var receivedCount = 0
+    
     private override init() {
         super.init()
         connectDatabase2()
@@ -80,7 +81,10 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
         } catch {
             print(error)
         }
-
+        while(SessionManager.receivedCount < deviceCountToSend){
+            
+        }
+        SessionManager.receivedCount = 0
         print("inside sendSyncReq")
     }
     
@@ -160,6 +164,7 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
                 print(error)
             }
         } else {
+            
                 DispatchQueue.main.async {
                     let decoder = JSONDecoder()
                     let transactionsReceived = try! decoder.decode([TransactionJSONData].self, from: data)
@@ -198,6 +203,7 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
                         print("Error selecting transactions from Transaction table: \(error)")
                     }
                 }
+            SessionManager.receivedCount += 1
         }
     }
     

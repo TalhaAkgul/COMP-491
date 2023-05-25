@@ -18,12 +18,15 @@ class QRCodeViewController: UIViewController {
     var scannedCode: String = ""
     var scanComplete: Bool = false {
         didSet {
+            
             processDataFromQRCode()
-            mcSession = self.sessionManager.mcSession
-            retrieveTransactionsFromConnectedDevices()
+            
+            
             movePersonalDetailsPage()
+            
         }
     }
+    
     func retrieveTransactionsFromConnectedDevices(){
         sessionManager.sendSyncRequest()
     }
@@ -33,7 +36,8 @@ class QRCodeViewController: UIViewController {
         super.viewDidLoad()
         databaseController.connectMenuDatabase()
         databaseController.connectQRDatabase()
-        
+        mcSession = self.sessionManager.mcSession
+        retrieveTransactionsFromConnectedDevices()
         var scannerSheet : CodeScannerView {
             CodeScannerView(
                 codeTypes: [.qr],

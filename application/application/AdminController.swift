@@ -103,8 +103,13 @@ class AdminController: UIViewController, URLSessionDelegate {
     
     @IBAction func closeTransactionsClicked(_ sender: Any) {
         sessionManager.sendSyncRequest()
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "CloseController") {
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true, completion: nil)
+        }
+        
         print(AdminController.flightNo)
-        send()
+        
     }
     
     @IBAction func seeAllTransactionsClicked(_ sender: Any) {
@@ -116,101 +121,6 @@ class AdminController: UIViewController, URLSessionDelegate {
         databaseController.resetTransactions()
     }
     
-    func send(){
-        var closeCompleted = false
-        var transactions: [[String: Any]] = []
-        var postString = "test"
-        do {
-            for row in try databaseController.database2.prepare(databaseController.transactionTable) {
-                let transaction: [String: Any] = [
-                    "amount": String(row[databaseController.amount]),
-                    "pid": row[databaseController.passengerId]
-                ]
-                transactions.append(transaction)
-            }
-
-            let jsonObject: [String: Any] = [
-                "flightNo": AdminController.flightNo,
-                "transactions": transactions
-            ]
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: [])
-                if let jsonString = String(data: jsonData, encoding: .utf8) {
-                    print(jsonString)
-                    postString = jsonString
-                }
-            } catch {
-                print("Error converting JSON object to string: \(error)")
-            }
-        } catch {
-            print("Error: \(error)")
-        }
-        
-        var request = URLRequest(url: URL(string: "https://172.20.62.133:8080/close")!)
-        request.httpMethod = "POST"
-        request.httpBody = postString.data(using: String.Encoding.utf8)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-        let task = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
-            if let error = error{
-                print("error: ")
-                print(error)
-                return
-            }
-            if let data = data{
-                print("data: ")
-                print(data)
-                
-                guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-                    fatalError("Couldn't access the document directory.")
-                }
-                let fileURL = documentsDirectory.appendingPathComponent("serverData.json")
-                print(fileURL)
-                // Check if the file already exists
-                if FileManager.default.fileExists(atPath: fileURL.path) {
-                    do {
-                        try FileManager.default.removeItem(at: fileURL)
-                        print("File 'serverData.json' deleted.")
-                    } catch {
-                        fatalError("Failed to delete the file: \(error)")
-                    }
-                }
-                do {
-                    try data.write(to: fileURL, options: .atomic)
-                    print("New file 'serverData.json' created.")
-                    closeCompleted = true
-                    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-                    let blurEffectView = UIVisualEffectView(effect: blurEffect)
-                    blurEffectView.frame = self.view.bounds
-                    blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                    self.view.addSubview(blurEffectView)
-                    
-                    let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CompletedPopUp") as! CompletedPopUp
-                    self.addChild(popOverVC)
-                    popOverVC.view.frame = self.view.frame
-                    self.view.addSubview(popOverVC.view)
-                    popOverVC.didMove(toParent: self)
-                    AdminController.flightNo = ""
-                } catch {
-                    fatalError("Failed to create the file: \(error)")
-                }
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print(json)
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-            if let response = response{
-                print("response: ")
-                print(response)
-            }
-        }
-        task.resume()
-        if(closeCompleted == false){
-            
-        }
-    }
     
     
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
