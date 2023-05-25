@@ -103,7 +103,7 @@ class QRCodeViewController: UIViewController {
             print(passID)
             orderDict = passengerInfo.orders
             print(orderDict)
-            /*
+            
             if orderDict.isEmpty {
                 let insertQuery = databaseController.qrTable.insert(databaseController.pId <- passID, databaseController.prId <- String(-1), databaseController.prCount <- String(-1))
                 do {
@@ -112,7 +112,7 @@ class QRCodeViewController: UIViewController {
                     print("Error inserting data: \(error)")
                 }
             }
-             */
+             
             for dict in orderDict {
                 let prIdValue = dict.keys.first ?? ""
                 let prCountValue = dict.values.first ?? ""
