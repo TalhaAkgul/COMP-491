@@ -103,13 +103,10 @@ class AdminController: UIViewController, URLSessionDelegate {
     
     @IBAction func closeTransactionsClicked(_ sender: Any) {
         sessionManager.sendSyncRequest()
-        if let viewController = storyboard?.instantiateViewController(withIdentifier: "CloseController") {
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "ClosePopupController") {
             viewController.modalPresentationStyle = .fullScreen
             present(viewController, animated: true, completion: nil)
         }
-        
-        print(AdminController.flightNo)
-        
     }
     
     @IBAction func seeAllTransactionsClicked(_ sender: Any) {

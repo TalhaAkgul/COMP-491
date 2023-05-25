@@ -13,9 +13,11 @@ class CloseController: UIViewController, URLSessionDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     
     let databaseController = DatabaseController.instance
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.layoutIfNeeded()
         databaseController.connectTransactionDatabase()
         
         let screenSize: CGRect = UIScreen.main.bounds
@@ -219,4 +221,5 @@ class CloseController: UIViewController, URLSessionDelegate {
                 completionHandler(.performDefaultHandling, nil)
             }
     }
+    
 }

@@ -24,8 +24,9 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
     let passengerId = Expression<String>("passengerId")
     var transactionLocalCount = 0
     let requestString = "Sync my transactions"
-    static var receivedCount = 0
-    
+    var deviceCountToSend = 0
+    static var closeOperation = false
+    static var closeCompleted = false
     private override init() {
         super.init()
         connectDatabase2()
@@ -33,6 +34,7 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
         mcSession = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
         mcSession.delegate = self
         startHosting()
+        
     }
     
     func sendTransactions(){
@@ -66,7 +68,7 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
     
     func sendSyncRequest(){
         let connectedPeers = mcSession.connectedPeers
-        let deviceCountToSend = connectedPeers.count / 2
+        deviceCountToSend = connectedPeers.count / 2
         var randomPeers = Set<MCPeerID>()
         while randomPeers.count < deviceCountToSend {
             let randomIndex = Int(arc4random_uniform(UInt32(connectedPeers.count)))
@@ -77,15 +79,15 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
 
         do {
             try mcSession.send(requestData, toPeers: Array(randomPeers), with: .reliable)
-            print("inside sendSyncReq tried")
         } catch {
             print(error)
         }
+        /*
         while(SessionManager.receivedCount < deviceCountToSend){
             
         }
         SessionManager.receivedCount = 0
-        print("inside sendSyncReq")
+         */
     }
     
     func startHosting() {
@@ -203,7 +205,6 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
                         print("Error selecting transactions from Transaction table: \(error)")
                     }
                 }
-            SessionManager.receivedCount += 1
         }
     }
     
