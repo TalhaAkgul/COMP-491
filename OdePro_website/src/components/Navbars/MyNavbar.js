@@ -71,13 +71,14 @@ function ExamplesNavbar() {
     >
       <Container>
         <div className="navbar-translate">
+        <NavLink href="/my-landing-page">             
           <NavbarBrand
             data-placement="bottom"
-            to="/my-landing-page"
-            tag={Link}
-          >
+            to="/my-landing-page">
             ÖdePro
           </NavbarBrand>
+          </NavLink>
+
           <button
             aria-expanded={navbarCollapse}
             className={classnames("navbar-toggler navbar-toggler", {
