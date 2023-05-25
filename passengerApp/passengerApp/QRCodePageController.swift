@@ -11,8 +11,10 @@ import SQLite
 import SwiftUI
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import PassKit
 
-class QRCodePageController: UIViewController {
+
+class QRCodePageController: UIViewController, PKAddPassesViewControllerDelegate {
     
     var database: Connection!
     let productsTable = Table("Products")
@@ -45,18 +47,11 @@ class QRCodePageController: UIViewController {
     }
     func generateQRCode(){
         let orderDict : [String: Any] = generateJSON()
-        
-        //let data = Data.data(using: String.Encoding.ascii, allowLossyConversion: false)
-        
         guard let jsonData = try? JSONSerialization.data(withJSONObject: orderDict, options: [.prettyPrinted]) else {
             return
         }
         let filter = CIFilter(name: "CIQRCodeGenerator")
         filter?.setValue(jsonData, forKey: "InputMessage")
-        
-        
-        //filter.setValue(data, forKey: "InputMessage")
-        
         let ciImage = filter?.outputImage
         
         let transform = CGAffineTransform(scaleX: 10, y: 10)
@@ -64,8 +59,8 @@ class QRCodePageController: UIViewController {
         
         image = UIImage(ciImage: transformImage!)
         qrCodeImageView.image = image
-        //print(orderDict)
     }
+    
     
     func generateJSON() -> [String: Any]{
         connectDatabase()
@@ -91,7 +86,9 @@ class QRCodePageController: UIViewController {
         } catch {
             print(error)
         }
+        
         orderDict.updateValue(orderArray, forKey: "orders")
+        print(orderDict)
         return orderDict
     }
     
@@ -99,9 +96,6 @@ class QRCodePageController: UIViewController {
         removeAnimate()
     }
     
-    @IBAction func addWalletClicked(_ sender: UIButton) {
-        
-    }
     
    
     func showAnimate()

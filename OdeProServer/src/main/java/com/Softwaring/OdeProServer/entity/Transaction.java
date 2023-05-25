@@ -20,6 +20,6 @@ public class Transaction {
     @Column(name = "amount", nullable = false)
     private double amount;
 
-    @Column(name = "ProvID")//TODO Check whether you can delete this or not
+    @Column(name = "ProvID")
     private Long provID;
 }

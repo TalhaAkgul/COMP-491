@@ -1,10 +1,10 @@
 package com.Softwaring.OdeProServer.controller;
 
 import com.Softwaring.OdeProServer.dto.*;
-import com.Softwaring.OdeProServer.entity.Passenger;
 import com.Softwaring.OdeProServer.exception.NotFoundException;
 import com.Softwaring.OdeProServer.service.PassengerService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +15,19 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
+@Slf4j
 public class RestfulController {
     private final PassengerService passengerService;
 
     @GetMapping("/getActiveProvision")
     public ResponseEntity<?> getActiveProvisionsByPID(@RequestParam("id") String PID) {
         try {
-            System.out.println(PID);
+            log.info("Request for getActiveProvisionsByPID is received for PID: " + PID);
             List<ActiveProvisionDTO> results = new ArrayList<>();
             results.add(passengerService.getActiveProvisionByPassengerID(PID));
-            System.out.println();
             return ResponseEntity.ok(results);
         } catch (NotFoundException e) {
+            log.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
@@ -34,20 +35,23 @@ public class RestfulController {
     @GetMapping("/getProvisionsByFlightNo")
     public ResponseEntity<?> getActiveProvisionsByFlightNo(@RequestParam("flightNo") String flightNo) {
         try {
-            System.out.println(flightNo);
+            log.info("Request for getActiveProvisionsByFlightNo is received for flightNo: " + flightNo);
             List<ActiveProvisionDTO> results = passengerService.getActiveProvisionByFlightNo(flightNo);
             return ResponseEntity.ok(results);
         } catch (NotFoundException e) {
+            log.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
     @GetMapping("/getUsedProvisions")
     public ResponseEntity<?> getUsedProvisions(@RequestParam("id") String PID) {
         try {
+            log.info("Request for getUsedProvisions is received for PID: " + PID);
             List<UsedProvisionDTO> results = passengerService.getUsedProvisionsByPassengerID(PID);
-            System.out.println(results);
             return ResponseEntity.ok(results);
         } catch (NotFoundException e) {
+            log.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
@@ -58,17 +62,19 @@ public class RestfulController {
             PassengerDTO passengerDTO = passengerService.getPassenger(PID);
             return ResponseEntity.ok(passengerDTO);
         } catch (NotFoundException e) {
+            log.warn(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @GetMapping("/deleteActiveProvision")
-    public ResponseEntity<String> search(@RequestParam("id") String PID) {
+    public ResponseEntity<String> deleteActiveProvision(@RequestParam("id") String PID) {
         try {
-            System.out.println("PIDDDDD: "+PID);
+            log.info("Request for deleteActiveProvision is received for PID: " + PID);
             passengerService.deleteActiveProvision(PID);
             return ResponseEntity.ok("Passenger with id: " + PID + " deleted");
         } catch (NotFoundException e) {
+            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
@@ -76,21 +82,23 @@ public class RestfulController {
     @PostMapping("/addPassenger")
     public ResponseEntity<?> addPassenger(@RequestBody final PassengerDTO passenger) {
         try {
+            log.info("Request for deleteActiveProvision is received for PID: " + passenger.getPID());
             passengerService.addPassenger(passenger);
             return ResponseEntity.ok(passenger);
         } catch (IllegalArgumentException e) {
+            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
-    @PostMapping("/payment")//TODO You can try ResponseEntity<String>
-    public ResponseEntity<?> addPassenger(@RequestBody final OpenProvisionDTO openProvision) {
+    @PostMapping("/payment")
+    public ResponseEntity<?> openProvision(@RequestBody final OpenProvisionDTO openProvision) {
         try {
-            System.out.println(openProvision);
+            log.info("Request for openProvision is received for PID: " + openProvision.getPassengerPID());
             passengerService.openProvision(openProvision);
             return ResponseEntity.ok("Provision is opened");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
@@ -98,12 +106,11 @@ public class RestfulController {
     @PostMapping("/close")
     public ResponseEntity<?> closeProvision(@RequestBody final CloseProvisionRequest closeProvisionRequest) {
         try {
+            log.info("Request for closeProvision is received for flightNo: " + closeProvisionRequest.getFlightNo());
             passengerService.closeProvision(closeProvisionRequest);
-            System.out.println(closeProvisionRequest);
-
             return ResponseEntity.ok("Provision is closed");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }

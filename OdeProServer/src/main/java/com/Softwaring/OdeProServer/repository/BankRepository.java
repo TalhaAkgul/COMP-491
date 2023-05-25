@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface BankRepository extends JpaRepository<Bank, String> {
     Optional<Bank> findByCreditCardNoAndCardHolderAndExpirationAndCvc(String creditCardNo, String cardHolder, String expiration, String cvv);
+
     Optional<Bank> findByUniqueCardId(String uniqueCardId);
 }

@@ -9,5 +9,6 @@ import java.util.Optional;
 
 public interface UsedProvisionRepository extends JpaRepository<UsedProvision, String> {
     Optional<List<UsedProvision>> findByPassenger(Passenger passenger);
+
     Optional<List<UsedProvision>> findByPassenger_PID(String PID);
 }

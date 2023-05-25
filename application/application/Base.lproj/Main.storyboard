@@ -126,6 +126,50 @@
             </objects>
             <point key="canvasLocation" x="-1613.0434782608697" y="970.98214285714278"/>
         </scene>
+        <!--Flight No Entry-->
+        <scene sceneID="eJO-iG-bOm">
+            <objects>
+                <viewController restorationIdentifier="FlightNoEntry" storyboardIdentifier="FlightNoEntry" id="hIY-jb-hPB" customClass="FlightNoEntry" customModule="application" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="c2k-kc-GmK">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="bAG-V6-3ss">
+                                <rect key="frame" x="87" y="367" width="240" height="52"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YJf-3D-XHE">
+                                <rect key="frame" x="106" y="427" width="203" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Continue" cornerStyle="capsule">
+                                    <backgroundConfiguration key="background">
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="strokeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="continueButtonClicked:" destination="hIY-jb-hPB" eventType="touchUpInside" id="OdQ-Tx-8B3"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="IoN-ke-B5z"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="continueButton" destination="YJf-3D-XHE" id="DTw-JG-OR9"/>
+                        <outlet property="flightEntryTextView" destination="bAG-V6-3ss" id="Sg7-Ik-sel"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EQW-cD-gQd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2398.5507246376815" y="86.383928571428569"/>
+        </scene>
         <!--Admin Controller-->
         <scene sceneID="iji-oo-oN5">
             <objects>
@@ -259,6 +303,9 @@
                                     </backgroundConfiguration>
                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <segue destination="BB0-cU-46x" kind="presentation" modalPresentationStyle="fullScreen" id="1nq-Sw-4k1"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VkY-oP-N0A">
                                 <rect key="frame" x="106" y="612" width="203" height="54"/>
@@ -293,7 +340,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
-                        <outlet property="identifyIdButton" destination="0EP-xY-aOG" id="Ppd-Rh-h8n"/>
+                        <outlet property="identifyIdButton" destination="0EP-xY-aOG" id="UEC-9v-Hdd"/>
                         <outlet property="instructionLabel" destination="AXx-KU-Yp8" id="VAR-dL-eyC"/>
                         <outlet property="qrCodeButton" destination="VkY-oP-N0A" id="LSX-Nm-Knx"/>
                         <outlet property="syncButton" destination="6ka-Hd-0T5" id="Y5W-T7-7nX"/>
@@ -4054,12 +4101,27 @@
             </objects>
             <point key="canvasLocation" x="-688.40579710144937" y="859.82142857142856"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="t8L-F0-CzS">
+            <objects>
+                <viewController restorationIdentifier="IDViewController" storyboardIdentifier="IDViewController" id="BB0-cU-46x" customClass="IDViewController" customModule="application" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="epn-WQ-ZBT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="63s-kO-YeL"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WPT-Bc-fcr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8" y="904"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="ijJ-JW-0EX"/>
         <segue reference="P3N-e5-V71"/>
         <segue reference="CR0-aG-bRY"/>
-        <segue reference="whR-Iw-4Hx"/>
+        <segue reference="H4h-9P-ddt"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>

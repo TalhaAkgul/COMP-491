@@ -616,6 +616,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DX2793HJLK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = passengerApp/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to save this QR Code to your Photos";
@@ -644,6 +645,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DX2793HJLK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = passengerApp/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to save this QR Code to your Photos";

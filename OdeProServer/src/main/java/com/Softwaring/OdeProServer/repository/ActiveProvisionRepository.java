@@ -9,7 +9,10 @@ import java.util.Optional;
 
 public interface ActiveProvisionRepository extends JpaRepository<ActiveProvision, String> {
     Optional<ActiveProvision> findByPassenger(Passenger passenger);
+
     Optional<ActiveProvision> findByPassenger_PID(String PID);
+
     void deleteActiveProvisionByPassenger_PID(String PID);
+
     Optional<List<ActiveProvision>> findByFlightNo(String flightNo);
 }
