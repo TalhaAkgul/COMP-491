@@ -9,7 +9,6 @@ import UIKit
 import SQLite
 
 
-
 class PersonalDetailsController: UIViewController {
     
     @IBOutlet weak var personalInfoView: UIView!
@@ -24,14 +23,17 @@ class PersonalDetailsController: UIViewController {
     @IBOutlet weak var seeAllSpendingsButton: UIButton!
     
     let databaseController = DatabaseController.instance
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         databaseController.connectQRDatabase()
         databaseController.connectTransactionDatabase()
+        
         readLocalData()
         setItems()
     }
+    
     
     func setItems(){
         let screenSize: CGRect = UIScreen.main.bounds

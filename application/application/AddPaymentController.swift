@@ -155,6 +155,7 @@ class AddPaymentController: UIViewController {
     
     
     @IBAction func proceedPaymentClicked(_ sender: UIButton) {
+        mcSession = self.sessionManager.mcSession
         retrieveTransactionsFromConnectedDevices()
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             fatalError("Couldn't access the document directory.")

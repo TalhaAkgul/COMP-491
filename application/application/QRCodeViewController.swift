@@ -9,18 +9,24 @@ import UIKit
 import SwiftUI
 import CodeScanner
 import SQLite
+import MultipeerConnectivity
 
 
 class QRCodeViewController: UIViewController {
-    
+    let sessionManager = SessionManager.shared
+    var mcSession: MCSession!
     var scannedCode: String = ""
     var scanComplete: Bool = false {
         didSet {
             processDataFromQRCode()
+            mcSession = self.sessionManager.mcSession
+            retrieveTransactionsFromConnectedDevices()
             movePersonalDetailsPage()
         }
     }
-    
+    func retrieveTransactionsFromConnectedDevices(){
+        sessionManager.sendSyncRequest()
+    }
     let databaseController = DatabaseController.instance
     
     override func viewDidLoad() {
