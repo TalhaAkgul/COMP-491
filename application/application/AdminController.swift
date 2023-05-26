@@ -92,13 +92,10 @@ class AdminController: UIViewController, URLSessionDelegate {
     }
     
     @IBAction func getProvisionsClicked(_ sender: Any) {
-        print(AdminController.flightNo)
         if let viewController = storyboard?.instantiateViewController(withIdentifier: "FlightNoEntry") {
             viewController.modalPresentationStyle = .fullScreen
             present(viewController, animated: true, completion: nil)
-        }
-        print(AdminController.flightNo)
-        
+        }        
     }
     
     @IBAction func closeTransactionsClicked(_ sender: Any) {

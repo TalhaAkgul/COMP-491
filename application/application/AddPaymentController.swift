@@ -197,7 +197,6 @@ class AddPaymentController: UIViewController {
         let url = documentsDirectory.appendingPathComponent("serverData.json")
         do {
             let data = try Data(contentsOf: url)
-            print(data)
             do {
                 let decoder = JSONDecoder()
                 let serverInfos = try decoder.decode([ServerData].self, from: data)
@@ -211,7 +210,6 @@ class AddPaymentController: UIViewController {
                     for row in filteredRows {
                         let transactionAmount = Double(row[databaseController.amount])
                         totalSpendings += transactionAmount
-                        print("Transaction Amount: \(transactionAmount)")
                     }
                 } catch {
                     print("Error selecting transactions: \(error)")

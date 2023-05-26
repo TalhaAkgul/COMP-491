@@ -73,7 +73,6 @@ class IDViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDel
                 guard let observations = request.results as? [VNRecognizedTextObservation] else {
                     return
                 }
-                //print(observations)
                 for observation in observations {
                     guard let topCandidate = observation.topCandidates(1).first else { continue }
                     let text = topCandidate.string
@@ -116,7 +115,6 @@ class IDViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDel
             DispatchQueue.main.async { [weak self] in
                 if self?.identityNumberList.count == 50 {
                 if let mostRepeatedIdentityNumber = self?.findMostRepeatedString() {
-                    print("Most Repeated Identity Number: \(mostRepeatedIdentityNumber)")
                     self?.captureSession.stopRunning()
                     let insertQuery = self?.databaseController.qrTable.insert((self?.databaseController.pId <- mostRepeatedIdentityNumber)!, (self?.databaseController.prId <- String(-1))!, (self?.databaseController.prCount <- String(-1))!)
                     do {
@@ -127,7 +125,6 @@ class IDViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDel
                     self?.movePage(controllerName: "PersonalDetailsController")
                     
                 } else {
-                    print("No identity number found")
                     self?.movePage(controllerName: "mainViewController")
                 }
                 self?.identityNumberList.removeAll()

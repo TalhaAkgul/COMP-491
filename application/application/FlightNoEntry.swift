@@ -38,7 +38,6 @@ class FlightNoEntry: UIViewController, UITextViewDelegate, URLSessionDelegate {
             viewController.modalPresentationStyle = .fullScreen
             present(viewController, animated: true, completion: nil)
         }
-        print(AdminController.flightNo)
         if(AdminController.flightNo != ""){
             request()
         }
@@ -60,25 +59,19 @@ class FlightNoEntry: UIViewController, UITextViewDelegate, URLSessionDelegate {
                 return
             }
             if let data = data{
-                print("data: ")
-                print(data)
-                
                 guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
                     fatalError("Couldn't access the document directory.")
                 }
                 let fileURL = documentsDirectory.appendingPathComponent("serverData.json")
-                print(fileURL)
                 if FileManager.default.fileExists(atPath: fileURL.path) {
                     do {
                         try FileManager.default.removeItem(at: fileURL)
-                        print("File 'serverData.json' deleted.")
                     } catch {
                         fatalError("Failed to delete the file: \(error)")
                     }
                 }
                 do {
                     try data.write(to: fileURL, options: .atomic)
-                    print("New file 'serverData.json' created.")
                     let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
                     let blurEffectView = UIVisualEffectView(effect: blurEffect)
                     blurEffectView.frame = self.view.bounds
@@ -95,14 +88,11 @@ class FlightNoEntry: UIViewController, UITextViewDelegate, URLSessionDelegate {
                 }
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print(json)
                 } catch {
                     print(error.localizedDescription)
                 }
             }
             if let response = response{
-                print("response: ")
-                print(response)
             }
         }
         task.resume()

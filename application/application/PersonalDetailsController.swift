@@ -117,29 +117,24 @@ class PersonalDetailsController: UIViewController {
         }
         
         let fileURL = documentsDirectory.appendingPathComponent("serverData.json")
-        print(fileURL)
         do {
             let rows = try databaseController.database3.prepare(databaseController.qrTable)
                 for row in rows {
                     let pIdValue = row[databaseController.pId]
                     let prIdValue = row[databaseController.prId]
                     let prCountValue = row[databaseController.prCount]
-                    
-                    print("pId: \(pIdValue), prId: \(prIdValue), prCount: \(prCountValue)")
                 }
             } catch {
                 print("Error printing rows: \(error)")
             }
         do {
             let data = try Data(contentsOf: fileURL)
-            print(data)
             do {
                 let decoder = JSONDecoder()
                 let serverInfos = try decoder.decode([ServerData].self, from: data)
                 var currentId = ""
                 if let qrRow = try databaseController.database3.pluck(databaseController.qrTable) {
                     currentId  = qrRow[databaseController.pId]
-                    print(currentId)
                 }
                 var passengerFound = false
                 for serverInfo in serverInfos {
@@ -158,7 +153,6 @@ class PersonalDetailsController: UIViewController {
                         } catch {
                             print("Error selecting transactions: \(error)")
                         }
-                        print(totalSpendings)
                         let remainingAmount = provisionAmount - totalSpendings
                         nameLabel.text = passengerName + " " + passengerSurname
                         provisionLabel.text = String(remainingAmount.rounded(toPlaces: 2)) + "₺"

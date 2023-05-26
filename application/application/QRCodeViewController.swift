@@ -83,7 +83,6 @@ class QRCodeViewController: UIViewController {
     }
     
     func processDataFromQRCode() {
-        print("reading qr")
         var passID = ""
         var orderDict : [[String: String]]
         let passengerInfoAsJsonData = self.scannedCode.data(using: .utf8)!
@@ -96,9 +95,7 @@ class QRCodeViewController: UIViewController {
             let end = passIDWithZeros.index(passIDWithZeros.endIndex, offsetBy: (-1))
             let range = start...end
             passID = String(passIDWithZeros[range])
-            print(passID)
             orderDict = passengerInfo.orders
-            print(orderDict)
             
             if orderDict.isEmpty {
                 let insertQuery = databaseController.qrTable.insert(databaseController.pId <- passID, databaseController.prId <- String(-1), databaseController.prCount <- String(-1))

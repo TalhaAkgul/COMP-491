@@ -144,10 +144,8 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
         } catch {
             print("Error getting transaction count: \(error)")
         }
-        print("recevied")
         let dataText = String(data: data, encoding: .utf8)!
         if dataText == requestString {
-            print("request")
             let query = transactionTable.select(transactionId, amount, passengerId)
             let transactions = try! database2.prepare(query).map { row in
                 return TransactionJSONData(
@@ -161,7 +159,6 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
             let transactionData = try! encoder.encode(transactions)
             do {
                 try mcSession.send(transactionData, toPeers: [peerID], with: .reliable)
-                print("request answered", peerID)
             } catch {
                 print(error)
             }
@@ -184,7 +181,6 @@ class SessionManager: NSObject, MCSessionDelegate, MCBrowserViewControllerDelega
                                     try self.database2.run(insertQuery)
                                 }
                             }
-                            print("All transactions inserted successfully into the Transaction table.")
                         }
                     } catch {
                         print("Error inserting transactions into Transaction table: \(error)")

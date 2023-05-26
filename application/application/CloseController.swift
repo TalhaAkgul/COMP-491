@@ -139,7 +139,6 @@ class CloseController: UIViewController, URLSessionDelegate {
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: [])
                 if let jsonString = String(data: jsonData, encoding: .utf8) {
-                    print(jsonString)
                     postString = jsonString
                 }
             } catch {
@@ -161,26 +160,19 @@ class CloseController: UIViewController, URLSessionDelegate {
                 return
             }
             if let data = data{
-                print("data: ")
-                print(data)
-                
                 guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
                     fatalError("Couldn't access the document directory.")
                 }
                 let fileURL = documentsDirectory.appendingPathComponent("serverData.json")
-                print(fileURL)
-                // Check if the file already exists
                 if FileManager.default.fileExists(atPath: fileURL.path) {
                     do {
                         try FileManager.default.removeItem(at: fileURL)
-                        print("File 'serverData.json' deleted.")
                     } catch {
                         fatalError("Failed to delete the file: \(error)")
                     }
                 }
                 do {
                     try data.write(to: fileURL, options: .atomic)
-                    print("New file 'serverData.json' created.")
                     closeCompleted = true
                     let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
                     let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -199,14 +191,11 @@ class CloseController: UIViewController, URLSessionDelegate {
                 }
                 do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print(json)
                 } catch {
                     print(error.localizedDescription)
                 }
             }
             if let response = response{
-                print("response: ")
-                print(response)
             }
         }
         task.resume()
