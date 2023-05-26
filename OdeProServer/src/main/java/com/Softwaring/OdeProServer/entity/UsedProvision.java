@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 @ToString
 public class UsedProvision {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "UID", nullable = false)
     private Long UID;
 

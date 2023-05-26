@@ -145,18 +145,31 @@ public class PassengerService {
 
         for (Map.Entry<String, Double> entry : passengerSpending.entrySet()) {
             String PID = entry.getKey();
+            double spending = entry.getValue();
             ActiveProvision activeProvision = activeProvisionRepository
                     .findByPassenger_PID(PID)
                     .orElseThrow(() -> new NotFoundException(ActiveProvision.class, "PID", PID));
-            activeProvision.setAmount(activeProvision.getAmount() - entry.getValue());
+            bankService.closeProvision(activeProvision.getUniqueCardId(), activeProvision.getAmount() - spending);
+            activeProvision.setAmount(entry.getValue());
             UsedProvision usedProvision = modelMapper.map(activeProvision, UsedProvision.class);
-            usedProvision.setUID(activeProvision.getAID());
-            bankService.closeProvision(activeProvision.getUniqueCardId(), activeProvision.getAmount());
+            //usedProvision.setUID(activeProvision.getAID());
             usedProvisionRepository.save(usedProvision);
             activeProvisionRepository.deleteActiveProvisionByPassenger_PID(PID);
         }
-        log.info("Active provisions for the flight are saved to used provision table");
-        log.info("Active provisions for the flight are deleted");
+        log.info(String.format("Active provisions with transactions for the Flight No: %s are saved to used provision table", flightNo));
+        log.info(String.format("Active provisions with transactions for the Flight No: %s are deleted", flightNo));
+
+        List<ActiveProvision> activeProvisionsWithoutTransaction = activeProvisionRepository
+                .findByFlightNo(flightNo)
+                .orElseThrow(() -> new NotFoundException(ActiveProvision.class, "Flight No", flightNo));
+        for(ActiveProvision activeProvision: activeProvisionsWithoutTransaction){
+            bankService.closeProvision(activeProvision.getUniqueCardId(), activeProvision.getAmount());
+            activeProvision.setAmount(0);
+            UsedProvision usedProvision = modelMapper.map(activeProvision, UsedProvision.class);
+            //usedProvision.setUID(activeProvision.getAID());
+            usedProvisionRepository.save(usedProvision);
+            activeProvisionRepository.deleteActiveProvisionByPassenger_PID(activeProvision.getPassenger().getPID());
+        }
     }
 
     @Transactional
