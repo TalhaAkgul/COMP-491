@@ -395,6 +395,9 @@
                                     </backgroundConfiguration>
                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <segue destination="BB0-cU-46x" kind="presentation" modalPresentationStyle="fullScreen" id="Loa-Ci-wbE"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VkY-oP-N0A">
                                 <rect key="frame" x="106" y="612" width="203" height="54"/>
@@ -429,7 +432,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
-                        <outlet property="identifyIdButton" destination="0EP-xY-aOG" id="UEC-9v-Hdd"/>
+                        <outlet property="identifyIdButton" destination="0EP-xY-aOG" id="74e-i4-rUc"/>
                         <outlet property="instructionLabel" destination="AXx-KU-Yp8" id="VAR-dL-eyC"/>
                         <outlet property="qrCodeButton" destination="VkY-oP-N0A" id="LSX-Nm-Knx"/>
                         <outlet property="syncButton" destination="6ka-Hd-0T5" id="Y5W-T7-7nX"/>
@@ -4207,7 +4210,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Xve-4i-V6Y"/>
         <segue reference="ijJ-JW-0EX"/>
         <segue reference="08X-ih-pdO"/>
         <segue reference="CR0-aG-bRY"/>

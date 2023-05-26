@@ -18,12 +18,8 @@ class QRCodeViewController: UIViewController {
     var scannedCode: String = ""
     var scanComplete: Bool = false {
         didSet {
-            
             processDataFromQRCode()
-            
-            
             movePersonalDetailsPage()
-            
         }
     }
     
@@ -49,16 +45,14 @@ class QRCodeViewController: UIViewController {
                 }
             )
         }
-        let scanView = UIHostingController(rootView: scannerSheet)
-        scanView.view.frame = self.view.bounds
-        self.view.addSubview(scanView.view)
-        self.addChild(scanView)
-        
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
+        let scanView = UIHostingController(rootView: scannerSheet)
        
-        let navigationItem = UINavigationItem(title: "Scan QR Code")
+        //scanView.view.frame = self.view.bounds
         
+        
+        let navigationItem = UINavigationItem(title: "Scan QR Code")
         let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
                                    style: .plain,
                                    target: self,
@@ -66,7 +60,7 @@ class QRCodeViewController: UIViewController {
         navigationItem.leftBarButtonItem = back
 
         let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
-        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.barTintColor = self.view.backgroundColor
         navigationBar.setItems([navigationItem], animated: false)
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
@@ -74,9 +68,11 @@ class QRCodeViewController: UIViewController {
         navigationBar.tintColor = .blue
         navigationBar.backgroundColor = .clear
         navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        scanView.view.frame = CGRect(x: 0, y: screenHeight/25 + navigationBar.frame.height, width: view.frame.width, height: view.frame.height - (screenHeight/25 + navigationBar.frame.height))
 
         view.addSubview(navigationBar)
-        
+        self.view.addSubview(scanView.view)
+        self.addChild(scanView)
     }
     
     @objc func goBack() {

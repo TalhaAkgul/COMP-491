@@ -19,7 +19,23 @@ class IDViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                self.view.backgroundColor = .green
+        let screenSize: CGRect = UIScreen.main.bounds
+        let screenHeight = screenSize.height
+        let screenWidth  = screenSize.width
+        let navigationItem = UINavigationItem(title: "Scan ID Card")
+        
+        let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
+                                   style: .plain,
+                                   target: self,
+                                   action: #selector(goBack))
+        navigationItem.leftBarButtonItem = back
+
+        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
+        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.setItems([navigationItem], animated: false)
+
+        view.addSubview(navigationBar)
+         
                 captureSession = AVCaptureSession()
                 
                 guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
@@ -40,11 +56,17 @@ class IDViewController: UIViewController,AVCaptureVideoDataOutputSampleBufferDel
                 
                 videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
                 videoPreviewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-                videoPreviewLayer.frame = view.layer.bounds
+        videoPreviewLayer.frame = CGRect(x: 0, y: navigationBar.frame.height + screenHeight/25, width: view.layer.bounds.width, height: view.layer.bounds.height - navigationBar.frame.height)
                 view.layer.addSublayer(videoPreviewLayer)
         
 
           
+    }
+    @objc func goBack() {
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "mainViewController") {
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true, completion: nil)
+        }
     }
     func setupVision() {
             textRecognitionRequest = VNRecognizeTextRequest(completionHandler: { [weak self] request, error in
