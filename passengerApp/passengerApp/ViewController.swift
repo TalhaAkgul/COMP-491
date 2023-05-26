@@ -27,21 +27,21 @@ class ViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var generateQRWithOrderButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Local database for the products
         initializeDatabase()
-        
-        // Do any additional setup after loading the view.
-        self.view.addBackground()
-        
+        let backgroundImage = UIImageView(image: UIImage(named: "images/entrance page images/plane.jpeg"))
+                backgroundImage.contentMode = .scaleAspectFill
+                backgroundImage.frame = view.bounds
+                backgroundImage.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                backgroundImage.center = view.center
+                view.addSubview(backgroundImage)
+                view.sendSubviewToBack(backgroundImage)
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
         
-        //Welcome Label
         welcomeLabel.center.x = self.view.center.x
         welcomeLabel.center.y = self.view.center.y + screenHeight/20
         welcomeLabel.textAlignment = .center
         
-        //Identification Label
         
         instructionLabel.center.x = self.view.center.x
         instructionLabel.center.y = welcomeLabel.center.y + welcomeLabel.bounds.size.height
@@ -54,9 +54,12 @@ class ViewController: UIViewController, UITextViewDelegate {
         
         generateQRWithoutOrderButton.center.x = self.view.center.x
         generateQRWithoutOrderButton.center.y = idTextField.center.y + 1.25*generateQRWithoutOrderButton.bounds.size.height
+        generateQRWithoutOrderButton.isEnabled = false
         
         generateQRWithOrderButton.center.x = self.view.center.x
         generateQRWithOrderButton.center.y = generateQRWithoutOrderButton.center.y + 1.25*generateQRWithOrderButton.bounds.size.height
+        generateQRWithOrderButton.isEnabled = false
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tapGesture)
         idTextField.delegate = self
@@ -64,26 +67,31 @@ class ViewController: UIViewController, UITextViewDelegate {
         idTextField.textAlignment = .center
     }
     @objc func handleTap() {
-        view.endEditing(true) // Dismiss the keyboard
+        view.endEditing(true)
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
+        generateQRWithoutOrderButton.isEnabled = false
+        generateQRWithOrderButton.isEnabled = false
         if textView.textColor == UIColor.lightGray {
                 textView.text = nil
                 textView.textColor = UIColor.black
         }
         UIView.animate(withDuration: 0.3) {
-            self.view.frame.origin.y -= 250 // Adjust the value to match the height of the keyboard
+            self.view.frame.origin.y -= 250
         }
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
+        let text = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let numberCharacterSet = CharacterSet.decimalDigits
+        let textOnlyContainsNumbers = text.rangeOfCharacter(from: numberCharacterSet.inverted) == nil && text.count == 11
+        generateQRWithoutOrderButton.isEnabled = textOnlyContainsNumbers
+        generateQRWithOrderButton.isEnabled = textOnlyContainsNumbers
         UIView.animate(withDuration: 0.3) {
             self.view.frame.origin.y = 0
         }
     }
     func initializeDatabase(){
-        
-        
         do {
             let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             
