@@ -75,6 +75,7 @@ class OrderController: UIViewController {
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
         }()
+        scrollViewContainer.backgroundColor = entertainmentMenuView.backgroundColor
         scrollView.frame.size.width = screenWidth * 0.9
         updateBasket(container : scrollViewContainer)
         view.addSubview(scrollView)
@@ -108,28 +109,40 @@ class OrderController: UIViewController {
     }
     
     func updateBasket(container : UIStackView){
-        
         do {
             let products = try self.database.prepare(self.productsTable.filter(self.count != 0))
             var labelPosY = 20
             var totalPrice = 0.0
             for product in products {
+                let productStackView = UIStackView()
+                productStackView.axis = .horizontal
+                productStackView.alignment = .fill
+                productStackView.distribution = .fill
+
                 let productLabel = UILabel()
-                productLabel.textColor = UIColor.black
                 productLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
                 let productName = product[self.productName]
                 let count = product[self.count]
                 let productText = String(count) + "   x   " + productName
+                productLabel.text = productText
+
+                let priceLabel = UILabel()
+                priceLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
+                priceLabel.textAlignment = .right
                 let price = product[self.price]
                 let totalPriceForProd = price * Double(count)
                 let priceText = String(totalPriceForProd) + " ₺ "
-                let text = productText + ": " + priceText
-                productLabel.text = text
-                container.addArrangedSubview(productLabel)
-                totalPrice = totalPrice + totalPriceForProd
-                labelPosY = labelPosY + 30
+                priceLabel.text = priceText
+
+                productStackView.addArrangedSubview(productLabel)
+                productStackView.addArrangedSubview(priceLabel)
+                container.addArrangedSubview(productStackView)
+
+                totalPrice += totalPriceForProd
+                labelPosY += 30
             }
-            totalLabel.text = "Total Amount: " + String(totalPrice) + " ₺ "
+            let roundedTotalPrice = totalPrice.rounded(toPlaces: 2)
+            totalLabel.text = "Total Amount: " + String(roundedTotalPrice) + " ₺ "
             totalLabel.textAlignment = .right
         } catch {
             print(error)
@@ -159,5 +172,11 @@ class OrderController: UIViewController {
         self.view.addSubview(popOverVC.view)
         popOverVC.didMove(toParent: self)
     }
+   
 }
-
+extension FloatingPoint {
+    func rounded(toPlaces places: Int) -> Self {
+        let divisor = Self(Int(pow(10.0, Double(places))))
+        return (self * divisor).rounded() / divisor
+    }
+}

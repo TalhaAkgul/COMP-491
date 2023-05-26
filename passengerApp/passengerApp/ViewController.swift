@@ -37,7 +37,9 @@ class ViewController: UIViewController, UITextViewDelegate {
                 view.sendSubviewToBack(backgroundImage)
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
-        
+        idTextField.isScrollEnabled = false
+        idTextField.textContainer.maximumNumberOfLines = 1
+        idTextField.textContainer.lineBreakMode = .byTruncatingTail
         welcomeLabel.center.x = self.view.center.x
         welcomeLabel.center.y = self.view.center.y + screenHeight/20
         welcomeLabel.textAlignment = .center
@@ -69,6 +71,16 @@ class ViewController: UIViewController, UITextViewDelegate {
     @objc func handleTap() {
         view.endEditing(true)
     }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+            // Check if the replacement text contains a new line or line break character
+            if text.rangeOfCharacter(from: CharacterSet.newlines) != nil {
+                // Prevent the new line or line break from being entered
+                return false
+            }
+            
+            // Allow other text changes
+            return true
+        }
     func textViewDidBeginEditing(_ textView: UITextView) {
         generateQRWithoutOrderButton.isEnabled = false
         generateQRWithOrderButton.isEnabled = false
