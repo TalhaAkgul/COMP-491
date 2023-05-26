@@ -139,7 +139,7 @@ class EntertainmentMenuController: UIViewController {
         navigationItem.leftBarButtonItem = back
 
         let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
-        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.barTintColor = self.view.backgroundColor
         navigationBar.setItems([navigationItem], animated: false)
 
         view.addSubview(navigationBar)

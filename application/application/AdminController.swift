@@ -121,7 +121,7 @@ class AdminController: UIViewController, URLSessionDelegate {
     
     
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-            if challenge.protectionSpace.host == "172.20.62.133" {
+            if challenge.protectionSpace.host == "172.16.126.233" {
                 completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
             } else {
                 completionHandler(.performDefaultHandling, nil)

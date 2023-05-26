@@ -6,7 +6,7 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
-			<key>172:20:62:133</key>
+			<key>172:16:126:233</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
 				<true/>

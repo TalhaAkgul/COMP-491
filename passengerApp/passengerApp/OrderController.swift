@@ -46,7 +46,7 @@ class OrderController: UIViewController {
         navigationItem.leftBarButtonItem = back
 
         let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
-        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.barTintColor = self.view.backgroundColor
         navigationBar.setItems([navigationItem], animated: false)
 
         view.addSubview(navigationBar)
@@ -56,16 +56,24 @@ class OrderController: UIViewController {
         menuImage7.image = UIImage(named: "images/add payment page images/menu7.jpeg")
         foodMenuView.frame.size.width = screenWidth * 0.9
         foodMenuView.center.y = navigationBar.frame.maxY + 1.25 * foodMenuView.bounds.size.height/2
+        foodMenuView.layer.cornerRadius = 8.0
+        foodMenuView.clipsToBounds = true
         
         entertainmentMenuView.frame.size.width = screenWidth * 0.9
         entertainmentMenuView.center.y = foodMenuView.frame.maxY + 1.25 * entertainmentMenuView.bounds.size.height/2
+        entertainmentMenuView.layer.cornerRadius = 8.0
+        entertainmentMenuView.clipsToBounds = true
         
         afterFlightServicesView.frame.size.width = screenWidth * 0.9
         afterFlightServicesView.center.y = entertainmentMenuView.frame.maxY + 1.25 * afterFlightServicesView.bounds.size.height/2
+        afterFlightServicesView.layer.cornerRadius = 8.0
+        afterFlightServicesView.clipsToBounds = true
         
         cancelPaymentButton.center.y = screenHeight * 0.95
         proceedPaymentButton.center.y = cancelPaymentButton.center.y - 1.5 * proceedPaymentButton.bounds.size.height
         totalView.center.y = proceedPaymentButton.center.y - 1.1 * totalView.frame.size.height
+        totalView.layer.cornerRadius = 8.0
+        totalView.clipsToBounds = true
         
         let scrollViewContainer: UIStackView = {
             let view = UIStackView()
@@ -75,7 +83,10 @@ class OrderController: UIViewController {
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
         }()
+        scrollViewContainer.backgroundColor = entertainmentMenuView.backgroundColor
         scrollView.frame.size.width = screenWidth * 0.9
+        scrollView.layer.cornerRadius = 8.0
+        scrollView.clipsToBounds = true
         updateBasket(container : scrollViewContainer)
         view.addSubview(scrollView)
         scrollView.addSubview(scrollViewContainer)
@@ -108,28 +119,40 @@ class OrderController: UIViewController {
     }
     
     func updateBasket(container : UIStackView){
-        
         do {
             let products = try self.database.prepare(self.productsTable.filter(self.count != 0))
             var labelPosY = 20
             var totalPrice = 0.0
             for product in products {
+                let productStackView = UIStackView()
+                productStackView.axis = .horizontal
+                productStackView.alignment = .fill
+                productStackView.distribution = .fill
+
                 let productLabel = UILabel()
-                productLabel.textColor = UIColor.black
                 productLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
                 let productName = product[self.productName]
                 let count = product[self.count]
                 let productText = String(count) + "   x   " + productName
+                productLabel.text = productText
+
+                let priceLabel = UILabel()
+                priceLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
+                priceLabel.textAlignment = .right
                 let price = product[self.price]
                 let totalPriceForProd = price * Double(count)
                 let priceText = String(totalPriceForProd) + " ₺ "
-                let text = productText + ": " + priceText
-                productLabel.text = text
-                container.addArrangedSubview(productLabel)
-                totalPrice = totalPrice + totalPriceForProd
-                labelPosY = labelPosY + 30
+                priceLabel.text = priceText
+
+                productStackView.addArrangedSubview(productLabel)
+                productStackView.addArrangedSubview(priceLabel)
+                container.addArrangedSubview(productStackView)
+
+                totalPrice += totalPriceForProd
+                labelPosY += 30
             }
-            totalLabel.text = "Total Amount: " + String(totalPrice) + " ₺ "
+            let roundedTotalPrice = totalPrice.rounded(toPlaces: 2)
+            totalLabel.text = "Total Amount: " + String(roundedTotalPrice) + " ₺ "
             totalLabel.textAlignment = .right
         } catch {
             print(error)
@@ -159,5 +182,11 @@ class OrderController: UIViewController {
         self.view.addSubview(popOverVC.view)
         popOverVC.didMove(toParent: self)
     }
+   
 }
-
+extension FloatingPoint {
+    func rounded(toPlaces places: Int) -> Self {
+        let divisor = Self(Int(pow(10.0, Double(places))))
+        return (self * divisor).rounded() / divisor
+    }
+}
