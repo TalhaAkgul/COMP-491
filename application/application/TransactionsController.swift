@@ -39,10 +39,10 @@ class TransactionsController: UIViewController {
         scrollView.center.x = self.view.center.x
         scrollView.center.y = navigationBar.bounds.maxY + screenHeight/30 + scrollView.frame.height/2
         let stackView = UIStackView()
-            stackView.axis = .vertical
-            stackView.spacing = 8
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.addSubview(stackView)
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
                 stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),

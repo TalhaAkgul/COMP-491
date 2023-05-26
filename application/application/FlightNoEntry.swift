@@ -50,7 +50,7 @@ class FlightNoEntry: UIViewController, UITextViewDelegate, URLSessionDelegate {
     }
     
     func request(){
-        var request = URLRequest(url: URL(string: "https://172.20.62.133:8080/getProvisionsByFlightNo?flightNo=" + AdminController.flightNo)!)
+        var request = URLRequest(url: URL(string: "https://172.16.126.233:8080/getProvisionsByFlightNo?flightNo=" + AdminController.flightNo)!)
         request.httpMethod = "GET"
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
         let task = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
@@ -108,7 +108,7 @@ class FlightNoEntry: UIViewController, UITextViewDelegate, URLSessionDelegate {
         task.resume()
     }
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-            if challenge.protectionSpace.host == "172.20.62.133" {
+            if challenge.protectionSpace.host == "172.16.126.233" {
                 completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
             } else {
                 completionHandler(.performDefaultHandling, nil)

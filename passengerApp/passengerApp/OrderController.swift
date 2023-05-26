@@ -56,16 +56,24 @@ class OrderController: UIViewController {
         menuImage7.image = UIImage(named: "images/add payment page images/menu7.jpeg")
         foodMenuView.frame.size.width = screenWidth * 0.9
         foodMenuView.center.y = navigationBar.frame.maxY + 1.25 * foodMenuView.bounds.size.height/2
+        foodMenuView.layer.cornerRadius = 8.0
+        foodMenuView.clipsToBounds = true
         
         entertainmentMenuView.frame.size.width = screenWidth * 0.9
         entertainmentMenuView.center.y = foodMenuView.frame.maxY + 1.25 * entertainmentMenuView.bounds.size.height/2
+        entertainmentMenuView.layer.cornerRadius = 8.0
+        entertainmentMenuView.clipsToBounds = true
         
         afterFlightServicesView.frame.size.width = screenWidth * 0.9
         afterFlightServicesView.center.y = entertainmentMenuView.frame.maxY + 1.25 * afterFlightServicesView.bounds.size.height/2
+        afterFlightServicesView.layer.cornerRadius = 8.0
+        afterFlightServicesView.clipsToBounds = true
         
         cancelPaymentButton.center.y = screenHeight * 0.95
         proceedPaymentButton.center.y = cancelPaymentButton.center.y - 1.5 * proceedPaymentButton.bounds.size.height
         totalView.center.y = proceedPaymentButton.center.y - 1.1 * totalView.frame.size.height
+        totalView.layer.cornerRadius = 8.0
+        totalView.clipsToBounds = true
         
         let scrollViewContainer: UIStackView = {
             let view = UIStackView()
@@ -77,6 +85,8 @@ class OrderController: UIViewController {
         }()
         scrollViewContainer.backgroundColor = entertainmentMenuView.backgroundColor
         scrollView.frame.size.width = screenWidth * 0.9
+        scrollView.layer.cornerRadius = 8.0
+        scrollView.clipsToBounds = true
         updateBasket(container : scrollViewContainer)
         view.addSubview(scrollView)
         scrollView.addSubview(scrollViewContainer)
