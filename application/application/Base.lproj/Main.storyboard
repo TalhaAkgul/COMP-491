@@ -395,9 +395,6 @@
                                     </backgroundConfiguration>
                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
                                 </buttonConfiguration>
-                                <connections>
-                                    <segue destination="BB0-cU-46x" kind="presentation" modalPresentationStyle="fullScreen" id="1nq-Sw-4k1"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VkY-oP-N0A">
                                 <rect key="frame" x="106" y="612" width="203" height="54"/>
@@ -4210,10 +4207,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dft-7U-0pw"/>
+        <segue reference="Xve-4i-V6Y"/>
+        <segue reference="ijJ-JW-0EX"/>
         <segue reference="08X-ih-pdO"/>
         <segue reference="CR0-aG-bRY"/>
-        <segue reference="cUt-so-Lqn"/>
+        <segue reference="H4h-9P-ddt"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>

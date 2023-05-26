@@ -30,7 +30,6 @@ class OrderController: UIViewController {
     @IBOutlet weak var proceedPaymentButton: UIButton!
     @IBOutlet weak var totalView: UIView!
     @IBOutlet weak var totalLabel: UILabel!
-    @IBOutlet weak var cancelPaymentButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDatabase()
@@ -69,8 +68,7 @@ class OrderController: UIViewController {
         afterFlightServicesView.layer.cornerRadius = 8.0
         afterFlightServicesView.clipsToBounds = true
         
-        cancelPaymentButton.center.y = screenHeight * 0.95
-        proceedPaymentButton.center.y = cancelPaymentButton.center.y - 1.5 * proceedPaymentButton.bounds.size.height
+        proceedPaymentButton.center.y = screenHeight * 0.95 - 1.5 * proceedPaymentButton.bounds.size.height
         totalView.center.y = proceedPaymentButton.center.y - 1.1 * totalView.frame.size.height
         totalView.layer.cornerRadius = 8.0
         totalView.clipsToBounds = true
