@@ -162,10 +162,10 @@ function ProfilePage() {
   const handleSubmit = async () => {
     const tempCardNumber = cardNumber.replaceAll(' ', '');
     const tempProvisionNumber = provisionAmount.replaceAll(',', '');
-    const tempName = name.toLowerCase().replaceAll("ı", "i").replaceAll("ğ", "g").replaceAll("ü", "u").replaceAll("ş", "s").replaceAll("ö", "o").replaceAll("ç", "c");
-    const tempSurname = surname.toLowerCase().replaceAll("ı", "i").replaceAll("ğ", "g").replaceAll("ü", "u").replaceAll("ş", "s").replaceAll("ö", "o").replaceAll("ç", "c");
-    const tempAddress = address.toLowerCase();
-    const tempCardHolderName = cardHolderName.toLowerCase().replaceAll("ı", "i").replaceAll("ğ", "g").replaceAll("ü", "u").replaceAll("ş", "s").replaceAll("ö", "o").replaceAll("ç", "c");
+    const tempName = name.toUpperCase().replaceAll("İ", "I").replaceAll("Ğ", "G").replaceAll("Ü", "U").replaceAll("Ş", "S").replaceAll("Ö", "O").replaceAll("Ç", "C");
+    const tempSurname = surname.toUpperCase().replaceAll("İ", "I").replaceAll("Ğ", "G").replaceAll("Ü", "U").replaceAll("Ş", "S").replaceAll("Ö", "O").replaceAll("Ç", "C");
+    const tempAddress = address.toUpperCase();
+    const tempCardHolderName = cardHolderName.toUpperCase().replaceAll("İ", "I").replaceAll("Ğ", "G").replaceAll("Ü", "U").replaceAll("Ş", "S").replaceAll("Ö", "O").replaceAll("Ç", "C");
     const tempFullFlightInfo = callSign + flightNo;
     const data = {
       passengerName: tempName,
@@ -230,7 +230,7 @@ function ProfilePage() {
                                     width: "50%",
                                   }}>
                           <Label className="credit-card-input-label" for="text">Name</Label>
-                          <Cleave
+                          <input
                             type="text"
                             id="name"
                             className="credit-card-text-input"
@@ -238,7 +238,7 @@ function ProfilePage() {
                             maxlength="30"
                             required="'required'"
                             onChange={(e) => {
-                              const pattern = /^[A-Za-zıöçşğü ]*$/; // regex to allow only letters
+                              const pattern = /^[A-Za-zıöçşğüİÖÇŞĞÜ ]*$/; // regex to allow only letters
                               if (pattern.test(e.target.value)) {
                                 setName(e.target.value);
                                 setErrorMessageName("");
@@ -262,7 +262,7 @@ function ProfilePage() {
                                     width: "50%",
                                   }}>
                           <Label className="credit-card-input-label" for="Surname">Surname</Label>
-                          <Cleave
+                          <input
                             type="text"
                             id="surname"
                             className="credit-card-text-input"
@@ -392,12 +392,21 @@ function ProfilePage() {
                                     width: "100%",
                                   }}>
                           <Label className="credit-card-input-label" for="inputAddress">Address</Label>
-                          <Cleave
+                          <input
                             type="text"
                             id="address"
                             maxlength="50"
                             className="credit-card-text-input"
-                            onChange={(e) => setAddress(e.target.value)}
+                            onChange={(e) => {
+                                const pattern = /^[A-Za-zıöçşğüİÖÇŞĞÜ ]*$/; // regex to allow only letters
+                                if (pattern.test(e.target.value)) {
+                                  setAddress(e.target.value);
+                                } else {
+                                  setErrorMessageSurname(
+                                    "Input must contain only letters"
+                                  );
+                                }
+                              }}
                             value={address}
                             required="'required'"
                             placeholder="Enter Your Address"
