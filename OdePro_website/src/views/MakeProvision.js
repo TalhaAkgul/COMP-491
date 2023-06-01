@@ -164,7 +164,7 @@ function ProfilePage() {
     const tempProvisionNumber = provisionAmount.replaceAll(',', '');
     const tempName = name.toUpperCase().replaceAll("İ", "I").replaceAll("Ğ", "G").replaceAll("Ü", "U").replaceAll("Ş", "S").replaceAll("Ö", "O").replaceAll("Ç", "C");
     const tempSurname = surname.toUpperCase().replaceAll("İ", "I").replaceAll("Ğ", "G").replaceAll("Ü", "U").replaceAll("Ş", "S").replaceAll("Ö", "O").replaceAll("Ç", "C");
-    const tempAddress = address.toUpperCase();
+    const tempAddress = address.toUpperCase().replaceAll("İ", "I").replaceAll("Ğ", "G").replaceAll("Ü", "U").replaceAll("Ş", "S").replaceAll("Ö", "O").replaceAll("Ç", "C");
     const tempCardHolderName = cardHolderName.toUpperCase().replaceAll("İ", "I").replaceAll("Ğ", "G").replaceAll("Ü", "U").replaceAll("Ş", "S").replaceAll("Ö", "O").replaceAll("Ç", "C");
     const tempFullFlightInfo = callSign + flightNo;
     const data = {
@@ -181,7 +181,7 @@ function ProfilePage() {
       cvc: cvv,
       amount: tempProvisionNumber,
     };
-    fetch('https://172.20.56.202:8080/payment', {
+    fetch('https://172.20.60.67:8080/payment', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -270,7 +270,7 @@ function ProfilePage() {
                             value={surname}
                             required="'required'"
                             onChange={(e) => {
-                              const pattern = /^[A-Za-zıöçşğü ]*$/; // regex to allow only letters
+                              const pattern = /^[A-Za-zıöçşğüİÖÇŞĞÜ ]*$/; // regex to allow only letters
                               if (pattern.test(e.target.value)) {
                                 setSurname(e.target.value);
                                 setErrorMessageSurname("");
@@ -398,12 +398,13 @@ function ProfilePage() {
                             maxlength="50"
                             className="credit-card-text-input"
                             onChange={(e) => {
-                                const pattern = /^[A-Za-zıöçşğüİÖÇŞĞÜ ]*$/; // regex to allow only letters
+                                const pattern = /^[A-Za-zıöçşğüİÖÇŞĞÜ0-9.,:\- ]*$/; // regex to allow only letters
                                 if (pattern.test(e.target.value)) {
                                   setAddress(e.target.value);
+                                  setErrorMessageAddress("");
                                 } else {
-                                  setErrorMessageSurname(
-                                    "Input must contain only letters"
+                                  setErrorMessageAddress(
+                                    "Input must contain only letters and , . - or :"
                                   );
                                 }
                               }}
@@ -465,7 +466,7 @@ function ProfilePage() {
                           <Cleave
                             type="text"
                             title="Numbers Only"
-                            maxlength="8"
+                            maxlength="4"
                             className="credit-card-text-input"
                             value={flightNo}
                             id="flightnum"
@@ -663,7 +664,7 @@ function ProfilePage() {
                                 className="credit-card-text-input"
                                 required="'required'"
                                 onChange={(e) => {
-                                  const pattern = /^[0-9,.]*$/; // regex to allow only letters
+                                  const pattern = /^[0-9,.]*$/; // regex to allow only numbers
                                   if (pattern.test(e.target.value)) {
                                     setProvisionAmount(e.target.value);
                                   }

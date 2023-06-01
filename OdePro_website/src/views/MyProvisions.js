@@ -53,12 +53,12 @@ function MyProvisionsPage() {
     setLiveDemo(true);
     if (del == true){
       {
-        fetch("https://172.20.56.202:8080/deleteActiveProvision?id=" + search)
+        fetch("https://172.20.60.67:8080/deleteActiveProvision?id=" + search)
         .then((response) => response.json());
       }
       setUsersActive([]);
       {
-        fetch("https://172.20.56.202:8080/getActiveProvision?id=" + search)
+        fetch("https://172.20.60.67:8080/getActiveProvision?id=" + search)
           .then((response) => response.json())
           .then((data) => setUsersActive(data));
       }
@@ -73,12 +73,12 @@ function MyProvisionsPage() {
       setUsersActive([]);
       setUsersUsed([]);
       {
-        fetch("https://172.20.56.202:8080/getActiveProvision?id=" + id)
+        fetch("https://172.20.60.67:8080/getActiveProvision?id=" + id)
           .then((response) => response.json())
           .then((data) => setUsersActive(data));
       }
       {
-        fetch("https://172.20.56.202:8080/getUsedProvisions?id=" + id)
+        fetch("https://172.20.60.67:8080/getUsedProvisions?id=" + id)
           .then((response) => response.json())
           .then((data) => setUsersUsed(data));
       }
