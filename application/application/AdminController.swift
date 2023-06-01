@@ -110,10 +110,6 @@ class AdminController: UIViewController, URLSessionDelegate {
         
     }
     
-    @IBAction func resetTransactionsClicked(_ sender: Any) {
-        
-        databaseController.resetTransactions()
-    }
     
     
     

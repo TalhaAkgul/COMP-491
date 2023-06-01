@@ -331,21 +331,6 @@
                                     <segue destination="IBQ-Oh-ze9" kind="presentation" modalPresentationStyle="fullScreen" id="Xue-4N-xIq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tt7-Wh-hMZ">
-                                <rect key="frame" x="106" y="430" width="203" height="56"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Reset Transactions" cornerStyle="capsule">
-                                    <backgroundConfiguration key="background">
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="strokeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </backgroundConfiguration>
-                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="resetTransactionsClicked:" destination="hdk-NX-aqd" eventType="touchUpInside" id="rH2-v1-4fX"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="u1n-S9-vWc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -354,7 +339,6 @@
                         <outlet property="closeTransactionsButton" destination="9bT-Og-cli" id="KGe-7w-VVD"/>
                         <outlet property="connectCabinCrewButton" destination="Lal-uT-e9L" id="lyV-k8-5kG"/>
                         <outlet property="getProvisionsButton" destination="Jdq-TW-eEf" id="cAl-6G-MmC"/>
-                        <outlet property="resetTransactionsButton" destination="Tt7-Wh-hMZ" id="wh2-rC-NlS"/>
                         <outlet property="seeAllTransactionsButton" destination="Aye-2I-RJU" id="9OH-6E-Mkj"/>
                     </connections>
                 </viewController>

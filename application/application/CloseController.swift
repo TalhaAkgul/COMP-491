@@ -202,6 +202,8 @@ class CloseController: UIViewController, URLSessionDelegate {
         if(closeCompleted == false){
             
         }
+        databaseController.resetTransactions()
+
     }
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
             if challenge.protectionSpace.host == "172.16.126.233" {
