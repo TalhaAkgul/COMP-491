@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         databaseController.connectTransactionDatabase()
         databaseController.initializeQRDatabase()
         mcSession = self.sessionManager.mcSession
-        
+        //databaseController.resetTransactions()
         let backgroundImage = UIImageView(image: UIImage(named: "images/entrance page images/entrance.png"))
                 backgroundImage.contentMode = .scaleAspectFill
                 backgroundImage.frame = view.bounds

@@ -81,7 +81,6 @@ class SpendingDetailsController: UIViewController {
         } catch {
             print("Error occurred while accessing database: \(error)")
         }
-        
         do {
             let filteredTransactions = transactionTable.filter(passengerId == currentId)
             for transaction in try database2.prepare(filteredTransactions) {
@@ -91,13 +90,18 @@ class SpendingDetailsController: UIViewController {
                 lineStackView.axis = .horizontal
                 lineStackView.spacing = 8.0
                 
-                let spentLabel = UILabel(frame: CGRect(x: 20, y: 0, width: 200, height: 40))
-                let formattedId = transactionId.replacingOccurrences(of: " +0000", with: "")
-                let spentText = "   Date: " + formattedId + " Amount: " + String(transactionAmount) + "₺"
-                
-                spentLabel.text = spentText
+                let spentLabel = UILabel()
+                spentLabel.translatesAutoresizingMaskIntoConstraints = false
                 spentLabel.textColor = UIColor.black
                 spentLabel.font = UIFont.systemFont(ofSize: 12.0)
+                
+                let formattedId = transactionId.replacingOccurrences(of: " +0000", with: "")
+                let spentText = "   Date: " + formattedId + " Amount: " + String(transactionAmount) + "₺"
+                spentLabel.text = spentText
+                
+                let labelWidthConstraint = spentLabel.widthAnchor.constraint(equalToConstant: 400)
+                labelWidthConstraint.priority = .defaultHigh
+                labelWidthConstraint.isActive = true
                 
                 lineStackView.addArrangedSubview(spentLabel)
                 
@@ -105,17 +109,16 @@ class SpendingDetailsController: UIViewController {
                     let spacerView = UIView()
                     spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
                     
-                    
                     let button = UIButton(type: .system)
-                    button.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
                     button.setTitle("Refund", for: .normal)
                     button.setTitleColor(.white, for: .normal)
-                    button.backgroundColor = okButton.backgroundColor
+                    button.backgroundColor = UIColor.systemOrange
                     button.addTarget(self, action: #selector(refundButtonTapped(_:)), for: .touchUpInside)
                     button.layer.cornerRadius = 8.0
                     button.clipsToBounds = true
-                    lineStackView.addArrangedSubview(button)
+                    
                     lineStackView.addArrangedSubview(spacerView)
+                    lineStackView.addArrangedSubview(button)
                 }
                 
                 container.addArrangedSubview(lineStackView)
@@ -123,6 +126,7 @@ class SpendingDetailsController: UIViewController {
         } catch {
             print("Error: \(error)")
         }
+
     }
 
     @objc func refundButtonTapped(_ sender: UIButton) {

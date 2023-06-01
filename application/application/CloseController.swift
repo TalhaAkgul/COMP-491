@@ -148,7 +148,7 @@ class CloseController: UIViewController, URLSessionDelegate {
             print("Error: \(error)")
         }
         
-        var request = URLRequest(url: URL(string: "https://172.16.126.233:8080/close")!)
+        var request = URLRequest(url: URL(string: "https://172.20.60.67:8080/close")!)
         request.httpMethod = "POST"
         request.httpBody = postString.data(using: String.Encoding.utf8)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -206,7 +206,7 @@ class CloseController: UIViewController, URLSessionDelegate {
 
     }
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-            if challenge.protectionSpace.host == "172.16.126.233" {
+            if challenge.protectionSpace.host == "172.20.60.67" {
                 completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
             } else {
                 completionHandler(.performDefaultHandling, nil)
