@@ -28,7 +28,7 @@ class ViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeDatabase()
-        let backgroundImage = UIImageView(image: UIImage(named: "images/entrance page images/plane.jpeg"))
+        let backgroundImage = UIImageView(image: UIImage(named: "images/entrance page images/entrance.png"))
                 backgroundImage.contentMode = .scaleAspectFill
                 backgroundImage.frame = view.bounds
                 backgroundImage.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -65,7 +65,7 @@ class ViewController: UIViewController, UITextViewDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tapGesture)
         idTextField.delegate = self
-        idTextField.textColor = UIColor.lightGray
+        idTextField.textColor = UIColor.white
         idTextField.textAlignment = .center
     }
     @objc func handleTap() {
@@ -84,10 +84,13 @@ class ViewController: UIViewController, UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         generateQRWithoutOrderButton.isEnabled = false
         generateQRWithOrderButton.isEnabled = false
+        textView.text = nil
+        /*
         if textView.textColor == UIColor.lightGray {
-                textView.text = nil
-                textView.textColor = UIColor.black
+                textView.text = ""
+                textView.textColor = UIColor.white
         }
+        */
         UIView.animate(withDuration: 0.3) {
             self.view.frame.origin.y -= 250
         }
