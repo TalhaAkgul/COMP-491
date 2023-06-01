@@ -60,7 +60,6 @@ class DatabaseController: NSObject {
                         
         do {
             try self.database3.run(createTable)
-            print("Created Table")
         } catch {
             print(error)
         }
@@ -82,7 +81,6 @@ class DatabaseController: NSObject {
                         
         do {
             try self.database2.run(createTable)
-            print("Created Table")
         } catch {
             print(error)
         }
@@ -149,7 +147,6 @@ class DatabaseController: NSObject {
             
         do {
             try self.database.run(createTable)
-            print("Created Table")
         } catch {
             print(error)
         }

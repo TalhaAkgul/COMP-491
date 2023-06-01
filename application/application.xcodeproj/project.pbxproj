@@ -37,6 +37,8 @@
 		1CDAE32029D376E0000E140A /* applicationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE31F29D376E0000E140A /* applicationUITests.swift */; };
 		1CDAE32229D376E0000E140A /* applicationUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDAE32129D376E0000E140A /* applicationUITestsLaunchTests.swift */; };
 		1CE16CB32A0975F0002C6C55 /* SpendingDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE16CB22A0975F0002C6C55 /* SpendingDetailsController.swift */; };
+		1CE362C32A1FF976008BF6D7 /* CloseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE362C22A1FF976008BF6D7 /* CloseController.swift */; };
+		1CE362C52A201D58008BF6D7 /* CloseControllerPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE362C42A201D58008BF6D7 /* CloseControllerPopup.swift */; };
 		1CED77972A10068D009749C6 /* TransactionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CED77962A10068D009749C6 /* TransactionsController.swift */; };
 		7782C50029F6D78000C1D325 /* ServerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7782C4FF29F6D78000C1D325 /* ServerData.swift */; };
 /* End PBXBuildFile section */
@@ -154,6 +156,8 @@
 		1CDAE31F29D376E0000E140A /* applicationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applicationUITests.swift; sourceTree = "<group>"; };
 		1CDAE32129D376E0000E140A /* applicationUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applicationUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1CE16CB22A0975F0002C6C55 /* SpendingDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpendingDetailsController.swift; sourceTree = "<group>"; };
+		1CE362C22A1FF976008BF6D7 /* CloseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseController.swift; sourceTree = "<group>"; };
+		1CE362C42A201D58008BF6D7 /* CloseControllerPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseControllerPopup.swift; sourceTree = "<group>"; };
 		1CED77962A10068D009749C6 /* TransactionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsController.swift; sourceTree = "<group>"; };
 		7782C4FF29F6D78000C1D325 /* ServerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -258,6 +262,8 @@
 				1C6790012A1A6D5300B18010 /* DatabaseController.swift */,
 				1C9D06B32A1C148700BAEDE6 /* CompletedPopUp.swift */,
 				1C9D06B52A1C19D100BAEDE6 /* FlightNoEntry.swift */,
+				1CE362C22A1FF976008BF6D7 /* CloseController.swift */,
+				1CE362C42A201D58008BF6D7 /* CloseControllerPopup.swift */,
 			);
 			path = application;
 			sourceTree = "<group>";
@@ -486,6 +492,7 @@
 				1C2FEF292A0EC5800065EB7A /* SessionManager.swift in Sources */,
 				1C9BF11B29DB342300B69C37 /* FoodDrinkMenuController.swift in Sources */,
 				1C6BD84A29E1F8DE00E243DB /* PersonalDetailsController.swift in Sources */,
+				1CE362C32A1FF976008BF6D7 /* CloseController.swift in Sources */,
 				1CDAE2FF29D376DE000E140A /* AppDelegate.swift in Sources */,
 				1CDAE30129D376DE000E140A /* SceneDelegate.swift in Sources */,
 				1C2FEF1F2A0E4C700065EB7A /* TransactionJSONData.swift in Sources */,
@@ -498,6 +505,7 @@
 				1C9D06B62A1C19D100BAEDE6 /* FlightNoEntry.swift in Sources */,
 				1CE16CB32A0975F0002C6C55 /* SpendingDetailsController.swift in Sources */,
 				1C9BF11F29DB344800B69C37 /* AfterFlightServiceController.swift in Sources */,
+				1CE362C52A201D58008BF6D7 /* CloseControllerPopup.swift in Sources */,
 				1C9BF11729DB2F3900B69C37 /* AddPaymentController.swift in Sources */,
 				1C7D052529E42C66003B1FF6 /* PaymentSuccessfulController.swift in Sources */,
 				1CED77972A10068D009749C6 /* TransactionsController.swift in Sources */,
@@ -608,7 +616,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -663,7 +671,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -691,6 +699,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -722,6 +731,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

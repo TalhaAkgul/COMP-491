@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -142,17 +143,17 @@
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i5L-0P-4Gv">
                                 <rect key="frame" x="20" y="419" width="374" height="141"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="contentLayoutGuide" id="uDY-6P-J7c"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="4QE-Q8-2J9"/>
                             </scrollView>
                             <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Umr-P9-6ED">
                                 <rect key="frame" x="20" y="568" width="374" height="49"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbw-2d-hec">
                                         <rect key="frame" x="8" y="14" width="358" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -162,24 +163,13 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KkH-C9-IA4">
                                 <rect key="frame" x="32" y="625" width="347" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Proceed Order &amp; Generate QR Code">
                                     <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="proceedPaymentClicked:" destination="mi5-1y-fxx" eventType="touchUpInside" id="t80-yn-Eb6"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GdJ-Q8-rkV">
-                                <rect key="frame" x="34" y="664" width="347" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Cancel Order">
-                                    <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" modalPresentationStyle="fullScreen" id="nSj-rs-CES"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NhX-gL-IWW">
@@ -210,7 +200,6 @@
                     </view>
                     <connections>
                         <outlet property="afterFlightServicesView" destination="Jzx-a7-qg2" id="DIU-qH-FTK"/>
-                        <outlet property="cancelPaymentButton" destination="GdJ-Q8-rkV" id="Rma-O0-Kh3"/>
                         <outlet property="entertainmentMenuView" destination="asI-q6-DXH" id="IU7-K6-SP9"/>
                         <outlet property="foodMenuView" destination="NhX-gL-IWW" id="m20-ZI-a8p"/>
                         <outlet property="menuImage3" destination="S58-ou-6bD" id="r1S-3M-QZZ"/>
@@ -3625,9 +3614,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="POf-Qn-sq8"/>
         <segue reference="mTE-7N-XmD"/>
-        <segue reference="nSj-rs-CES"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">

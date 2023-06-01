@@ -71,18 +71,26 @@ class AddPaymentController: UIViewController {
         foodDrinkMenuView.frame.size.width = screenWidth * 0.9
         foodDrinkMenuView.center.y = navigationBar.frame.maxY + 1.25 * foodDrinkMenuView.bounds.size.height/2
         foodDrinkMenuView.center.x = self.view.center.x
+        foodDrinkMenuView.layer.cornerRadius = 8.0
+        foodDrinkMenuView.clipsToBounds = true
         
         entertainmentMenuView.frame.size.width = screenWidth * 0.9
         entertainmentMenuView.center.y = foodDrinkMenuView.frame.maxY + 1.25 * entertainmentMenuView.bounds.size.height/2
         entertainmentMenuView.center.x = self.view.center.x
+        entertainmentMenuView.layer.cornerRadius = 8.0
+        entertainmentMenuView.clipsToBounds = true
         
         afterFlightServicesView.frame.size.width = screenWidth * 0.9
         afterFlightServicesView.center.y = entertainmentMenuView.frame.maxY + 1.25 * afterFlightServicesView.bounds.size.height/2
         afterFlightServicesView.center.x = self.view.center.x
+        afterFlightServicesView.layer.cornerRadius = 8.0
+        afterFlightServicesView.clipsToBounds = true
         
         cancelPaymentButton.center.y = screenHeight * 0.95
         proceedPaymentButton.center.y = cancelPaymentButton.center.y - 1.5 * proceedPaymentButton.bounds.size.height
         totalView.center.y = proceedPaymentButton.center.y - 1.1 * totalView.frame.size.height
+        totalView.layer.cornerRadius = 8.0
+        totalView.clipsToBounds = true
         
         let scrollViewContainer: UIStackView = {
             let view = UIStackView()
@@ -93,6 +101,8 @@ class AddPaymentController: UIViewController {
             return view
         }()
         scrollView.frame.size.width = screenWidth * 0.9
+        scrollView.layer.cornerRadius = 8.0
+        scrollView.clipsToBounds = true
         updateBasket(container : scrollViewContainer)
         view.addSubview(scrollView)
         scrollView.addSubview(scrollViewContainer)
@@ -121,26 +131,49 @@ class AddPaymentController: UIViewController {
             var labelPosY = 20
             totalPrice = 0.0
             for product in products {
+                let productStackView = UIStackView()
+                productStackView.axis = .horizontal
+                productStackView.alignment = .fill
+                productStackView.distribution = .fill
+
                 let productLabel = UILabel()
-                productLabel.textColor = UIColor.black
                 productLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
                 let productName = product[databaseController.productName]
                 let count = product[databaseController.count]
                 let productText = String(count) + "   x   " + productName
+                productLabel.text = productText
+
+                let priceLabel = UILabel()
+                priceLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
+                priceLabel.textAlignment = .right
                 let price = product[databaseController.price]
                 let totalPriceForProd = price * Double(count)
                 let priceText = String(totalPriceForProd) + " ₺ "
-                let text = productText + ": " + priceText
-                productLabel.text = text
-                container.addArrangedSubview(productLabel)
-                totalPrice = totalPrice + totalPriceForProd
-                labelPosY = labelPosY + 30
+                priceLabel.text = priceText
+
+                if self.traitCollection.userInterfaceStyle == .dark {
+                    productLabel.textColor = UIColor.white
+                    priceLabel.textColor = UIColor.white
+                } else {
+                    productLabel.textColor = UIColor.black
+                    priceLabel.textColor = UIColor.black
+                }
+
+                productStackView.addArrangedSubview(productLabel)
+                productStackView.addArrangedSubview(priceLabel)
+                container.addArrangedSubview(productStackView)
+
+                totalPrice += totalPriceForProd
+                labelPosY += 30
             }
-            totalLabel.text = "Total Amount: " + String(totalPrice) + " ₺ "
+
+            let roundedTotalPrice = totalPrice.rounded(toPlaces: 2)
+            totalLabel.text = "Total Amount: " + String(roundedTotalPrice) + " ₺ "
             totalLabel.textAlignment = .right
         } catch {
             print(error)
         }
+
     }
     
     @IBAction func cancelPaymentClicked(_ sender: UIButton) {
@@ -155,6 +188,7 @@ class AddPaymentController: UIViewController {
     
     
     @IBAction func proceedPaymentClicked(_ sender: UIButton) {
+        mcSession = self.sessionManager.mcSession
         retrieveTransactionsFromConnectedDevices()
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             fatalError("Couldn't access the document directory.")
@@ -163,7 +197,6 @@ class AddPaymentController: UIViewController {
         let url = documentsDirectory.appendingPathComponent("serverData.json")
         do {
             let data = try Data(contentsOf: url)
-            print(data)
             do {
                 let decoder = JSONDecoder()
                 let serverInfos = try decoder.decode([ServerData].self, from: data)
@@ -177,7 +210,6 @@ class AddPaymentController: UIViewController {
                     for row in filteredRows {
                         let transactionAmount = Double(row[databaseController.amount])
                         totalSpendings += transactionAmount
-                        print("Transaction Amount: \(transactionAmount)")
                     }
                 } catch {
                     print("Error selecting transactions: \(error)")
@@ -202,7 +234,7 @@ class AddPaymentController: UIViewController {
                         } else {
                             do {
                                 let time = ("\(Date())")
-                                let insert = databaseController.transactionTable.insert(databaseController.transactionId <- time, databaseController.amount <- totalPrice, databaseController.passengerId <- currentId)
+                                let insert = databaseController.transactionTable.insert(databaseController.transactionId <- time, databaseController.amount <- totalPrice.rounded(toPlaces: 2), databaseController.passengerId <- currentId)
                                 try databaseController.database2.run(insert)
                             } catch {
                                 print("Error inserting transaction: \(error)")
@@ -231,5 +263,11 @@ class AddPaymentController: UIViewController {
     
     func retrieveTransactionsFromConnectedDevices(){
         sessionManager.sendSyncRequest()
+    }
+}
+extension FloatingPoint {
+    func rounded(toPlaces places: Int) -> Self {
+        let divisor = Self(Int(pow(10.0, Double(places))))
+        return (self * divisor).rounded() / divisor
     }
 }

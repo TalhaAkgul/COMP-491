@@ -45,7 +45,7 @@ class SpendingDetailsController: UIViewController {
             let view = UIStackView()
 
             view.axis = .vertical
-            view.spacing = 10
+            view.spacing = 20
             view.backgroundColor = .white
             view.translatesAutoresizingMaskIntoConstraints = false
             return view
@@ -60,7 +60,7 @@ class SpendingDetailsController: UIViewController {
         scrollViewContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
         
         scrollView.frame.size.width = screenWidth * 0.85
-        scrollView.frame.size.height = screenHeight * 0.2
+        scrollView.frame.size.height = screenHeight * 0.4
         scrollView.center.y = self.view.center.y
         scrollView.center.x = self.view.center.x
         
@@ -72,13 +72,11 @@ class SpendingDetailsController: UIViewController {
                     
     }
     
-    
-    func fillScrollWithSpendings(container : UIStackView){
-        
+    func fillScrollWithSpendings(container: UIStackView) {
         var currentId = ""
         do {
             if let qrRow = try database3.pluck(qrTable) {
-                currentId  = qrRow[pId]
+                currentId = qrRow[pId]
             }
         } catch {
             print("Error occurred while accessing database: \(error)")
@@ -92,34 +90,41 @@ class SpendingDetailsController: UIViewController {
                 let lineStackView = UIStackView()
                 lineStackView.axis = .horizontal
                 lineStackView.spacing = 8.0
-                let spentLabel = UILabel(frame: CGRect(x: 20, y: 0, width: 200, height: 15))
-
+                
+                let spentLabel = UILabel(frame: CGRect(x: 20, y: 0, width: 200, height: 40))
                 let formattedId = transactionId.replacingOccurrences(of: " +0000", with: "")
-
                 let spentText = "   Date: " + formattedId + " Amount: " + String(transactionAmount) + "₺"
                 
                 spentLabel.text = spentText
                 spentLabel.textColor = UIColor.black
                 spentLabel.font = UIFont.systemFont(ofSize: 12.0)
-
-                let button = UIButton(type: .system)
-                button.frame = CGRect(x: 220, y: 0, width: 40, height: 10)
-                button.setTitle("Refund", for: .normal)
-                button.setTitleColor(.white, for: .normal)
-                button.backgroundColor = UIColor.systemBlue
-                button.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                button.heightAnchor.constraint(equalToConstant: 15).isActive = true
-                button.addTarget(self, action: #selector(refundButtonTapped(_:)), for: .touchUpInside)
                 
                 lineStackView.addArrangedSubview(spentLabel)
-                lineStackView.addArrangedSubview(button)
+                
+                if transactionAmount > 0 {
+                    let spacerView = UIView()
+                    spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+                    
+                    
+                    let button = UIButton(type: .system)
+                    button.frame = CGRect(x: 0, y: 0, width: 60, height: 30)
+                    button.setTitle("Refund", for: .normal)
+                    button.setTitleColor(.white, for: .normal)
+                    button.backgroundColor = okButton.backgroundColor
+                    button.addTarget(self, action: #selector(refundButtonTapped(_:)), for: .touchUpInside)
+                    button.layer.cornerRadius = 8.0
+                    button.clipsToBounds = true
+                    lineStackView.addArrangedSubview(button)
+                    lineStackView.addArrangedSubview(spacerView)
+                }
+                
                 container.addArrangedSubview(lineStackView)
             }
         } catch {
             print("Error: \(error)")
         }
     }
-    
+
     @objc func refundButtonTapped(_ sender: UIButton) {
         guard let lineStackView = sender.superview as? UIStackView else {
             return
@@ -144,8 +149,6 @@ class SpendingDetailsController: UIViewController {
                 do {
                     let insert = transactionTable.insert(transactionId <- date, amount <- negativeAmount, passengerId <- currentId)
                     try database2.run(insert)
-                    
-                    print("New transaction inserted")
                 } catch {
                     print("Error inserting transaction: \(error)")
                 }

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -51,7 +52,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zfo-iH-ehJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1654" y="-695"/>
+            <point key="canvasLocation" x="-1657" y="-700"/>
         </scene>
         <!--Payment Successful Controller-->
         <scene sceneID="8Pb-cz-e2k">
@@ -99,6 +100,44 @@
             </objects>
             <point key="canvasLocation" x="-688.40579710144937" y="-822.32142857142856"/>
         </scene>
+        <!--Close Controller-->
+        <scene sceneID="9nD-3g-tYT">
+            <objects>
+                <viewController restorationIdentifier="CloseController" storyboardIdentifier="CloseController" id="Hdr-29-yXu" customClass="CloseController" customModule="application" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EQe-uM-ej9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TbA-81-EdV">
+                                <rect key="frame" x="73" y="240" width="269" height="299"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="3zq-8e-bRu"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="dxK-IE-x3j"/>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xji-1e-LWt">
+                                <rect key="frame" x="31" y="831" width="353" height="31"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Approve and Close Transactions">
+                                    <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="closeTransactionsClicked:" destination="Hdr-29-yXu" eventType="touchUpInside" id="wI2-4q-HsK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="uk2-jS-X7D"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="TbA-81-EdV" id="qXl-N8-B2v"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hFP-Op-phU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2426.0869565217395" y="983.70535714285711"/>
+        </scene>
         <!--Transactions Controller-->
         <scene sceneID="Ajg-1R-Isl">
             <objects>
@@ -119,12 +158,65 @@
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                     </view>
                     <connections>
-                        <outlet property="scrollView" destination="HlB-N1-6fL" id="lZb-5Z-uHf"/>
+                        <outlet property="scrollView" destination="HlB-N1-6fL" id="0rX-XD-gx3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HLC-O0-dEA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1613.0434782608697" y="970.98214285714278"/>
+        </scene>
+        <!--Close Popup Controller-->
+        <scene sceneID="q4j-2i-kuM">
+            <objects>
+                <viewController restorationIdentifier="ClosePopupController" storyboardIdentifier="ClosePopupController" id="1vj-Fd-mrk" customClass="ClosePopupController" customModule="application" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="s83-Vf-YVe">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qD6-JO-tSC">
+                                <rect key="frame" x="60" y="360" width="294" height="177"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XTA-sp-ri4">
+                                        <rect key="frame" x="47" y="108" width="197" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="No">
+                                            <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <segue destination="hdk-NX-aqd" kind="presentation" modalPresentationStyle="fullScreen" id="cUt-so-Lqn"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" text="Are you sure?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="luH-bF-qtR">
+                                        <rect key="frame" x="36" y="8" width="219" height="49"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="94h-v7-fgp">
+                                        <rect key="frame" x="47" y="65" width="197" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Yes">
+                                            <color key="baseBackgroundColor" red="0.3596336544" green="0.032571088519999999" blue="0.57781267169999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <segue destination="Hdr-29-yXu" kind="presentation" modalPresentationStyle="fullScreen" id="6o6-FP-7ba"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="hzG-gu-7zf"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1EP-kd-r4w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3230.434782608696" y="533.70535714285711"/>
         </scene>
         <!--Flight No Entry-->
         <scene sceneID="eJO-iG-bOm">
@@ -239,21 +331,6 @@
                                     <segue destination="IBQ-Oh-ze9" kind="presentation" modalPresentationStyle="fullScreen" id="Xue-4N-xIq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tt7-Wh-hMZ">
-                                <rect key="frame" x="106" y="430" width="203" height="56"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Reset Transactions" cornerStyle="capsule">
-                                    <backgroundConfiguration key="background">
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="strokeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </backgroundConfiguration>
-                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="resetTransactionsClicked:" destination="hdk-NX-aqd" eventType="touchUpInside" id="rH2-v1-4fX"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="u1n-S9-vWc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -262,7 +339,6 @@
                         <outlet property="closeTransactionsButton" destination="9bT-Og-cli" id="KGe-7w-VVD"/>
                         <outlet property="connectCabinCrewButton" destination="Lal-uT-e9L" id="lyV-k8-5kG"/>
                         <outlet property="getProvisionsButton" destination="Jdq-TW-eEf" id="cAl-6G-MmC"/>
-                        <outlet property="resetTransactionsButton" destination="Tt7-Wh-hMZ" id="wh2-rC-NlS"/>
                         <outlet property="seeAllTransactionsButton" destination="Aye-2I-RJU" id="9OH-6E-Mkj"/>
                     </connections>
                 </viewController>
@@ -304,7 +380,7 @@
                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <segue destination="BB0-cU-46x" kind="presentation" modalPresentationStyle="fullScreen" id="1nq-Sw-4k1"/>
+                                    <segue destination="BB0-cU-46x" kind="presentation" modalPresentationStyle="fullScreen" id="Loa-Ci-wbE"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VkY-oP-N0A">
@@ -340,7 +416,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
-                        <outlet property="identifyIdButton" destination="0EP-xY-aOG" id="UEC-9v-Hdd"/>
+                        <outlet property="identifyIdButton" destination="0EP-xY-aOG" id="74e-i4-rUc"/>
                         <outlet property="instructionLabel" destination="AXx-KU-Yp8" id="VAR-dL-eyC"/>
                         <outlet property="qrCodeButton" destination="VkY-oP-N0A" id="LSX-Nm-Knx"/>
                         <outlet property="syncButton" destination="6ka-Hd-0T5" id="Y5W-T7-7nX"/>
@@ -4119,7 +4195,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="ijJ-JW-0EX"/>
-        <segue reference="P3N-e5-V71"/>
+        <segue reference="08X-ih-pdO"/>
         <segue reference="CR0-aG-bRY"/>
         <segue reference="H4h-9P-ddt"/>
     </inferredMetricsTieBreakers>

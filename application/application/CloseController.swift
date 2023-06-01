@@ -2,20 +2,22 @@
 //  TransactionsController.swift
 //  application
 //
-//  Created by Doga Ege Inhanli on 13.05.2023.
+//  Created by Doga Ege Inhanli on 25.05.2023.
 //
 import UIKit
 import SQLite
 
-class TransactionsController: UIViewController {
+class CloseController: UIViewController, URLSessionDelegate {
     
 
     @IBOutlet weak var scrollView: UIScrollView!
     
     let databaseController = DatabaseController.instance
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.layoutIfNeeded()
         databaseController.connectTransactionDatabase()
         
         let screenSize: CGRect = UIScreen.main.bounds
@@ -39,10 +41,10 @@ class TransactionsController: UIViewController {
         scrollView.center.x = self.view.center.x
         scrollView.center.y = navigationBar.bounds.maxY + screenHeight/30 + scrollView.frame.height/2
         let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 8
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(stackView)
+            stackView.axis = .vertical
+            stackView.spacing = 8
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
                 stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
@@ -97,7 +99,7 @@ class TransactionsController: UIViewController {
         
         self.view.addSubview(countView)
         NSLayoutConstraint.activate([
-            countView.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 5),
+            countView.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 16),
             countView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             countView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
                 countView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
@@ -106,10 +108,109 @@ class TransactionsController: UIViewController {
         ])
     }
     
+    @IBAction func closeTransactionsClicked(_ sender: Any) {
+        send()
+    }
+    
     @objc func goBack() {
         if let viewController = storyboard?.instantiateViewController(withIdentifier: "AdminController") {
             viewController.modalPresentationStyle = .fullScreen
             present(viewController, animated: true, completion: nil)
         }
     }
+    
+    func send(){
+        var closeCompleted = false
+        var transactions: [[String: Any]] = []
+        var postString = "test"
+        do {
+            for row in try databaseController.database2.prepare(databaseController.transactionTable) {
+                let transaction: [String: Any] = [
+                    "amount": String(row[databaseController.amount]),
+                    "pid": row[databaseController.passengerId]
+                ]
+                transactions.append(transaction)
+            }
+
+            let jsonObject: [String: Any] = [
+                "flightNo": AdminController.flightNo,
+                "transactions": transactions
+            ]
+            do {
+                let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: [])
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    postString = jsonString
+                }
+            } catch {
+                print("Error converting JSON object to string: \(error)")
+            }
+        } catch {
+            print("Error: \(error)")
+        }
+        
+        var request = URLRequest(url: URL(string: "https://172.16.126.233:8080/close")!)
+        request.httpMethod = "POST"
+        request.httpBody = postString.data(using: String.Encoding.utf8)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        let task = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+            if let error = error{
+                print("error: ")
+                print(error)
+                return
+            }
+            if let data = data{
+                guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                    fatalError("Couldn't access the document directory.")
+                }
+                let fileURL = documentsDirectory.appendingPathComponent("serverData.json")
+                if FileManager.default.fileExists(atPath: fileURL.path) {
+                    do {
+                        try FileManager.default.removeItem(at: fileURL)
+                    } catch {
+                        fatalError("Failed to delete the file: \(error)")
+                    }
+                }
+                do {
+                    try data.write(to: fileURL, options: .atomic)
+                    closeCompleted = true
+                    let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+                    let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                    blurEffectView.frame = self.view.bounds
+                    blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                    self.view.addSubview(blurEffectView)
+                    
+                    let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CompletedPopUp") as! CompletedPopUp
+                    self.addChild(popOverVC)
+                    popOverVC.view.frame = self.view.frame
+                    self.view.addSubview(popOverVC.view)
+                    popOverVC.didMove(toParent: self)
+                    AdminController.flightNo = ""
+                } catch {
+                    fatalError("Failed to create the file: \(error)")
+                }
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+            if let response = response{
+            }
+        }
+        task.resume()
+        if(closeCompleted == false){
+            
+        }
+        databaseController.resetTransactions()
+
+    }
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+            if challenge.protectionSpace.host == "172.16.126.233" {
+                completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
+            } else {
+                completionHandler(.performDefaultHandling, nil)
+            }
+    }
+    
 }

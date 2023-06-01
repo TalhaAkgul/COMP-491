@@ -9,10 +9,12 @@ import UIKit
 import SwiftUI
 import CodeScanner
 import SQLite
+import MultipeerConnectivity
 
 
 class QRCodeViewController: UIViewController {
-    
+    let sessionManager = SessionManager.shared
+    var mcSession: MCSession!
     var scannedCode: String = ""
     var scanComplete: Bool = false {
         didSet {
@@ -21,13 +23,17 @@ class QRCodeViewController: UIViewController {
         }
     }
     
+    func retrieveTransactionsFromConnectedDevices(){
+        sessionManager.sendSyncRequest()
+    }
     let databaseController = DatabaseController.instance
     
     override func viewDidLoad() {
         super.viewDidLoad()
         databaseController.connectMenuDatabase()
         databaseController.connectQRDatabase()
-        
+        mcSession = self.sessionManager.mcSession
+        retrieveTransactionsFromConnectedDevices()
         var scannerSheet : CodeScannerView {
             CodeScannerView(
                 codeTypes: [.qr],
@@ -39,16 +45,14 @@ class QRCodeViewController: UIViewController {
                 }
             )
         }
-        let scanView = UIHostingController(rootView: scannerSheet)
-        scanView.view.frame = self.view.bounds
-        self.view.addSubview(scanView.view)
-        self.addChild(scanView)
-        
         let screenSize: CGRect = UIScreen.main.bounds
         let screenHeight = screenSize.height
+        let scanView = UIHostingController(rootView: scannerSheet)
        
-        let navigationItem = UINavigationItem(title: "Scan QR Code")
+        //scanView.view.frame = self.view.bounds
         
+        
+        let navigationItem = UINavigationItem(title: "Scan QR Code")
         let back = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"),
                                    style: .plain,
                                    target: self,
@@ -56,7 +60,7 @@ class QRCodeViewController: UIViewController {
         navigationItem.leftBarButtonItem = back
 
         let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: screenHeight/25, width: view.frame.width, height: 44))
-        navigationBar.barTintColor = UIColor(white: 0.95, alpha: 1.0)
+        navigationBar.barTintColor = self.view.backgroundColor
         navigationBar.setItems([navigationItem], animated: false)
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
@@ -64,9 +68,11 @@ class QRCodeViewController: UIViewController {
         navigationBar.tintColor = .blue
         navigationBar.backgroundColor = .clear
         navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        scanView.view.frame = CGRect(x: 0, y: screenHeight/25 + navigationBar.frame.height, width: view.frame.width, height: view.frame.height - (screenHeight/25 + navigationBar.frame.height))
 
         view.addSubview(navigationBar)
-        
+        self.view.addSubview(scanView.view)
+        self.addChild(scanView)
     }
     
     @objc func goBack() {
@@ -77,7 +83,6 @@ class QRCodeViewController: UIViewController {
     }
     
     func processDataFromQRCode() {
-        print("reading qr")
         var passID = ""
         var orderDict : [[String: String]]
         let passengerInfoAsJsonData = self.scannedCode.data(using: .utf8)!
@@ -90,10 +95,8 @@ class QRCodeViewController: UIViewController {
             let end = passIDWithZeros.index(passIDWithZeros.endIndex, offsetBy: (-1))
             let range = start...end
             passID = String(passIDWithZeros[range])
-            print(passID)
             orderDict = passengerInfo.orders
-            print(orderDict)
-            /*
+            
             if orderDict.isEmpty {
                 let insertQuery = databaseController.qrTable.insert(databaseController.pId <- passID, databaseController.prId <- String(-1), databaseController.prCount <- String(-1))
                 do {
@@ -102,7 +105,7 @@ class QRCodeViewController: UIViewController {
                     print("Error inserting data: \(error)")
                 }
             }
-             */
+             
             for dict in orderDict {
                 let prIdValue = dict.keys.first ?? ""
                 let prCountValue = dict.values.first ?? ""

@@ -9,7 +9,6 @@ import UIKit
 import SQLite
 
 
-
 class PersonalDetailsController: UIViewController {
     
     @IBOutlet weak var personalInfoView: UIView!
@@ -24,7 +23,8 @@ class PersonalDetailsController: UIViewController {
     @IBOutlet weak var seeAllSpendingsButton: UIButton!
     
     let databaseController = DatabaseController.instance
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         databaseController.connectQRDatabase()
@@ -32,6 +32,7 @@ class PersonalDetailsController: UIViewController {
         readLocalData()
         setItems()
     }
+    
     
     func setItems(){
         let screenSize: CGRect = UIScreen.main.bounds
@@ -68,10 +69,14 @@ class PersonalDetailsController: UIViewController {
         personalInfoView.frame.size.width = screenWidth * 0.9
         personalInfoView.center.x = self.view.center.x
         personalInfoView.center.y = navigationBar.center.y +  navigationBar.bounds.size.height + screenHeight/25
+        personalInfoView.layer.cornerRadius = 8.0
+        personalInfoView.clipsToBounds = true
         
         spendingsView.frame.size.width = screenWidth * 0.9
         spendingsView.center.x = self.view.center.x
         spendingsView.center.y = personalInfoView.frame.maxY + spendingsView.bounds.size.height/2 + screenHeight/25
+        spendingsView.layer.cornerRadius = 8.0
+        spendingsView.clipsToBounds = true
         
         addPaymentButton.frame.size.width = screenWidth * 0.9
         addPaymentButton.center.x = self.view.center.x
@@ -112,52 +117,33 @@ class PersonalDetailsController: UIViewController {
         }
         
         let fileURL = documentsDirectory.appendingPathComponent("serverData.json")
-        print(fileURL)
         do {
             let rows = try databaseController.database3.prepare(databaseController.qrTable)
                 for row in rows {
                     let pIdValue = row[databaseController.pId]
                     let prIdValue = row[databaseController.prId]
                     let prCountValue = row[databaseController.prCount]
-                    
-                    print("pId: \(pIdValue), prId: \(prIdValue), prCount: \(prCountValue)")
                 }
             } catch {
                 print("Error printing rows: \(error)")
             }
         do {
             let data = try Data(contentsOf: fileURL)
-            print(data)
             do {
                 let decoder = JSONDecoder()
-                print("DKDKDS")
                 let serverInfos = try decoder.decode([ServerData].self, from: data)
-                print("DKDKDS2")
-                print(serverInfos)
                 var currentId = ""
                 if let qrRow = try databaseController.database3.pluck(databaseController.qrTable) {
                     currentId  = qrRow[databaseController.pId]
-                    print(currentId)
                 }
                 var passengerFound = false
-                print("beforeserverinfo")
                 for serverInfo in serverInfos {
-                    print("ifffff")
-                    print(serverInfo.passengerPID)
-                    print(type(of: serverInfo.passengerPID))
-                    print(type(of: currentId))
-                    print(currentId)
-                   
                     if serverInfo.passengerPID == currentId {
                         passengerFound = true
                         let passengerName = serverInfo.passengerName
                         let passengerSurname = serverInfo.passengerSurname
-                        print("SDAS111111111")
                         let provisionAmount = Double(serverInfo.amount) ?? 0.0
-                        print("SDAS2222222")
-                        print(provisionAmount)
                         var totalSpendings = 0.0
-                        
                         do {
                             let filteredRows = try databaseController.database2.prepare(databaseController.transactionTable.filter(databaseController.passengerId == currentId))
                             for row in filteredRows {
@@ -167,12 +153,11 @@ class PersonalDetailsController: UIViewController {
                         } catch {
                             print("Error selecting transactions: \(error)")
                         }
-                        print(totalSpendings)
                         let remainingAmount = provisionAmount - totalSpendings
                         nameLabel.text = passengerName + " " + passengerSurname
-                        provisionLabel.text = String(remainingAmount) + "₺"
-                        initialPLabel.text = String(provisionAmount) + "₺"
-                        spentLabel.text = String(totalSpendings) + "₺"
+                        provisionLabel.text = String(remainingAmount.rounded(toPlaces: 2)) + "₺"
+                        initialPLabel.text = String(provisionAmount.rounded(toPlaces: 2)) + "₺"
+                        spentLabel.text = String(totalSpendings.rounded(toPlaces: 2)) + "₺"
                         if(totalSpendings == 0.0){
                             seeAllSpendingsButton.isEnabled = false
                         } else {
@@ -182,12 +167,10 @@ class PersonalDetailsController: UIViewController {
                     
                         }
                 if(passengerFound == false){
-                    print("no passenger found")
-                    let personalDetailsController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mainViewController") as! PersonalDetailsController
-                    self.addChild(personalDetailsController)
-                    personalDetailsController.view.frame = self.view.frame
-                    self.view.addSubview(personalDetailsController.view)
-                    personalDetailsController.didMove(toParent: self)
+                    if let viewController = storyboard?.instantiateViewController(withIdentifier: "mainViewController") {
+                        viewController.modalPresentationStyle = .fullScreen
+                        present(viewController, animated: true, completion: nil)
+                    }
                     
                 }
                     } catch {
@@ -197,3 +180,5 @@ class PersonalDetailsController: UIViewController {
         }
     }
 }
+
+
