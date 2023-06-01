@@ -83,8 +83,7 @@ class AdminController: UIViewController, URLSessionDelegate {
         seeAllTransactionsButton.center.x = self.view.center.x
         seeAllTransactionsButton.center.y = closeTransactionsButton.frame.maxY + seeAllTransactionsButton.bounds.size.height
         
-        resetTransactionsButton.center.x = self.view.center.x
-        resetTransactionsButton.center.y = seeAllTransactionsButton.frame.maxY + resetTransactionsButton.bounds.size.height
+        
     }
    
     @IBAction func connectCabinCrewClicked(_ sender: Any) {
@@ -114,7 +113,7 @@ class AdminController: UIViewController, URLSessionDelegate {
     
     
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-            if challenge.protectionSpace.host == "172.16.126.233" {
+            if challenge.protectionSpace.host == "172.20.60.67" {
                 completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
             } else {
                 completionHandler(.performDefaultHandling, nil)
