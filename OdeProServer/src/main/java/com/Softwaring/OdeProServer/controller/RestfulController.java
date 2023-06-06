@@ -2,7 +2,7 @@ package com.Softwaring.OdeProServer.controller;
 
 import com.Softwaring.OdeProServer.dto.*;
 import com.Softwaring.OdeProServer.exception.NotFoundException;
-import com.Softwaring.OdeProServer.service.PassengerService;
+import com.Softwaring.OdeProServer.service.OdeProService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,14 +17,14 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class RestfulController {
-    private final PassengerService passengerService;
+    private final OdeProService odeProService;
 
     @GetMapping("/getActiveProvision")
     public ResponseEntity<?> getActiveProvisionsByPID(@RequestParam("id") String PID) {
         try {
             log.info("Request for getActiveProvisionsByPID is received for PID: " + PID);
             List<ActiveProvisionDTO> results = new ArrayList<>();
-            results.add(passengerService.getActiveProvisionByPassengerID(PID));
+            results.add(odeProService.getActiveProvisionByPassengerID(PID));
             return ResponseEntity.ok(results);
         } catch (NotFoundException e) {
             log.warn(e.getMessage());
@@ -36,7 +36,7 @@ public class RestfulController {
     public ResponseEntity<?> getActiveProvisionsByFlightNo(@RequestParam("flightNo") String flightNo) {
         try {
             log.info("Request for getActiveProvisionsByFlightNo is received for flightNo: " + flightNo);
-            List<ActiveProvisionDTO> results = passengerService.getActiveProvisionByFlightNo(flightNo);
+            List<ActiveProvisionDTO> results = odeProService.getActiveProvisionByFlightNo(flightNo);
             return ResponseEntity.ok(results);
         } catch (NotFoundException e) {
             log.warn(e.getMessage());
@@ -48,7 +48,7 @@ public class RestfulController {
     public ResponseEntity<?> getUsedProvisions(@RequestParam("id") String PID) {
         try {
             log.info("Request for getUsedProvisions is received for PID: " + PID);
-            List<UsedProvisionDTO> results = passengerService.getUsedProvisionsByPassengerID(PID);
+            List<UsedProvisionDTO> results = odeProService.getUsedProvisionsByPassengerID(PID);
             return ResponseEntity.ok(results);
         } catch (NotFoundException e) {
             log.warn(e.getMessage());
@@ -59,7 +59,7 @@ public class RestfulController {
     @PostMapping("/getPassenger")
     public ResponseEntity<?> checkPassenger(@RequestBody final String PID) {
         try {
-            PassengerDTO passengerDTO = passengerService.getPassenger(PID);
+            PassengerDTO passengerDTO = odeProService.getPassenger(PID);
             return ResponseEntity.ok(passengerDTO);
         } catch (NotFoundException e) {
             log.warn(e.getMessage());
@@ -71,7 +71,7 @@ public class RestfulController {
     public ResponseEntity<String> deleteActiveProvision(@RequestParam("id") String PID) {
         try {
             log.info("Request for deleteActiveProvision is received for PID: " + PID);
-            passengerService.deleteActiveProvision(PID);
+            odeProService.deleteActiveProvision(PID);
             return ResponseEntity.ok("Passenger with id: " + PID + " deleted");
         } catch (NotFoundException e) {
             log.error(e.getMessage());
@@ -83,7 +83,7 @@ public class RestfulController {
     public ResponseEntity<?> addPassenger(@RequestBody final PassengerDTO passenger) {
         try {
             log.info("Request for deleteActiveProvision is received for PID: " + passenger.getPID());
-            passengerService.addPassenger(passenger);
+            odeProService.addPassenger(passenger);
             return ResponseEntity.ok(passenger);
         } catch (IllegalArgumentException e) {
             log.error(e.getMessage());
@@ -95,7 +95,7 @@ public class RestfulController {
     public ResponseEntity<?> openProvision(@RequestBody final OpenProvisionDTO openProvision) {
         try {
             log.info("Request for openProvision is received for PID: " + openProvision.getPassengerPID());
-            passengerService.openProvision(openProvision);
+            odeProService.openProvision(openProvision);
             return ResponseEntity.ok("Provision is opened");
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -107,7 +107,7 @@ public class RestfulController {
     public ResponseEntity<?> closeProvision(@RequestBody final CloseProvisionRequest closeProvisionRequest) {
         try {
             log.info("Request for closeProvision is received for flightNo: " + closeProvisionRequest.getFlightNo());
-            passengerService.closeProvision(closeProvisionRequest);
+            odeProService.closeProvision(closeProvisionRequest);
             return ResponseEntity.ok("Provision is closed");
         } catch (Exception e) {
             log.error(e.getMessage());

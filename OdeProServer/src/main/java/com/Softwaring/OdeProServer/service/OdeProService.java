@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class PassengerService {
+public class OdeProService {
     private final ModelMapper modelMapper = new ModelMapper();
     private final BankService bankService;
     private PassengerRepository passengerRepository;
