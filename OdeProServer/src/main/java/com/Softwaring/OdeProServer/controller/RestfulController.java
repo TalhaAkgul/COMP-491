@@ -56,8 +56,8 @@ public class RestfulController {
         }
     }
 
-    @PostMapping("/getPassenger")
-    public ResponseEntity<?> checkPassenger(@RequestBody final String PID) {
+    @GetMapping("/getPassenger")
+    public ResponseEntity<?> checkPassenger(@RequestParam("id") String PID) {
         try {
             PassengerDTO passengerDTO = odeProService.getPassenger(PID);
             return ResponseEntity.ok(passengerDTO);
