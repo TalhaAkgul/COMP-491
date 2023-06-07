@@ -108,9 +108,7 @@ public class OdeProService {
 
 
     private Passenger findOrCreatePassenger(OpenProvisionDTO openProvision) {
-        return passengerRepository
-                .findByPID(openProvision.getPassengerPID())
-                .orElse(passengerRepository.save(modelMapper.map(openProvision, Passenger.class)));
+        return passengerRepository.save(modelMapper.map(openProvision, Passenger.class));
     }
 
     <S, T> List<T> mapList(List<S> source, Class<T> targetClass) {
